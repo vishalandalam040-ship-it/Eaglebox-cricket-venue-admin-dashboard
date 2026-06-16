@@ -220,7 +220,7 @@ export const Bookings = () => {
                            {booking.status}
                          </span>
                       </div>
-                      <p className="text-xs text-[var(--text-secondary)] font-medium">ID: {booking.id} • {booking.phone}</p>
+                      <p className="text-xs text-[var(--text-secondary)] font-medium">ID: {booking.id} {user?.role !== 'Viewer' && `• ${booking.phone}`}</p>
                    </div>
                 </div>
 
@@ -240,13 +240,15 @@ export const Bookings = () => {
                 </div>
 
                 <div className="flex items-center gap-2 mt-2 lg:mt-0">
-                  <button 
-                    onClick={() => sendWhatsApp(booking)}
-                    className="flex-1 lg:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 transition-all font-bold text-xs"
-                    title="Send WhatsApp Message"
-                  >
-                    <MessageCircle size={14} /> WhatsApp
-                  </button>
+                  {user?.role !== 'Viewer' && (
+                    <button 
+                      onClick={() => sendWhatsApp(booking)}
+                      className="flex-1 lg:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 transition-all font-bold text-xs"
+                      title="Send WhatsApp Message"
+                    >
+                      <MessageCircle size={14} /> WhatsApp
+                    </button>
+                  )}
                   {(user?.role !== 'Viewer' || booking.userId === user.id) && (
                     <button onClick={() => handleEditClick(booking)} className="px-4 py-2 rounded-lg bg-[#1E293B] hover:bg-white/10 text-white font-bold text-xs transition-colors">Edit</button>
                   )}
