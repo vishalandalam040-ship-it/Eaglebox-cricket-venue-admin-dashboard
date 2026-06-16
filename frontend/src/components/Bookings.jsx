@@ -224,39 +224,40 @@ export const Bookings = () => {
                    </div>
                 </div>
 
-                <div className="flex flex-wrap md:flex-nowrap items-center gap-4 lg:gap-8 bg-[#0B1120] lg:bg-transparent p-3 lg:p-0 rounded-xl border border-[#1E293B] lg:border-none">
-                   <div className="flex flex-col">
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Date & Time</span>
-                      <p className="text-sm font-bold text-white whitespace-nowrap">{booking.date}</p>
-                      <p className="text-xs text-cyan-400 font-medium whitespace-nowrap">{booking.time}{booking.endTime ? ` - ${booking.endTime}` : ''}</p>
-                   </div>
+                <div className="flex flex-wrap md:flex-nowrap items-center gap-4 lg:gap-8 justify-end">
+                  <div className="flex items-center gap-2 mt-2 lg:mt-0">
+                    {user?.role !== 'Viewer' && (
+                      <button 
+                        onClick={() => sendWhatsApp(booking)}
+                        className="flex-1 lg:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 transition-all font-bold text-xs"
+                        title="Send WhatsApp Message"
+                      >
+                        <MessageCircle size={14} /> WhatsApp
+                      </button>
+                    )}
+                    {(user?.role !== 'Viewer' || booking.userId === user.id) && (
+                      <button onClick={() => handleEditClick(booking)} className="px-4 py-2 rounded-lg bg-[#1E293B] hover:bg-white/10 text-white font-bold text-xs transition-colors">Edit</button>
+                    )}
+                    {user?.role !== 'Viewer' && (
+                      <button onClick={() => handleCancelBooking(booking.id)} className="px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white font-bold text-xs transition-colors" title="Cancel Booking">
+                         <X size={14} />
+                      </button>
+                    )}
+                  </div>
 
-                   {user?.role !== 'Viewer' && (
-                     <div className="flex flex-col pl-4 border-l border-[#1E293B]">
-                        <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Amount</span>
-                        <p className="text-sm font-bold text-emerald-400 whitespace-nowrap">₹ {booking.amount}</p>
+                  <div className="flex flex-wrap md:flex-nowrap items-center gap-4 lg:gap-8 bg-[#0B1120] lg:bg-transparent p-3 lg:p-0 rounded-xl border border-[#1E293B] lg:border-none">
+                     {user?.role !== 'Viewer' && (
+                       <div className="flex flex-col pr-4 border-r border-[#1E293B] text-right">
+                          <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Amount</span>
+                          <p className="text-sm font-bold text-emerald-400 whitespace-nowrap">₹ {booking.amount}</p>
+                       </div>
+                     )}
+                     <div className="flex flex-col text-right">
+                        <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Date & Time</span>
+                        <p className="text-sm font-bold text-white whitespace-nowrap">{booking.date}</p>
+                        <p className="text-xs text-cyan-400 font-medium whitespace-nowrap">{booking.time}{booking.endTime ? ` - ${booking.endTime}` : ''}</p>
                      </div>
-                   )}
-                </div>
-
-                <div className="flex items-center gap-2 mt-2 lg:mt-0">
-                  {user?.role !== 'Viewer' && (
-                    <button 
-                      onClick={() => sendWhatsApp(booking)}
-                      className="flex-1 lg:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 transition-all font-bold text-xs"
-                      title="Send WhatsApp Message"
-                    >
-                      <MessageCircle size={14} /> WhatsApp
-                    </button>
-                  )}
-                  {(user?.role !== 'Viewer' || booking.userId === user.id) && (
-                    <button onClick={() => handleEditClick(booking)} className="px-4 py-2 rounded-lg bg-[#1E293B] hover:bg-white/10 text-white font-bold text-xs transition-colors">Edit</button>
-                  )}
-                  {user?.role !== 'Viewer' && (
-                    <button onClick={() => handleCancelBooking(booking.id)} className="px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white font-bold text-xs transition-colors" title="Cancel Booking">
-                       <X size={14} />
-                    </button>
-                  )}
+                  </div>
                 </div>
               </div>
             ))}
