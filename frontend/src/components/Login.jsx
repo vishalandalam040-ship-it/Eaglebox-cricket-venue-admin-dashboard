@@ -21,8 +21,7 @@ export const Login = () => {
     setLoading(true);
 
     if (isLogin) {
-      // Bypass actual input and use default admin credentials to allow anyone to log in
-      const result = await login('admin@venueos.com', 'password123');
+      const result = await login(email, password);
       
       if (result.success) {
         if (result.user.role === 'Viewer') {
