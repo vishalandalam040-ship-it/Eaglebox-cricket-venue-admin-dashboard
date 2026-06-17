@@ -16,8 +16,8 @@ export const Tournaments = () => {
   
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [teams, setTeams] = useState([]);
-  const [minTournamentFee, setMinTournamentFee] = useState(2500);
-  const [isSavingFee, setIsSavingFee] = useState(false);
+  const [activeTournamentFee, setActiveTournamentFee] = useState('');
+  const [isSavingManageFee, setIsSavingManageFee] = useState(false);
 
   useEffect(() => {
     // Fetch mock data from backend
@@ -30,14 +30,6 @@ export const Tournaments = () => {
         console.error("Error fetching tournaments", err);
         setLoading(false);
       });
-      
-    api.get('/settings')
-      .then(res => {
-        if (res.data.minTournamentFee) {
-          setMinTournamentFee(Number(res.data.minTournamentFee));
-        }
-      })
-      .catch(err => console.error("Error fetching settings", err));
   }, []);
 
   const handleCreateTournament = (e) => {
@@ -97,6 +89,10 @@ export const Tournaments = () => {
 
   const openManageModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
+    const tournament = tournaments.find(t => t.id === tournamentId);
+    if (tournament) {
+      setActiveTournamentFee(tournament.entryFee || 0);
+    }
     api.get(`/tournaments/${tournamentId}/teams`)
       .then(res => {
         setTeams(res.data);
@@ -137,42 +133,12 @@ export const Tournaments = () => {
           <p className="text-sm text-[var(--text-secondary)] max-w-md leading-relaxed mb-6 md:mb-0">Create, manage, and track local cricket tournaments directly from your dashboard. Handle team registrations, fixtures, and prize pools seamlessly.</p>
         </div>
         {user?.role !== 'Viewer' && (
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-4">
-            <div className="flex items-center gap-2 bg-[#0B1120] border border-[#1E293B] px-4 py-2.5 rounded-xl">
-              <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Min Fee: ₹</span>
-              <input 
-                type="number" 
-                value={minTournamentFee}
-                onChange={e => setMinTournamentFee(e.target.value)}
-                className="w-16 bg-transparent border-none outline-none text-white font-bold text-sm"
-              />
-              <button 
-                onClick={() => {
-                  setIsSavingFee(true);
-                  api.put('/settings/minTournamentFee', { minTournamentFee })
-                    .then(() => {
-                      alert("Minimum Tournament Fee saved successfully!");
-                      setIsSavingFee(false);
-                    })
-                    .catch(err => {
-                      console.error(err);
-                      alert("Failed to save minimum fee.");
-                      setIsSavingFee(false);
-                    });
-                }}
-                disabled={isSavingFee}
-                className="ml-2 px-3 py-1 bg-[#1E293B] hover:bg-white/10 text-cyan-400 text-xs font-bold rounded-lg transition-colors disabled:opacity-50"
-              >
-                {isSavingFee ? '...' : 'Save'}
-              </button>
-            </div>
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              className="w-full md:w-auto bg-cyan-400 hover:bg-cyan-300 text-black px-6 py-3 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(0,242,254,0.3)] active:scale-95 flex items-center justify-center gap-2"
-            >
-              <Plus size={20} /> Create Tournament
-            </button>
-          </div>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="relative z-10 w-full md:w-auto bg-cyan-400 hover:bg-cyan-300 text-black px-6 py-3 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(0,242,254,0.3)] active:scale-95 flex items-center justify-center gap-2"
+          >
+            <Plus size={20} /> Create Tournament
+          </button>
         )}
       </div>
 
@@ -384,16 +350,16 @@ export const Tournaments = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
-                  Payment Amount (Min: ₹{minTournamentFee})
+                  Price (Minimum: ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0})
                 </label>
-                <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className={`w-full bg-black/5 dark:bg-white/10 border ${Number(newTeam.amountPaid) >= minTournamentFee ? 'border-emerald-500/50 focus:ring-emerald-500/50' : 'border-[var(--border-color)] focus:ring-purple-500/50'} rounded-xl px-4 py-2.5 outline-none focus:ring-2 text-[var(--text-primary)] transition-colors`} placeholder="Enter amount" />
-                {newTeam.amountPaid && Number(newTeam.amountPaid) < minTournamentFee && (
-                  <p className="text-xs text-red-400 mt-1">Amount must be at least ₹{minTournamentFee}.</p>
+                <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className={`w-full bg-black/5 dark:bg-white/10 border ${Number(newTeam.amountPaid) >= (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0) ? 'border-emerald-500/50 focus:ring-emerald-500/50' : 'border-[var(--border-color)] focus:ring-purple-500/50'} rounded-xl px-4 py-2.5 outline-none focus:ring-2 text-[var(--text-primary)] transition-colors`} placeholder="Enter price" />
+                {newTeam.amountPaid && Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0) && (
+                  <p className="text-xs text-red-400 mt-1">Price must be at least ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0}.</p>
                 )}
               </div>
               <div className="mt-6 flex gap-3">
                 <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--border-color)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Cancel</button>
-                <button type="submit" disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < minTournamentFee} className="flex-1 px-4 py-2.5 rounded-xl bg-purple-500 text-white font-medium hover:bg-purple-600 shadow-md shadow-purple-500/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-purple-500">Pay & Register</button>
+                <button type="submit" disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} className="flex-1 px-4 py-2.5 rounded-xl bg-purple-500 text-white font-medium hover:bg-purple-600 shadow-md shadow-purple-500/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-purple-500">Pay & Register</button>
               </div>
             </form>
           </div>
@@ -409,6 +375,41 @@ export const Tournaments = () => {
                 <Plus size={20} className="rotate-45" />
               </button>
             </div>
+            
+            {user?.role !== 'Viewer' && (
+              <div className="mb-6 p-4 bg-black/5 dark:bg-white/5 rounded-xl border border-[var(--border-color)]">
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Minimum Registration Price (₹)</label>
+                <div className="flex items-center gap-2">
+                  <input 
+                    type="number" 
+                    value={activeTournamentFee}
+                    onChange={e => setActiveTournamentFee(e.target.value)}
+                    className="flex-1 bg-[var(--bg-color)] border border-[var(--border-color)] rounded-xl px-4 py-2 outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--text-primary)]"
+                    placeholder="Enter minimum price"
+                  />
+                  <button 
+                    onClick={() => {
+                      setIsSavingManageFee(true);
+                      api.put(`/tournaments/${activeTournamentId}/fee`, { entryFee: activeTournamentFee })
+                        .then(() => {
+                          alert("Minimum price saved permanently!");
+                          setIsSavingManageFee(false);
+                          setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, entryFee: Number(activeTournamentFee) } : t));
+                        })
+                        .catch(err => {
+                          console.error(err);
+                          alert("Failed to save minimum price.");
+                          setIsSavingManageFee(false);
+                        });
+                    }}
+                    disabled={isSavingManageFee}
+                    className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-xl transition-colors disabled:opacity-50"
+                  >
+                    {isSavingManageFee ? 'Saving...' : 'Save Price'}
+                  </button>
+                </div>
+              </div>
+            )}
             
             <div className="flex-1 overflow-y-auto">
               {teams.length === 0 ? (

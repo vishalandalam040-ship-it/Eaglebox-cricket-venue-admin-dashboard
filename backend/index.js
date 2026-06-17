@@ -305,6 +305,16 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       }
     });
 
+    app.put('/api/tournaments/:id/fee', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+      try {
+        const { entryFee } = req.body;
+        await db.run('UPDATE tournaments SET entryFee = ? WHERE id = ?', [entryFee, req.params.id]);
+        res.json({ message: 'Tournament fee updated successfully' });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
     app.delete('/api/tournaments/:id', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         await db.run('DELETE FROM tournaments WHERE id = ?', [req.params.id]);
