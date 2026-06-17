@@ -290,13 +290,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="relative rounded-2xl overflow-hidden h-32 md:h-48 group cursor-pointer border border-[#1E293B]">
-         <img src="/stadium.png" alt="Stadium" className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity" />
-         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] to-transparent"></div>
-         <div className="absolute bottom-4 left-4 right-4">
-           <h3 className="text-xl md:text-2xl font-bold text-white mb-1">Upgrade Your Venue</h3>
-           <p className="text-xs md:text-sm text-[var(--text-secondary)]">Unlock advanced tournament management</p>
-         </div>
+      <div className="relative rounded-2xl overflow-hidden h-32 md:h-48 group border border-[#1E293B]">
+         <img src="/box-cricket.png" alt="Box Cricket Venue" className="w-full h-full object-cover opacity-90 transition-opacity" />
+         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/60 to-transparent"></div>
       </div>
     </div>
   );
