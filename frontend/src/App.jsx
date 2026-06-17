@@ -12,6 +12,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Reports } from './components/Reports';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import api from './api';
+import boxCricketImg from './assets/box-cricket.png';
 import './index.css';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -291,7 +292,7 @@ const Dashboard = () => {
       </div>
 
       <div className="relative rounded-2xl overflow-hidden h-32 md:h-48 group border border-[#1E293B]">
-         <img src="/box-cricket.png" alt="Box Cricket Venue" className="w-full h-full object-cover opacity-90 transition-opacity" />
+         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover opacity-90 transition-opacity" />
          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/60 to-transparent"></div>
       </div>
     </div>
