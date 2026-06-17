@@ -380,9 +380,16 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const { message } = req.body;
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
         
+        let roleInstructions = "";
+        if (req.user && req.user.role === 'Viewer') {
+          roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse and state that they do not have the required administrative permissions to view financial or sensitive business data.`;
+        } else {
+          roleInstructions = `\nThe user you are speaking to is an Admin/Owner. You have full permission to disclose all revenue, reports, memberships, and business metrics.`;
+        }
+
         const prompt = `You are a Venue Admin AI Assistant for a Box Cricket venue. 
-Answer concisely and professionally. Help the owner manage their ground.
-Owner's request: ${message}`;
+Answer concisely and professionally. Help the user manage their ground.${roleInstructions}
+User's request: ${message}`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
