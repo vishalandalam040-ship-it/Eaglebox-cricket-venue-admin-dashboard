@@ -378,7 +378,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.post('/api/ai/chat', verifyToken, async (req, res) => {
       try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
         
         const prompt = `You are a Venue Admin AI Assistant for a Box Cricket venue. 
 Answer concisely and professionally. Help the owner manage their ground.
