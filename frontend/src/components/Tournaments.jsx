@@ -8,11 +8,11 @@ export const Tournaments = () => {
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newTournament, setNewTournament] = useState({ name: '', prizePool: '', maxTeams: '', startDate: '', status: 'Upcoming' });
+  const [newTournament, setNewTournament] = useState({ name: '', prizePool: '', maxTeams: '', entryFee: '', startDate: '', status: 'Upcoming' });
 
   const [activeTournamentId, setActiveTournamentId] = useState(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
-  const [newTeam, setNewTeam] = useState({ teamName: '', playersCount: '' });
+  const [newTeam, setNewTeam] = useState({ teamName: '', playersCount: '', amountPaid: '' });
   
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [teams, setTeams] = useState([]);
@@ -44,7 +44,7 @@ export const Tournaments = () => {
       .then(res => {
         setTournaments([...tournaments, tournamentToCreate]);
         setIsModalOpen(false);
-        setNewTournament({ name: '', prizePool: '', maxTeams: '', startDate: '', status: 'Upcoming' });
+        setNewTournament({ name: '', prizePool: '', maxTeams: '', entryFee: '', startDate: '', status: 'Upcoming' });
       })
       .catch(err => {
         console.error("Error creating tournament", err);
@@ -69,7 +69,7 @@ export const Tournaments = () => {
 
   const openJoinModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
-    setNewTeam({ teamName: '', playersCount: '' });
+    setNewTeam({ teamName: '', playersCount: '', amountPaid: '' });
     setIsJoinModalOpen(true);
   };
 
@@ -201,7 +201,7 @@ export const Tournaments = () => {
                         <span className="text-purple-400 font-bold">₹</span>
                         <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">ENTRY FEE</span>
                      </div>
-                     <p className="text-2xl font-bold text-purple-400 mb-1">₹ 2,500</p>
+                     <p className="text-2xl font-bold text-purple-400 mb-1">₹ {(tournament.entryFee || 0).toLocaleString()}</p>
                      <p className="text-[10px] text-[var(--text-secondary)]">Per team (Inc. Refreshments)</p>
                    </div>
                 </div>
@@ -303,9 +303,16 @@ export const Tournaments = () => {
                   <input required type="number" value={newTournament.prizePool} onChange={e => setNewTournament({...newTournament, prizePool: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white" placeholder="50000" />
                 </div>
                 <div>
+                  <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Entry Fee (₹)</label>
+                  <input required type="number" value={newTournament.entryFee} onChange={e => setNewTournament({...newTournament, entryFee: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white" placeholder="2500" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4">
+                <div>
                   <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Max Teams</label>
                   <input required type="number" min="2" value={newTournament.maxTeams} onChange={e => setNewTournament({...newTournament, maxTeams: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white" placeholder="16" />
                 </div>
+              </div>
               </div>
               <div className="mt-6 flex gap-3">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3 rounded-xl border border-[#1E293B] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
@@ -335,9 +342,18 @@ export const Tournaments = () => {
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Number of Players</label>
                 <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => setNewTeam({...newTeam, playersCount: e.target.value})} className="w-full bg-black/5 dark:bg-white/10 border border-[var(--border-color)] rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-purple-500/50 text-[var(--text-primary)]" placeholder="11" />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
+                  Payment Amount (Fee is ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0})
+                </label>
+                <input required type="text" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className={`w-full bg-black/5 dark:bg-white/10 border ${newTeam.amountPaid === String(tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0) ? 'border-emerald-500/50 focus:ring-emerald-500/50' : 'border-[var(--border-color)] focus:ring-purple-500/50'} rounded-xl px-4 py-2.5 outline-none focus:ring-2 text-[var(--text-primary)] transition-colors`} placeholder="Enter exact amount" />
+                {newTeam.amountPaid && newTeam.amountPaid !== String(tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0) && (
+                  <p className="text-xs text-red-400 mt-1">Amount must match the exact tournament entry fee.</p>
+                )}
+              </div>
               <div className="mt-6 flex gap-3">
                 <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--border-color)] font-medium hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Cancel</button>
-                <button type="submit" className="flex-1 px-4 py-2.5 rounded-xl bg-purple-500 text-white font-medium hover:bg-purple-600 shadow-md shadow-purple-500/20 transition-all active:scale-95">Submit Registration</button>
+                <button type="submit" disabled={newTeam.amountPaid !== String(tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} className="flex-1 px-4 py-2.5 rounded-xl bg-purple-500 text-white font-medium hover:bg-purple-600 shadow-md shadow-purple-500/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-purple-500">Pay & Register</button>
               </div>
             </form>
           </div>

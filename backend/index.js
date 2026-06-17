@@ -58,6 +58,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         teams INTEGER,
         maxTeams INTEGER,
         prizePool INTEGER,
+        entryFee INTEGER,
         status TEXT
       );
 
@@ -87,6 +88,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       );
     `);
     
+    // Migration: Add entryFee to existing tournaments table safely
+    try {
+      await db.run('ALTER TABLE tournaments ADD COLUMN entryFee INTEGER DEFAULT 0;');
+    } catch (e) {
+      // Ignore if column already exists
+    }
+
     // Initialize default hourly rate if it doesn't exist
     const exists = await db.get('SELECT * FROM settings WHERE key = "hourlyRate"');
     if (!exists) {
@@ -269,11 +277,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     app.post('/api/tournaments', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
-        const { id, name, teams, maxTeams, prizePool, status } = req.body;
+        const { id, name, teams, maxTeams, prizePool, entryFee, status } = req.body;
         const parsedMaxTeams = parseInt(maxTeams, 10);
         await db.run(
-          'INSERT INTO tournaments (id, name, teams, maxTeams, prizePool, status) VALUES (?, ?, ?, ?, ?, ?)',
-          [id, name, teams, isNaN(parsedMaxTeams) ? 16 : parsedMaxTeams, prizePool, status]
+          'INSERT INTO tournaments (id, name, teams, maxTeams, prizePool, entryFee, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          [id, name, teams, isNaN(parsedMaxTeams) ? 16 : parsedMaxTeams, prizePool, entryFee || 0, status]
         );
         res.status(201).json({ message: 'Tournament created successfully' });
       } catch (err) {
