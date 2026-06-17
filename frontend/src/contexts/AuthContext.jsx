@@ -10,9 +10,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing token and user data in local storage
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    // Check for existing token and user data in session storage
+    const token = sessionStorage.getItem('token');
+    const storedUser = sessionStorage.getItem('user');
     
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/login', { email, password });
       const { token, user } = response.data;
       
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
       
       setUser(user);
       return { success: true, user };
@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setUser(null);
   };
 

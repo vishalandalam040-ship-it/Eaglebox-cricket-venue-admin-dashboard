@@ -305,10 +305,29 @@ const Dashboard = () => {
 const AppContent = () => {
   const [isOpen, setIsOpen] = useState(true);
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
+  const { user, loading } = useAuth();
 
-  if (isLoginPage) {
-    return <Routes><Route path="/login" element={<Login />} /></Routes>;
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[var(--bg-color)]">
+        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  // If not logged in, only allow access to login page
+  if (!user) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    );
+  }
+
+  // If logged in and trying to access login page, redirect to dashboard
+  if (location.pathname === '/login') {
+    return <Navigate to="/" replace />;
   }
 
   return (
@@ -324,6 +343,7 @@ const AppContent = () => {
             <Route path="/tournaments" element={<ProtectedRoute><Tournaments /></ProtectedRoute>} />
             <Route path="/memberships" element={<ProtectedRoute><Memberships /></ProtectedRoute>} />
             <Route path="/reports" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Reports /></ProtectedRoute>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
         <AIAssistant />
