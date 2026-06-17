@@ -322,9 +322,9 @@ const AppContent = () => {
     );
   }
 
-  // If logged in and trying to access login page, redirect to dashboard
+  // If logged in and trying to access login page, redirect to appropriate default page
   if (location.pathname === '/login') {
-    return <Navigate to="/" replace />;
+    return <Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />;
   }
 
   return (
@@ -334,13 +334,16 @@ const AppContent = () => {
         <Topbar />
         <div className="px-4 md:px-8 pb-6 max-w-7xl mx-auto">
           <Routes>
-            <Route path="/" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Dashboard /></ProtectedRoute>} />
+            <Route path="/" element={
+              user.role === 'Viewer' ? <Navigate to="/bookings" replace /> : 
+              <ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Dashboard /></ProtectedRoute>
+            } />
             <Route path="/bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
             <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
             <Route path="/tournaments" element={<ProtectedRoute><Tournaments /></ProtectedRoute>} />
             <Route path="/memberships" element={<ProtectedRoute><Memberships /></ProtectedRoute>} />
             <Route path="/reports" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Reports /></ProtectedRoute>} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />} />
           </Routes>
         </div>
         <AIAssistant />
