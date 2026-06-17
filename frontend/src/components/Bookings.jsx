@@ -235,7 +235,7 @@ export const Bookings = () => {
                         <MessageCircle size={14} /> WhatsApp
                       </button>
                     )}
-                    {(user?.role !== 'Viewer' || booking.userId === user.id) && (
+                    {user?.role !== 'Viewer' && (
                       <button onClick={() => handleEditClick(booking)} className="px-4 py-2 rounded-lg bg-[#1E293B] hover:bg-white/10 text-white font-bold text-xs transition-colors">Edit</button>
                     )}
                     {user?.role !== 'Viewer' && (

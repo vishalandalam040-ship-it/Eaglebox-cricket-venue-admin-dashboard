@@ -90,6 +90,12 @@ const Topbar = () => {
         <h2 className="font-bold text-xl m-0 text-cyan-400">VenueOS</h2>
       </div>
       <div className="flex items-center gap-4 ml-auto">
+        {user?.membership && (
+          <div className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full border ${user.membership.includes('Gold') ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : user.membership.includes('Platinum') ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-slate-300/10 border-slate-300/30 text-slate-300'}`}>
+             <Crown size={14} />
+             <span className="text-xs font-bold tracking-wider uppercase">{user.membership.split(' ')[0]}</span>
+          </div>
+        )}
         <div className="flex items-center gap-3 bg-[var(--surface-color)] border border-[var(--border-color)] px-2 md:px-4 py-1.5 md:py-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors">
           <div className="hidden md:flex flex-col items-end">
              <span className="text-xs font-bold leading-tight text-white">{user?.role || 'Guest'}</span>
