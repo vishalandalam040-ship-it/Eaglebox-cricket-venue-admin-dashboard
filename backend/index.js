@@ -101,6 +101,12 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['hourlyRate', '1000']);
     }
 
+    // Initialize default minTournamentFee if it doesn't exist
+    const existsTournamentFee = await db.get('SELECT * FROM settings WHERE key = "minTournamentFee"');
+    if (!existsTournamentFee) {
+      await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['minTournamentFee', '2500']);
+    }
+
     console.log('Tables initialized.');
 
     // Mount Auth and Reports Routes
@@ -128,6 +134,16 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       try {
         const { hourlyRate } = req.body;
         await db.run('UPDATE settings SET value = ? WHERE key = "hourlyRate"', [hourlyRate.toString()]);
+        res.json({ message: 'Settings updated successfully' });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    app.put('/api/settings/minTournamentFee', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+      try {
+        const { minTournamentFee } = req.body;
+        await db.run('UPDATE settings SET value = ? WHERE key = "minTournamentFee"', [minTournamentFee.toString()]);
         res.json({ message: 'Settings updated successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
