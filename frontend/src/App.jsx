@@ -23,6 +23,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     { path: '/customers', name: 'Customers', icon: Users },
     { path: '/tournaments', name: 'Tournaments', icon: Trophy },
     { path: '/memberships', name: 'Plans', icon: Crown },
+    { path: '/reports', name: 'Reports', icon: FileText },
   ];
 
   if (user?.role === 'Viewer') {
