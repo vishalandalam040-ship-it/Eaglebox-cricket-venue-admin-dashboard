@@ -156,7 +156,7 @@ export const Bookings = () => {
           <p className="text-sm text-[var(--text-secondary)]">Schedule and manage court reservations.</p>
         </div>
         <div className="flex items-center gap-3">
-          {user?.role !== 'Viewer' && (
+          {user?.role !== 'Viewer' ? (
             <div className="flex items-center gap-2 bg-[#151C2C] border border-[#1E293B] px-4 py-2.5 rounded-xl">
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate: ₹</span>
               <input 
@@ -184,6 +184,11 @@ export const Bookings = () => {
               >
                 {isSavingRate ? '...' : 'Save'}
               </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 bg-[#151C2C] border border-[#1E293B] px-4 py-2.5 rounded-xl">
+              <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate:</span>
+              <span className="text-white font-bold text-sm">₹ {hourlyRate} / hr</span>
             </div>
           )}
           <button 
