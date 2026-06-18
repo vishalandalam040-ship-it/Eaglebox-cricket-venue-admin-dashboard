@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown } from 'lucide-react';
+import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown, BrainCircuit } from 'lucide-react';
 import { Bookings } from './components/Bookings';
 import { Customers } from './components/Customers';
 import { Tournaments } from './components/Tournaments';
@@ -34,30 +34,37 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-[var(--surface-color)] h-full transition-all duration-300 border-r border-[var(--border-color)] ${isOpen ? 'w-64' : 'w-20'}`}>
-        <div className="p-4 flex items-center justify-between border-b border-[var(--border-color)] h-20">
-          {isOpen && <h2 className="font-bold text-xl m-0 text-cyan-400">VenueOS</h2>}
-          <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-full hover:bg-white/5 transition-colors">
-            <Menu size={20} className="text-white" />
-          </button>
+      <div className={`hidden md:flex flex-col bg-[#0A0F1C] h-full transition-all duration-300 border-r border-[#1E293B] ${isOpen ? 'w-64' : 'w-20'}`}>
+        <div className="p-6 flex items-center gap-3 h-24">
+          <div className="bg-cyan-400 p-2 rounded-xl text-black shrink-0 shadow-[0_0_15px_rgba(0,242,254,0.3)] cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+            <div className="w-6 h-6 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            </div>
+          </div>
+          {isOpen && (
+            <div className="flex flex-col overflow-hidden">
+               <h2 className="font-bold text-xl leading-tight text-white m-0">VenueOS</h2>
+               <span className="text-[8px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">Sleek Intelligence</span>
+            </div>
+          )}
         </div>
-        <div className="flex-1 py-6 flex flex-col gap-2 px-3">
+        <div className="flex-1 py-4 flex flex-col gap-1 px-4">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-[#1E293B] shadow-sm' : 'hover:bg-white/5'}`}>
-                <Icon size={22} className={isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'} />
-                {isOpen && <span className={`font-medium ${isActive ? 'text-white' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>}
+              <Link key={item.path} to={item.path} className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-[#102A30] border border-cyan-500/20' : 'hover:bg-white/5 border border-transparent'}`}>
+                <Icon size={20} className={isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'} />
+                {isOpen && <span className={`font-bold text-sm ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>}
               </Link>
             );
           })}
         </div>
         {user && (
-          <div className="p-4 border-t border-[var(--border-color)]">
-            <button onClick={logout} className="flex items-center gap-4 px-4 py-3 w-full rounded-xl hover:bg-red-500/10 text-red-500 transition-colors">
-              <LogOut size={22} />
-              {isOpen && <span className="font-medium">Logout</span>}
+          <div className="p-6 border-t border-[#1E293B]">
+            <button onClick={logout} className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-white transition-colors w-full">
+              <LogOut size={20} />
+              {isOpen && <span className="font-bold text-sm">Logout</span>}
             </button>
           </div>
         )}
@@ -85,23 +92,26 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 const Topbar = () => {
   const { user } = useAuth();
   return (
-    <div className="flex items-center justify-between p-4 md:mb-8 sticky top-0 z-10 bg-[var(--bg-color)]">
+    <div className="flex items-center justify-between p-6 sticky top-0 z-10 bg-[#0B1120]/80 backdrop-blur-md border-b border-[#1E293B]">
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-white mr-4" />
         <h2 className="font-bold text-xl m-0 text-cyan-400">VenueOS</h2>
       </div>
+      
+      <div className="hidden md:flex items-center gap-3 bg-[#151C2C] border border-[#1E293B] rounded-xl px-4 py-2 w-full max-w-md">
+         <Search size={16} className="text-[var(--text-secondary)]" />
+         <input type="text" placeholder="Search insights, bookings..." className="bg-transparent outline-none flex-1 text-sm text-white placeholder-[var(--text-secondary)]" />
+      </div>
+
       <div className="flex items-center gap-4 ml-auto">
-        {user?.membership && (
-          <div className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full border ${user.membership.includes('Gold') ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : user.membership.includes('Platinum') ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-slate-300/10 border-slate-300/30 text-slate-300'}`}>
-             <Crown size={14} />
-             <span className="text-xs font-bold tracking-wider uppercase">{user.membership.split(' ')[0]}</span>
-          </div>
-        )}
-        <div className="flex items-center gap-3 bg-[var(--surface-color)] border border-[var(--border-color)] px-2 md:px-4 py-1.5 md:py-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors">
+        <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-xs font-bold leading-tight text-white">{user?.role || 'Guest'}</span>
+             <span className="text-sm font-bold leading-tight text-white group-hover:text-cyan-400 transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'Super Admin'}</span>
+             <span className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">{user?.role === 'Viewer' ? 'READ ONLY' : 'SYSTEM ADMIN'}</span>
           </div>
-          <img src={`https://ui-avatars.com/api/?name=${user?.email?.[0] || 'U'}&background=C084FC&color=fff&rounded=true`} alt="User Avatar" className="w-8 h-8 rounded-full shadow-lg" />
+          <div className="w-10 h-10 rounded-full bg-[#3B82F6] flex items-center justify-center text-white font-bold text-lg shadow-lg border border-white/10">
+            {user?.email?.[0]?.toUpperCase() || 'S'}
+          </div>
         </div>
       </div>
     </div>
@@ -178,122 +188,153 @@ const Dashboard = () => {
   }, [timeframe]);
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24 md:pb-0">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24 md:pb-0 px-2 md:px-0">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Overview</h1>
-        <p className="text-sm text-[var(--text-secondary)]">Welcome back, Super Admin. Here's your venue status.</p>
+        <h1 className="text-2xl font-normal text-white mb-1">Dashboard <span className="font-bold text-cyan-400">Overview</span></h1>
+        <p className="text-sm text-[var(--text-secondary)]">Intelligent system status for Elite Sports Arena.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 relative overflow-hidden group min-h-[180px] flex flex-col justify-between">
-          <div className="flex justify-between items-center mb-4">
-             <h3 className="text-xs font-bold text-cyan-400 tracking-wider">TOTAL REVENUE</h3>
-             <select 
-               value={timeframe} 
-               onChange={(e) => setTimeframe(e.target.value)}
-               className="bg-[#0B1120] border border-[#1E293B] text-[10px] font-bold text-[var(--text-secondary)] rounded-lg px-2 py-1 outline-none cursor-pointer hover:text-white transition-colors"
-             >
-               <option value="7">Last 7 Days</option>
-               <option value="30">Last 30 Days</option>
-             </select>
+      <div className="flex flex-col xl:flex-row gap-6 mb-8">
+        <div className="xl:w-2/3 flex flex-col gap-6">
+          <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 relative overflow-hidden h-[300px] flex flex-col">
+            <div className="flex justify-between items-start mb-4">
+               <div>
+                  <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">TOTAL REVENUE</h3>
+                  <div className="flex items-center gap-3">
+                    <p className="text-3xl font-bold text-white">₹ {stats.revenue.toLocaleString()}</p>
+                    <span className="text-[9px] font-bold text-cyan-400 bg-cyan-400/10 border border-cyan-500/20 px-2 py-0.5 rounded text-center leading-none flex items-center">TODAY</span>
+                  </div>
+               </div>
+               <div className="flex items-center gap-2 bg-[#1E293B] border border-[#334155] rounded-lg px-3 py-1.5 cursor-pointer hover:bg-white/5 transition-colors">
+                 <Calendar size={14} className="text-cyan-400" />
+                 <select 
+                   value={timeframe} 
+                   onChange={(e) => setTimeframe(e.target.value)}
+                   className="bg-transparent text-xs font-bold text-white outline-none cursor-pointer appearance-none pr-4"
+                 >
+                   <option value="7">Last 7 Days</option>
+                   <option value="30">Last 30 Days</option>
+                 </select>
+               </div>
+            </div>
+            
+            <div className="flex-1 -mx-6 -mb-6 mt-4 relative">
+               <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent"></div>
+               {loading ? null : (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="colorRevCyan" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#22d3ee" stopOpacity={0}/>
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                           <feGaussianBlur stdDeviation="4" result="blur" />
+                           <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                      </defs>
+                      <XAxis dataKey="date" hide />
+                      <Tooltip 
+                        content={({ active, payload, label }) => {
+                          if (active && payload && payload.length) {
+                            return (
+                              <div className="bg-[#151C2C] border border-[#1E293B] p-3 rounded-xl shadow-xl">
+                                <p className="text-white text-xs font-bold mb-1">{`Date: ${label}`}</p>
+                                <p className="text-cyan-400 text-sm font-bold">{`Revenue: ₹${Number(payload[0].value).toLocaleString()}`}</p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Area type="monotone" dataKey="revenue" stroke="#22d3ee" strokeWidth={4} fillOpacity={1} fill="url(#colorRevCyan)" filter="url(#glow)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+               )}
+            </div>
           </div>
-          <div className="flex items-baseline gap-3 mb-2">
-            <p className="text-3xl font-bold text-white">₹ {stats.revenue.toLocaleString()}</p>
-            <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">TODAY</span>
-          </div>
-          <div className="h-24 -mx-6 -mb-6 mt-4">
-             {loading ? null : (
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData}>
-                    <defs>
-                      <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#C084FC" stopOpacity={0.5}/>
-                        <stop offset="95%" stopColor="#C084FC" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <XAxis dataKey="date" hide />
-                    <Tooltip 
-                      content={({ active, payload, label }) => {
-                        if (active && payload && payload.length) {
-                          return (
-                            <div className="bg-[#151C2C] border border-[#1E293B] p-3 rounded-xl shadow-xl">
-                              <p className="text-white text-xs font-bold mb-1">{`Date: ${label}`}</p>
-                              <p className="text-[#C084FC] text-sm font-bold">{`Revenue: ₹${Number(payload[0].value).toLocaleString()}`}</p>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Area type="monotone" dataKey="revenue" stroke="#C084FC" strokeWidth={2} fillOpacity={1} fill="url(#colorRev)" />
-                  </AreaChart>
-                </ResponsiveContainer>
-             )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
+               <div>
+                 <div className="flex items-center gap-2 mb-2">
+                    <Calendar size={14} className="text-cyan-400" />
+                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">TOTAL BOOKINGS</h3>
+                 </div>
+                 <p className="text-3xl font-bold text-white">{stats.bookings}</p>
+               </div>
+            </div>
+
+            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
+               <div>
+                 <div className="flex items-center gap-2 mb-2">
+                    <Users size={14} className="text-purple-400" />
+                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">CUSTOMERS <span className="bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded text-[8px] ml-1">LIVE</span></h3>
+                 </div>
+                 <p className="text-3xl font-bold text-white">{stats.customers}</p>
+               </div>
+            </div>
+
+            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
+               <div>
+                 <div className="flex items-center gap-2 mb-2">
+                    <Trophy size={14} className="text-emerald-400" />
+                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">TOURNAMENTS</h3>
+                 </div>
+                 <p className="text-3xl font-bold text-white">{stats.tournaments}</p>
+               </div>
+            </div>
           </div>
         </div>
 
-        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between min-h-[180px]">
-           <div className="flex items-center gap-4">
-             <div className="bg-[#1E293B] p-3 rounded-xl">
-               <Calendar size={20} className="text-purple-400" />
-             </div>
-             <div>
-               <h3 className="text-xs font-medium text-[var(--text-secondary)] mb-1">Total Bookings</h3>
-               <p className="text-2xl font-bold text-white">{stats.bookings}</p>
-             </div>
-           </div>
-           <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">All Time</span>
-        </div>
+        <div className="xl:w-1/3">
+          <div className="bg-[#1E253A] border border-[#2D3748] rounded-2xl p-6 h-full shadow-[0_0_30px_rgba(34,211,238,0.05)] bg-gradient-to-b from-[#1E253A] to-[#151C2C]">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="bg-cyan-400 p-2 rounded-xl text-black shadow-[0_0_15px_rgba(0,242,254,0.3)]">
+                <BrainCircuit size={20} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white leading-tight">AI Analysis</h3>
+                <p className="text-[8px] font-bold text-cyan-400 uppercase tracking-widest">SYSTEM THINKING...</p>
+              </div>
+            </div>
 
-        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between min-h-[180px]">
-           <div className="flex items-center gap-4">
-             <div className="bg-[#1E293B] p-3 rounded-xl">
-               <Users size={20} className="text-cyan-400" />
-             </div>
-             <div>
-               <h3 className="text-xs font-medium text-[var(--text-secondary)] mb-1">Total Customers</h3>
-               <p className="text-2xl font-bold text-white">{stats.customers}</p>
-             </div>
-           </div>
-           <span className="text-[10px] font-bold text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded-full">Verified</span>
-        </div>
+            <div className="bg-[#0B1120]/50 border border-[#1E293B] rounded-xl p-5 mb-4 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400"></div>
+               <p className="text-xs text-white leading-relaxed mb-4">
+                 Peak utilization detected between <br/><span className="text-cyan-400 font-bold text-sm">18:00 - 21:00</span>.
+               </p>
+               <div className="w-full h-1 bg-[#1E293B] rounded-full overflow-hidden">
+                  <div className="h-full bg-cyan-400 w-3/4 rounded-full shadow-[0_0_10px_rgba(0,242,254,0.8)]"></div>
+               </div>
+            </div>
 
-        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between min-h-[180px]">
-           <div className="flex items-center gap-4">
-             <div className="bg-[#1E293B] p-3 rounded-xl">
-               <Trophy size={20} className="text-emerald-400" />
-             </div>
-             <div>
-               <h3 className="text-xs font-medium text-[var(--text-secondary)] mb-1">Tournaments</h3>
-               <p className="text-2xl font-bold text-white">{stats.tournaments}</p>
-             </div>
-           </div>
-           <span className="text-[10px] font-bold text-purple-400 bg-purple-400/10 px-2 py-0.5 rounded-full">New</span>
+            <div className="bg-[#0B1120]/50 border border-[#1E293B] rounded-xl p-5 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+               <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Recommendation:</p>
+               <p className="text-xs text-white leading-relaxed">
+                 Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-purple-400">~14%</span>.
+               </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-white mb-4">AI Insights</h2>
-        <div className="border border-cyan-500/30 rounded-2xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, rgba(21, 28, 44, 0) 0%, rgba(0, 242, 254, 0.05) 100%), #151C2C' }}>
-           <div className="flex gap-4 relative z-10">
-             <div className="bg-cyan-400 text-black p-3 rounded-full h-12 w-12 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,242,254,0.5)]">
-                <Sun size={24} />
-             </div>
-             <div>
-                <p className="text-sm text-white leading-relaxed mb-4">
-                  Based on current trends, your peak revenue occurs between <span className="text-cyan-400 font-bold">6 PM - 9 PM</span>. Consider offering early-bird memberships to boost morning traffic.
-                </p>
-                <button className="text-cyan-400 text-sm font-bold flex items-center hover:text-cyan-300 transition-colors">
-                  Explore Strategy <span className="ml-1">›</span>
-                </button>
-             </div>
-           </div>
-        </div>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-base font-bold text-white">Venue Intelligence Feed</h2>
+        <button className="text-cyan-400 text-xs font-bold hover:text-cyan-300 transition-colors flex items-center gap-1">
+          View Facility Gallery <span className="text-lg leading-none">›</span>
+        </button>
       </div>
 
-      <div className="relative rounded-2xl overflow-hidden h-32 md:h-48 group border border-[#1E293B]">
-         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover opacity-90 transition-opacity" />
-         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/60 to-transparent"></div>
+      <div className="relative rounded-2xl overflow-hidden h-40 md:h-64 group border border-[#1E293B]">
+         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/90 via-[#0B1120]/40 to-transparent"></div>
+         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-cyan-400/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-cyan-400/40 shadow-[0_0_20px_rgba(0,242,254,0.2)]">
+            <div className="w-8 h-8 rounded-full border-2 border-cyan-400 flex items-center justify-center">
+              <div className="w-3 h-3 bg-cyan-400 rounded-sm rotate-45"></div>
+            </div>
+         </div>
       </div>
     </div>
   );
