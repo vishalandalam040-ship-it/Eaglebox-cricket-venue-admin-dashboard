@@ -14,6 +14,8 @@ export const Bookings = () => {
   const [hourlyRate, setHourlyRate] = useState(1000);
   const [isSavingRate, setIsSavingRate] = useState(false);
 
+  const [isDiscountApplied, setIsDiscountApplied] = useState(false);
+
   useEffect(() => {
     fetchBookings();
     fetchSettings();
@@ -42,6 +44,30 @@ export const Bookings = () => {
       });
   };
 
+  useEffect(() => {
+    if (newBooking.time && newBooking.endTime) {
+      const startParts = newBooking.time.split(':');
+      const endParts = newBooking.endTime.split(':');
+      const durationHours = (parseInt(endParts[0]) + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
+      
+      if (durationHours > 0) {
+        let minimumAmount = durationHours * hourlyRate;
+        if (isDiscountApplied && user?.membership) {
+          let discount = 0;
+          if (user.membership.includes('Silver')) discount = 0.10;
+          else if (user.membership.includes('Gold')) discount = 0.15;
+          else if (user.membership.includes('Platinum')) discount = 0.20;
+          minimumAmount = minimumAmount * (1 - discount);
+        }
+        setNewBooking(prev => ({ ...prev, amount: minimumAmount }));
+      } else {
+        setNewBooking(prev => ({ ...prev, amount: '' }));
+      }
+    } else {
+      setNewBooking(prev => ({ ...prev, amount: '' }));
+    }
+  }, [newBooking.time, newBooking.endTime, hourlyRate, isDiscountApplied, user?.membership]);
+
   const sendWhatsApp = (booking) => {
     const text = encodeURIComponent(`Hi ${booking.customerName}, your Box Cricket booking for ${booking.date} at ${booking.time} is confirmed!`);
     window.open(`https://wa.me/${booking.phone}?text=${text}`, '_blank');
@@ -58,6 +84,7 @@ export const Bookings = () => {
       status: booking.status
     });
     setEditingId(booking.id);
+    setIsDiscountApplied(false);
     setIsEditMode(true);
     setIsModalOpen(true);
   };
@@ -85,17 +112,6 @@ export const Bookings = () => {
       alert("A minimum of one-hour slot should be booked.");
       return;
     }
-
-    let discount = 0;
-    if (user?.membership?.includes('Silver')) discount = 0.10;
-    else if (user?.membership?.includes('Gold')) discount = 0.15;
-    else if (user?.membership?.includes('Platinum')) discount = 0.20;
-
-    const minimumAmount = durationHours * hourlyRate * (1 - discount);
-    if (Number(newBooking.amount) < minimumAmount) {
-      alert(`The minimum price for a ${durationHours}-hour slot is ₹${minimumAmount} ${discount > 0 ? '(Member Discount Applied)' : ''}.`);
-      return;
-    }
     
     if (isEditMode) {
       api.put(`/bookings/${editingId}`, newBooking)
@@ -104,6 +120,7 @@ export const Bookings = () => {
           setIsModalOpen(false);
           setIsEditMode(false);
           setEditingId(null);
+          setIsDiscountApplied(false);
           setNewBooking({ customerName: '', phone: '', date: '', time: '', amount: '', status: 'Confirmed' });
         })
         .catch(err => {
@@ -118,6 +135,7 @@ export const Bookings = () => {
         .then(res => {
           setBookings([...bookings, bookingToCreate]);
           setIsModalOpen(false);
+          setIsDiscountApplied(false);
           setNewBooking({ customerName: '', phone: '', date: '', time: '', amount: '', status: 'Confirmed' });
           sendWhatsApp(bookingToCreate);
         })
@@ -131,6 +149,7 @@ export const Bookings = () => {
   const openCreateModal = () => {
     setIsEditMode(false);
     setEditingId(null);
+    setIsDiscountApplied(false);
     setNewBooking({ customerName: '', phone: '', date: '', time: '', endTime: '', amount: '', status: 'Confirmed' });
     setIsModalOpen(true);
   };
@@ -299,24 +318,34 @@ export const Bookings = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Date</label>
-                  <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [&::-webkit-calendar-picker-indicator]:invert" />
+                  <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:invert-0 [&::-webkit-calendar-picker-indicator]:bg-cyan-400 [&::-webkit-calendar-picker-indicator]:rounded-md [&::-webkit-calendar-picker-indicator]:p-1" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Start Time</label>
-                  <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [&::-webkit-calendar-picker-indicator]:invert" />
+                  <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:invert-0 [&::-webkit-calendar-picker-indicator]:bg-cyan-400 [&::-webkit-calendar-picker-indicator]:rounded-md [&::-webkit-calendar-picker-indicator]:p-1" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">End Time</label>
-                  <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [&::-webkit-calendar-picker-indicator]:invert" />
+                  <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:invert-0 [&::-webkit-calendar-picker-indicator]:bg-cyan-400 [&::-webkit-calendar-picker-indicator]:rounded-md [&::-webkit-calendar-picker-indicator]:p-1" />
                 </div>
               </div>
               <div>
                 <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">
-                  Amount (₹) 
-                  {user?.membership && <span className="text-emerald-400 ml-2 text-[10px]">({user.membership.split(' ')[0]} Discount Active)</span>}
+                  Amount (₹)
                 </label>
-                <input required type="number" value={newBooking.amount} onChange={e => setNewBooking({...newBooking, amount: e.target.value})} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white" placeholder="1500" />
-              </div>
+                <div className="flex items-center gap-3">
+                  <input required readOnly type="number" value={newBooking.amount} className="w-full bg-[#0B1120] border border-[#1E293B] rounded-xl px-4 py-3 outline-none text-white opacity-80 cursor-not-allowed" placeholder="Auto-calculated" />
+                  {user?.membership && !isDiscountApplied && (
+                    <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-3 rounded-xl bg-purple-500 hover:bg-purple-600 text-white font-bold whitespace-nowrap transition-colors">
+                      Apply Discount
+                    </button>
+                  )}
+                  {user?.membership && isDiscountApplied && (
+                    <span className="px-4 py-3 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold whitespace-nowrap border border-emerald-500/30">
+                      Discount Applied!
+                    </span>
+                  )}
+                </div>
               <div className="mt-6 flex gap-3">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3 rounded-xl border border-[#1E293B] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
                 <button type="submit" className="flex-1 px-4 py-3 rounded-xl bg-cyan-400 text-black font-bold hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,242,254,0.3)] transition-all active:scale-95">
