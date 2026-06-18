@@ -162,6 +162,30 @@ export const Memberships = () => {
         </div>
       </div>
 
+      {user?.role === 'Viewer' ? (
+        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl overflow-hidden p-8 mb-8">
+          <h2 className="text-2xl font-bold text-white mb-2 text-center">Membership Pricing</h2>
+          <p className="text-[var(--text-secondary)] text-center text-sm mb-8">Choose a plan that fits your needs to unlock exclusive discounts.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#0B1120] border border-[#1E293B] rounded-2xl p-6 text-center shadow-lg">
+               <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest text-slate-300">Silver</h3>
+               <p className="text-slate-300 font-bold text-3xl mb-4">₹1,000 <span className="text-sm text-[var(--text-secondary)] font-normal">/ 1 Month</span></p>
+               <p className="text-sm text-[var(--text-secondary)] bg-slate-300/10 py-2 rounded-lg border border-slate-300/20 text-slate-300 font-medium">10% Discount on Bookings</p>
+            </div>
+            <div className="bg-[#0B1120] border-2 border-amber-500/50 rounded-2xl p-6 text-center shadow-[0_0_20px_rgba(245,158,11,0.15)] relative transform md:-translate-y-2">
+               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-black text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow-lg">Most Popular</div>
+               <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest text-amber-400">Gold</h3>
+               <p className="text-amber-400 font-bold text-3xl mb-4">₹2,500 <span className="text-sm text-[var(--text-secondary)] font-normal">/ 3 Months</span></p>
+               <p className="text-sm text-[var(--text-secondary)] bg-amber-500/10 py-2 rounded-lg border border-amber-500/20 text-amber-400 font-medium">15% Discount on Bookings</p>
+            </div>
+            <div className="bg-[#0B1120] border border-[#1E293B] rounded-2xl p-6 text-center shadow-lg">
+               <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest text-purple-400">Platinum</h3>
+               <p className="text-purple-400 font-bold text-3xl mb-4">₹8,000 <span className="text-sm text-[var(--text-secondary)] font-normal">/ 1 Year</span></p>
+               <p className="text-sm text-[var(--text-secondary)] bg-purple-500/10 py-2 rounded-lg border border-purple-500/20 text-purple-400 font-medium">20% Discount on Bookings</p>
+            </div>
+          </div>
+        </div>
+      ) : (
       <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl overflow-hidden shadow-2xl">
         <div className="p-4 border-b border-[#1E293B] flex justify-end">
            <div className="w-8 h-4 rounded-full bg-[#1E293B] flex items-center p-0.5">
@@ -261,6 +285,7 @@ export const Memberships = () => {
            </div>
         </div>
       </div>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
