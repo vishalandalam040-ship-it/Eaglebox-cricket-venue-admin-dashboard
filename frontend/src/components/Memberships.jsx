@@ -180,7 +180,7 @@ export const Memberships = () => {
                     <th className="px-6 py-4 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Member ID</th>
                     <th className="px-6 py-4 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Plan Type</th>
                     <th className="px-6 py-4 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Validity Period</th>
-                    <th className="px-6 py-4 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider text-right">Actions</th>
+                    <th className="px-6 py-4 text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider text-right">Delete</th>
                  </tr>
                </thead>
                <tbody className="divide-y divide-[#1E293B]">
@@ -233,16 +233,9 @@ export const Memberships = () => {
                         </td>
                         <td className="px-6 py-4 text-right">
                            {user?.role !== 'Viewer' ? (
-                             <div className="relative inline-block text-left">
-                                <button className="p-2 rounded-lg hover:bg-white/10 transition-colors text-[var(--text-secondary)]">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                                </button>
-                                <div className="absolute right-0 mt-1 w-32 bg-[#0B1120] border border-[#1E293B] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10 flex flex-col p-1">
-                                   <button onClick={() => handleDelete(member.id)} className="w-full text-left px-3 py-2 text-xs font-bold text-red-400 hover:bg-red-500/10 rounded-lg transition-colors flex items-center gap-2">
-                                     <Trash2 size={12} /> Delete
-                                   </button>
-                                </div>
-                             </div>
+                             <button onClick={() => handleDelete(member.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-[var(--text-secondary)] hover:text-red-400 transition-colors" title="Delete">
+                               <Trash2 size={16} />
+                             </button>
                            ) : (
                              <span className="text-[10px] text-[var(--text-secondary)]">Read Only</span>
                            )}
@@ -264,9 +257,6 @@ export const Memberships = () => {
            <p className="text-xs text-[var(--text-secondary)]">Showing <span className="font-bold text-white">1</span> to <span className="font-bold text-white">{Math.min(4, memberships.length)}</span> of <span className="font-bold text-white">{memberships.length}</span> members</p>
            <div className="flex gap-1">
               <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#1E293B] bg-[#0B1120] hover:bg-white/5 text-[var(--text-secondary)] transition-colors">‹</button>
-              <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-cyan-500/30 bg-[#102A30] text-cyan-400 font-bold text-xs transition-colors">1</button>
-              <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#1E293B] bg-[#0B1120] hover:bg-white/5 text-[var(--text-secondary)] font-bold text-xs transition-colors">2</button>
-              <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#1E293B] bg-[#0B1120] hover:bg-white/5 text-[var(--text-secondary)] font-bold text-xs transition-colors">3</button>
               <button className="w-8 h-8 rounded-lg flex items-center justify-center border border-[#1E293B] bg-[#0B1120] hover:bg-white/5 text-[var(--text-secondary)] transition-colors">›</button>
            </div>
         </div>

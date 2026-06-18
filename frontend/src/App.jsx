@@ -212,8 +212,8 @@ const Dashboard = () => {
                    onChange={(e) => setTimeframe(e.target.value)}
                    className="bg-transparent text-xs font-bold text-white outline-none cursor-pointer appearance-none pr-4"
                  >
-                   <option value="7">Last 7 Days</option>
-                   <option value="30">Last 30 Days</option>
+                   <option value="7" className="bg-[#151C2C] text-white">Last 7 Days</option>
+                   <option value="30" className="bg-[#151C2C] text-white">Last 30 Days</option>
                  </select>
                </div>
             </div>
