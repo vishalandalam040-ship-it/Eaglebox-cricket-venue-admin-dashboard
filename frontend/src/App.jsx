@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <motion.div 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] cursor-pointer shrink-0" 
+            className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] cursor-pointer shrink-0" 
             onClick={() => setIsOpen(!isOpen)}
           >
             <Trophy size={20} className="text-white" />
@@ -59,7 +59,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 className="flex flex-col overflow-hidden whitespace-nowrap"
               >
                  <h2 className="font-extrabold text-2xl tracking-tight text-white m-0">VenueOS</h2>
-                 <span className="text-[9px] font-bold tracking-[0.2em] text-cyan-400 uppercase">Premium Edition</span>
+                 <span className="text-[9px] font-bold tracking-[0.2em] text-emerald-400 uppercase">Premium Edition</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -73,10 +73,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <Link key={item.path} to={item.path}>
                 <motion.div 
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-cyan-500/10 border border-cyan-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-white/5 border border-transparent'}`}
+                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-emerald-500/10 border border-emerald-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-white/5 border border-transparent'}`}
                 >
-                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 rounded-r-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
-                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)] group-hover:text-white'}`} />
+                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-400 rounded-r-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
+                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-white'}`} />
                   
                   <AnimatePresence>
                     {isOpen && (
@@ -117,17 +117,17 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         )}
       </motion.div>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-[var(--border-subtle)] pb-safe z-50">
-        <div className="flex justify-around items-center p-2">
+      {/* Mobile Bottom Navigation (Floating Dock) */}
+      <div className="md:hidden fixed bottom-6 left-4 right-4 z-50">
+        <div className="glass-panel rounded-2xl flex justify-around items-center p-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[var(--border-subtle)]/50 bg-[var(--bg-surface)]/80 backdrop-blur-xl">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1 relative">
-                {isActive && <div className="absolute top-0 w-8 h-1 bg-cyan-400 rounded-b-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
-                <Icon size={24} className={isActive ? 'text-cyan-400 mt-1' : 'text-[var(--text-secondary)]'} />
-                <span className={`text-[10px] mt-1 font-medium ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
+              <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1 relative group">
+                {isActive && <div className="absolute -top-2 w-8 h-1 bg-emerald-400 rounded-b-full shadow-[0_0_10px_rgba(16,185,129,0.8)]" />}
+                <Icon size={22} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-white transition-colors'} />
+                <span className={`text-[9px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
           })}
@@ -147,10 +147,10 @@ const Topbar = () => {
     >
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-white mr-4" />
-        <h2 className="font-extrabold text-xl m-0 neon-text-cyan">VenueOS</h2>
+        <h2 className="font-extrabold text-xl m-0 text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">VenueOS</h2>
       </div>
       
-      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-cyan-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
+      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-emerald-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
          <Search size={18} className="text-[var(--text-secondary)]" />
          <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-white placeholder-[var(--text-secondary)] font-medium" />
       </div>
@@ -165,10 +165,10 @@ const Topbar = () => {
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-white group-hover:neon-text-cyan transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
-             <span className="text-[9px] font-extrabold text-cyan-400 uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
+             <span className="text-sm font-bold leading-tight text-white group-hover:text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
+             <span className="text-[9px] font-extrabold text-emerald-400 uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(0,242,254,0.3)] ring-2 ring-white/10 group-hover:ring-cyan-400/50 transition-all">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(0,242,254,0.3)] ring-2 ring-white/10 group-hover:ring-emerald-400/50 transition-all">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
@@ -277,14 +277,14 @@ const Dashboard = () => {
       className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
     >
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold neon-text-cyan">Overview</span></h1>
+        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Overview</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
       </motion.div>
 
       <div className="flex flex-col xl:flex-row gap-6 mb-8">
         <motion.div variants={itemVariants} className="xl:w-2/3 flex flex-col gap-6">
           <div className="glass-panel rounded-3xl p-6 relative h-[380px] flex flex-col overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
             
             <div className="flex justify-between items-start mb-6 z-10">
                <div>
@@ -295,13 +295,13 @@ const Dashboard = () => {
                     ) : (
                       <>
                         <p className="text-4xl font-extrabold text-white tracking-tight">₹ {stats.revenue.toLocaleString()}</p>
-                        <span className="text-[10px] font-bold text-cyan-400 bg-cyan-400/10 border border-cyan-500/30 px-2.5 py-1 rounded-md tracking-wider flex items-center shadow-[0_0_10px_rgba(0,242,254,0.2)]">TODAY LIVE</span>
+                        <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 border border-emerald-500/30 px-2.5 py-1 rounded-md tracking-wider flex items-center shadow-[0_0_10px_rgba(0,242,254,0.2)]">TODAY LIVE</span>
                       </>
                     )}
                   </div>
                </div>
                <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-xl px-3 py-2 cursor-pointer hover:bg-white/5 transition-all z-20">
-                 <Calendar size={16} className="text-cyan-400" />
+                 <Calendar size={16} className="text-emerald-400" />
                  <select 
                    value={timeframe} 
                    onChange={(e) => setTimeframe(e.target.value)}
@@ -314,7 +314,7 @@ const Dashboard = () => {
             </div>
             
             <div className="flex-1 -mx-6 -mb-6 mt-4 relative z-0">
-               <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/5 to-transparent z-10 pointer-events-none"></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/5 to-transparent z-10 pointer-events-none"></div>
                {loading ? (
                  <div className="w-full h-full bg-white/5 skeleton-shimmer opacity-50"></div>
                ) : (
@@ -332,9 +332,9 @@ const Dashboard = () => {
                         content={({ active, payload, label }) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="glass-panel p-4 rounded-xl shadow-2xl border border-cyan-500/30">
+                              <div className="glass-panel p-4 rounded-xl shadow-2xl border border-emerald-500/30">
                                 <p className="text-[var(--text-secondary)] text-xs font-bold mb-1 uppercase tracking-wider">{label}</p>
-                                <p className="text-cyan-400 text-lg font-extrabold">₹{Number(payload[0].value).toLocaleString()}</p>
+                                <p className="text-emerald-400 text-lg font-extrabold">₹{Number(payload[0].value).toLocaleString()}</p>
                               </div>
                             );
                           }
@@ -360,21 +360,21 @@ const Dashboard = () => {
                 <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
                    <div>
                      <div className="flex items-center gap-2 mb-3">
-                        <Calendar size={16} className="text-cyan-400" />
+                        <Calendar size={16} className="text-emerald-400" />
                         <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOTAL BOOKINGS</h3>
                      </div>
                      <p className="text-4xl font-extrabold text-white tracking-tight">{stats.bookings}</p>
                    </div>
-                   <div className="w-12 h-12 rounded-full bg-cyan-400/10 flex items-center justify-center">
-                     <ChevronRight size={20} className="text-cyan-400 opacity-50" />
+                   <div className="w-12 h-12 rounded-full bg-emerald-400/10 flex items-center justify-center">
+                     <ChevronRight size={20} className="text-emerald-400 opacity-50" />
                    </div>
                 </motion.div>
 
                 <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
                    <div>
                      <div className="flex items-center gap-2 mb-3">
-                        <Users size={16} className="text-purple-400" />
-                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded ml-2 shadow-[0_0_8px_rgba(192,132,252,0.3)]">LIVE</span></h3>
+                        <Users size={16} className="text-amber-400" />
+                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded ml-2 shadow-[0_0_8px_rgba(192,132,252,0.3)]">LIVE</span></h3>
                      </div>
                      <p className="text-4xl font-extrabold text-white tracking-tight">{stats.customers}</p>
                    </div>
@@ -395,21 +395,21 @@ const Dashboard = () => {
         </motion.div>
 
         <motion.div variants={itemVariants} className="xl:w-1/3 flex flex-col h-full">
-          <div className="glass-panel rounded-3xl p-8 flex-1 relative overflow-hidden group border-t border-t-cyan-500/30">
-            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-transparent z-0 opacity-50"></div>
+          <div className="glass-panel rounded-3xl p-8 flex-1 relative overflow-hidden group border-t border-t-emerald-500/30">
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-emerald-500/5 via-amber-500/5 to-transparent z-0 opacity-50"></div>
             
             <div className="flex items-center gap-4 mb-8 relative z-10">
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.3)] flex items-center justify-center"
+                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/30 shadow-[0_0_20px_rgba(0,242,254,0.3)] flex items-center justify-center"
               >
-                <BrainCircuit size={24} className="text-cyan-400" />
+                <BrainCircuit size={24} className="text-emerald-400" />
               </motion.div>
               <div>
                 <h3 className="text-xl font-extrabold text-white leading-tight">Neural Insights</h3>
-                <p className="text-[9px] font-extrabold text-cyan-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_5px_#00F2FE]"></span>
+                <p className="text-[9px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_5px_#00F2FE]"></span>
                   SYSTEM THINKING
                 </p>
               </div>
@@ -417,27 +417,27 @@ const Dashboard = () => {
 
             <div className="space-y-4 relative z-10">
               <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
-                 <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400 shadow-[0_0_10px_#00F2FE]"></div>
+                 <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400 shadow-[0_0_10px_#00F2FE]"></div>
                  <p className="text-sm text-white leading-relaxed mb-4 font-medium">
-                   Peak utilization detected between <br/><span className="text-cyan-400 font-bold text-base">18:00 - 21:00</span>.
+                   Peak utilization detected between <br/><span className="text-emerald-400 font-bold text-base">18:00 - 21:00</span>.
                  </p>
                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: "75%" }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="h-full bg-cyan-400 rounded-full shadow-[0_0_10px_#00F2FE]"
+                      className="h-full bg-emerald-400 rounded-full shadow-[0_0_10px_#00F2FE]"
                     ></motion.div>
                  </div>
               </motion.div>
 
               <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
-                 <div className="absolute top-0 left-0 w-1 h-full bg-purple-500 shadow-[0_0_10px_#C084FC]"></div>
-                 <p className="text-[10px] font-extrabold text-purple-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                 <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 shadow-[0_0_10px_#C084FC]"></div>
+                 <p className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                     Actionable Recommendation
                  </p>
                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-medium">
-                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-white bg-purple-500/20 px-1 rounded">~14%</span>.
+                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-white bg-amber-500/20 px-1 rounded">~14%</span>.
                  </p>
               </motion.div>
             </div>
@@ -447,7 +447,7 @@ const Dashboard = () => {
 
       <motion.div variants={itemVariants} className="mb-6 flex items-center justify-between">
         <h2 className="text-lg font-bold text-white tracking-tight">Facility Showcase</h2>
-        <button className="text-cyan-400 text-sm font-bold hover:text-white transition-colors flex items-center gap-1 group">
+        <button className="text-emerald-400 text-sm font-bold hover:text-white transition-colors flex items-center gap-1 group">
           View Gallery <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
         </button>
       </motion.div>
@@ -455,9 +455,9 @@ const Dashboard = () => {
       <motion.div variants={itemVariants} className="relative rounded-3xl overflow-hidden h-48 md:h-72 group border border-[var(--border-subtle)] shadow-2xl">
          <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/40 to-transparent opacity-80"></div>
-         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-cyan-400/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-cyan-400/50 shadow-[0_0_30px_rgba(0,242,254,0.3)] cursor-pointer hover:bg-cyan-400/20 transition-all group-hover:-translate-y-2">
-            <div className="w-10 h-10 rounded-full border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,242,254,0.5)]">
-              <div className="w-4 h-4 bg-cyan-400 rounded-sm rotate-45 shadow-[0_0_10px_#00F2FE]"></div>
+         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-emerald-400/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-emerald-400/50 shadow-[0_0_30px_rgba(0,242,254,0.3)] cursor-pointer hover:bg-emerald-400/20 transition-all group-hover:-translate-y-2">
+            <div className="w-10 h-10 rounded-full border-2 border-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,242,254,0.5)]">
+              <div className="w-4 h-4 bg-emerald-400 rounded-sm rotate-45 shadow-[0_0_10px_#00F2FE]"></div>
             </div>
          </div>
       </motion.div>
@@ -475,7 +475,7 @@ const AppContent = () => {
       <div className="h-screen flex items-center justify-center bg-[var(--bg-base)]">
         <div className="relative">
           <div className="w-16 h-16 border-4 border-white/10 rounded-full"></div>
-          <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin absolute top-0 left-0 shadow-[0_0_20px_rgba(0,242,254,0.5)]"></div>
+          <div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin absolute top-0 left-0 shadow-[0_0_20px_rgba(0,242,254,0.5)]"></div>
         </div>
       </div>
     );
@@ -495,7 +495,7 @@ const AppContent = () => {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] selection:bg-cyan-500/30 font-sans">
+    <div className="flex h-screen overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] selection:bg-emerald-500/30 font-sans">
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <main className="flex-1 overflow-y-auto relative custom-scrollbar">
         <Topbar />

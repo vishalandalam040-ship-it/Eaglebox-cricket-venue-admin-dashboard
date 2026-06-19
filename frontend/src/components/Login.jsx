@@ -101,7 +101,7 @@ export const Login = () => {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full mt-2 bg-gradient-to-tr from-blue-500 to-purple-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full mt-2 bg-gradient-to-tr from-blue-500 to-amber-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
           </button>

@@ -104,7 +104,7 @@ export const Memberships = () => {
       
       <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Access & <span className="font-extrabold neon-text-cyan">Tiers</span></h1>
+          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tiers</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage and monitor venue access and subscriber lifecycle.</p>
         </div>
         {user?.role !== 'Viewer' && (
@@ -125,7 +125,7 @@ export const Memberships = () => {
           <div className="absolute right-[-20px] top-4 opacity-5">
             <Crown size={120} />
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
           
           <div className="relative z-10 flex flex-col h-full justify-between gap-4">
             <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">TOTAL NETWORK</p>
@@ -135,12 +135,12 @@ export const Memberships = () => {
               ) : (
                 <div className="flex items-baseline gap-2">
                   <p className="text-4xl font-extrabold text-white tracking-tight">{memberships.length}</p>
-                  <span className="text-[10px] font-extrabold text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">+12%</span>
+                  <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">+12%</span>
                 </div>
               )}
             </div>
             <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
-               <motion.div initial={{ width: 0 }} animate={{ width: "80%" }} className="bg-cyan-400 h-full w-full shadow-[0_0_10px_rgba(0,242,254,0.5)]"></motion.div>
+               <motion.div initial={{ width: 0 }} animate={{ width: "80%" }} className="bg-emerald-400 h-full w-full shadow-[0_0_10px_rgba(0,242,254,0.5)]"></motion.div>
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ export const Memberships = () => {
           <div className="absolute right-[-10px] top-4 opacity-5">
             <ShieldCheck size={100} />
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-purple-500/20 transition-all duration-700"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-amber-500/20 transition-all duration-700"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between gap-4">
             <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">ACTIVE SUBSCRIPTIONS</p>
@@ -159,13 +159,13 @@ export const Memberships = () => {
                  <div className="w-32 h-10 skeleton-shimmer rounded"></div>
               ) : (
                 <div className="flex items-baseline gap-2">
-                  <p className="text-4xl font-extrabold text-purple-400 tracking-tight">{memberships.filter(m => m.status === 'Active').length}</p>
+                  <p className="text-4xl font-extrabold text-amber-400 tracking-tight">{memberships.filter(m => m.status === 'Active').length}</p>
                   <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">{memberships.length ? Math.round((memberships.filter(m => m.status === 'Active').length / memberships.length) * 100) : 0}% RETAINED</span>
                 </div>
               )}
             </div>
             <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
-               <motion.div initial={{ width: 0 }} animate={{ width: "75%" }} className="bg-purple-400 h-full shadow-[0_0_10px_rgba(192,132,252,0.5)]"></motion.div>
+               <motion.div initial={{ width: 0 }} animate={{ width: "75%" }} className="bg-amber-400 h-full shadow-[0_0_10px_rgba(192,132,252,0.5)]"></motion.div>
             </div>
           </div>
         </div>
@@ -203,10 +203,10 @@ export const Memberships = () => {
 
       {user?.role === 'Viewer' ? (
         <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden p-8 lg:p-12 mb-8 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-cyan-500/5 to-purple-500/5 z-0 blur-[100px]"></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-emerald-500/5 to-amber-500/5 z-0 blur-[100px]"></div>
           
           <div className="relative z-10 text-center mb-12">
-            <h2 className="text-3xl font-light text-white mb-2 tracking-tight">Tier <span className="font-extrabold text-cyan-400">Pricing</span></h2>
+            <h2 className="text-3xl font-light text-white mb-2 tracking-tight">Tier <span className="font-extrabold text-emerald-400">Pricing</span></h2>
             <p className="text-[var(--text-secondary)] font-medium text-sm">Choose a plan that fits your needs to unlock exclusive discounts.</p>
           </div>
           
@@ -230,16 +230,16 @@ export const Memberships = () => {
             
             {/* Platinum */}
             <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden group">
-               <div className="absolute top-0 left-0 w-full h-1 bg-purple-400"></div>
-               <h3 className="text-xl font-extrabold text-purple-400 mb-2 uppercase tracking-[0.2em]">Platinum</h3>
+               <div className="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
+               <h3 className="text-xl font-extrabold text-amber-400 mb-2 uppercase tracking-[0.2em]">Platinum</h3>
                <p className="text-white font-extrabold text-4xl mb-6 tracking-tight">₹8,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Year</span></p>
-               <div className="bg-purple-500/10 py-3 rounded-xl border border-purple-500/20 text-purple-400 font-extrabold text-xs uppercase tracking-wider">20% Off Bookings</div>
+               <div className="bg-amber-500/10 py-3 rounded-xl border border-amber-500/20 text-amber-400 font-extrabold text-xs uppercase tracking-wider">20% Off Bookings</div>
             </motion.div>
           </div>
         </motion.div>
       ) : (
       <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden shadow-2xl relative">
-        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-cyan-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-emerald-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
 
         <div className="p-5 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
            <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DIRECTORY</h2>
@@ -279,7 +279,7 @@ export const Memberships = () => {
                      let planLabel = member.planType;
                      
                      if (member.planType.includes('Platinum') || member.planType.includes('1 Year')) {
-                       planBadgeStyle = "bg-purple-500/10 text-purple-400 border border-purple-500/30 shadow-[0_0_10px_rgba(192,132,252,0.2)]";
+                       planBadgeStyle = "bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[0_0_10px_rgba(192,132,252,0.2)]";
                        planLabel = "PLATINUM ELITE";
                      } else if (member.planType.includes('Gold') || member.planType.includes('3 Months')) {
                        planBadgeStyle = "bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]";
@@ -395,7 +395,7 @@ export const Memberships = () => {
                     <select className="w-full bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 outline-none focus:border-amber-500/50 text-white font-extrabold appearance-none shadow-[0_0_15px_rgba(0,0,0,0.5)]" value={formData.planType} onChange={handlePlanChange}>
                       <option value="Silver (1 Month)" className="bg-[var(--bg-base)]">Silver Core (₹1,000 / mo)</option>
                       <option value="Gold (3 Months)" className="bg-[var(--bg-base)] text-amber-400">Gold Pro (₹2,500 / 3 mo)</option>
-                      <option value="Platinum (1 Year)" className="bg-[var(--bg-base)] text-purple-400">Platinum Elite (₹8,000 / yr)</option>
+                      <option value="Platinum (1 Year)" className="bg-[var(--bg-base)] text-amber-400">Platinum Elite (₹8,000 / yr)</option>
                     </select>
                     <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--text-secondary)]"><polyline points="6 9 12 15 18 9"></polyline></svg>

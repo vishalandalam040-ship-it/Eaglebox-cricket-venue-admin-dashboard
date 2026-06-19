@@ -164,14 +164,14 @@ export const Bookings = () => {
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Active <span className="font-extrabold neon-text-cyan">Bookings</span></h1>
+          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Active <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Bookings</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage court reservations and schedule.</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-4">
           {user?.role !== 'Viewer' ? (
-            <div className="flex items-center gap-3 glass-panel px-5 py-2.5 rounded-full border border-[var(--border-subtle)] focus-within:border-cyan-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
-              <CreditCard size={16} className="text-cyan-400" />
+            <div className="flex items-center gap-3 glass-panel px-5 py-2.5 rounded-full border border-[var(--border-subtle)] focus-within:border-emerald-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
+              <CreditCard size={16} className="text-emerald-400" />
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate</span>
               <div className="w-px h-4 bg-[var(--border-subtle)]"></div>
               <span className="text-xs font-bold text-white">₹</span>
@@ -189,14 +189,14 @@ export const Bookings = () => {
                     .catch(() => setIsSavingRate(false));
                 }}
                 disabled={isSavingRate}
-                className="ml-1 p-1 hover:bg-white/10 text-cyan-400 rounded-md transition-colors disabled:opacity-50"
+                className="ml-1 p-1 hover:bg-white/10 text-emerald-400 rounded-md transition-colors disabled:opacity-50"
               >
-                {isSavingRate ? <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div> : <span className="text-xs font-bold">SAVE</span>}
+                {isSavingRate ? <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div> : <span className="text-xs font-bold">SAVE</span>}
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-3 glass-panel px-5 py-2.5 rounded-full border border-[var(--border-subtle)]">
-              <CreditCard size={16} className="text-cyan-400" />
+              <CreditCard size={16} className="text-emerald-400" />
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate</span>
               <div className="w-px h-4 bg-[var(--border-subtle)]"></div>
               <span className="text-white font-extrabold text-sm">₹ {hourlyRate} / hr</span>
@@ -207,7 +207,7 @@ export const Bookings = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={openCreateModal}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black px-6 py-2.5 rounded-full font-extrabold transition-all shadow-[0_0_20px_rgba(0,242,254,0.3)]"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-400 to-blue-500 hover:from-emerald-300 hover:to-blue-400 text-black px-6 py-2.5 rounded-full font-extrabold transition-all shadow-[0_0_20px_rgba(0,242,254,0.3)]"
           >
             <Plus size={18} /> New Booking
           </motion.button>
@@ -215,11 +215,11 @@ export const Bookings = () => {
       </motion.div>
 
       <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-cyan-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-emerald-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
         
         <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
           <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">UPCOMING SCHEDULE</h2>
-          <span className="bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-extrabold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(0,242,254,0.2)]">
+          <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(0,242,254,0.2)]">
             {bookings.length}
           </span>
         </div>
@@ -258,7 +258,7 @@ export const Bookings = () => {
                   >
                     <div className="flex items-center gap-5">
                        <div className="relative shrink-0">
-                          <img src={`https://ui-avatars.com/api/?name=${booking.customerName}&background=0B1120&color=00F2FE&rounded=true&bold=true`} alt={booking.customerName} className="w-14 h-14 rounded-full border-2 border-cyan-500/30 group-hover:border-cyan-400 transition-colors shadow-[0_0_15px_rgba(0,242,254,0.1)]" />
+                          <img src={`https://ui-avatars.com/api/?name=${booking.customerName}&background=0B1120&color=00F2FE&rounded=true&bold=true`} alt={booking.customerName} className="w-14 h-14 rounded-full border-2 border-emerald-500/30 group-hover:border-emerald-400 transition-colors shadow-[0_0_15px_rgba(0,242,254,0.1)]" />
                           {booking.status === 'Confirmed' && <div className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-[#0B1120] rounded-full shadow-[0_0_8px_#10B981]"></div>}
                        </div>
                        <div>
@@ -283,7 +283,7 @@ export const Bookings = () => {
                     <div className="flex flex-wrap md:flex-nowrap items-center gap-4 xl:gap-8 justify-end">
                       <div className="flex flex-wrap md:flex-nowrap items-center gap-6 bg-white/5 xl:bg-transparent p-4 xl:p-0 rounded-2xl border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
                          <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
-                            <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                               <CalendarIcon size={18} />
                             </div>
                             <div className="flex flex-col">
@@ -293,7 +293,7 @@ export const Bookings = () => {
                          </div>
                          
                          <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
-                            <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">
+                            <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400">
                               <Clock size={18} />
                             </div>
                             <div className="flex flex-col">
@@ -305,7 +305,7 @@ export const Bookings = () => {
                          {user?.role !== 'Viewer' && (
                            <div className="flex flex-col text-right ml-auto xl:ml-0">
                               <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Revenue</span>
-                              <p className="text-xl font-extrabold neon-text-cyan whitespace-nowrap">₹ {booking.amount}</p>
+                              <p className="text-xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] whitespace-nowrap">₹ {booking.amount}</p>
                            </div>
                          )}
                       </div>
@@ -356,11 +356,11 @@ export const Bookings = () => {
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
               className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-blue-500"></div>
               
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-white tracking-tight">{isEditMode ? 'Edit' : 'New'} <span className="font-extrabold neon-text-cyan">Booking</span></h2>
+                  <h2 className="text-2xl font-light text-white tracking-tight">{isEditMode ? 'Edit' : 'New'} <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Booking</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Schedule Court Time</p>
                 </div>
                 <button onClick={closeModal} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
@@ -371,37 +371,37 @@ export const Bookings = () => {
               <form onSubmit={handleCreateBooking} className="flex flex-col gap-5">
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Customer Name</label>
-                  <input required type="text" value={newBooking.customerName} onChange={e => setNewBooking({...newBooking, customerName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="Enter full name" />
+                  <input required type="text" value={newBooking.customerName} onChange={e => setNewBooking({...newBooking, customerName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="Enter full name" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">WhatsApp Number</label>
-                  <input required type="tel" value={newBooking.phone} onChange={e => setNewBooking({...newBooking, phone: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="10-digit number" />
+                  <input required type="tel" value={newBooking.phone} onChange={e => setNewBooking({...newBooking, phone: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="10-digit number" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Date</label>
-                    <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start</label>
-                    <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">End</label>
-                    <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-cyan-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
                   </div>
                 </div>
                 
-                <div className="p-4 rounded-xl border border-cyan-500/30 bg-cyan-500/5 mt-2">
+                <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 mt-2">
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
                     Total Revenue
                   </label>
                   <div className="flex items-center gap-4">
                     <div className="flex-1">
-                      <input required readOnly type="number" value={newBooking.amount} className="w-full bg-transparent border-none outline-none text-3xl font-extrabold neon-text-cyan placeholder-cyan-900" placeholder="0" />
+                      <input required readOnly type="number" value={newBooking.amount} className="w-full bg-transparent border-none outline-none text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] placeholder-emerald-900" placeholder="0" />
                     </div>
                     {user?.membership && !isDiscountApplied && (
-                      <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_15px_rgba(192,132,252,0.4)]">
+                      <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_15px_rgba(192,132,252,0.4)]">
                         Apply Discount
                       </button>
                     )}
@@ -419,7 +419,7 @@ export const Bookings = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="submit" 
-                    className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] transition-all"
+                    className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 text-black font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] transition-all"
                   >
                     {isEditMode ? 'Update Session' : 'Confirm Slot'}
                   </motion.button>

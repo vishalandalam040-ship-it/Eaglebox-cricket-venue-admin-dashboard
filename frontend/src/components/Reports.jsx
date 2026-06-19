@@ -39,10 +39,10 @@ export const Reports = () => {
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       
       <motion.div variants={itemVariants} className="mb-10">
-        <div className="flex items-center gap-2 mb-2 text-cyan-400 font-extrabold text-[10px] uppercase tracking-[0.2em] bg-cyan-500/10 w-fit px-3 py-1.5 rounded-md border border-cyan-500/20 shadow-[0_0_15px_rgba(0,242,254,0.1)]">
+        <div className="flex items-center gap-2 mb-2 text-emerald-400 font-extrabold text-[10px] uppercase tracking-[0.2em] bg-emerald-500/10 w-fit px-3 py-1.5 rounded-md border border-emerald-500/20 shadow-[0_0_15px_rgba(0,242,254,0.1)]">
            <BrainCircuit size={14} className="animate-pulse" /> INTELLIGENCE-DRIVEN INSIGHTS
         </div>
-        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold text-cyan-400">Reports</span></h1>
+        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400">Reports</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Automated analytics and generative business intelligence.</p>
       </motion.div>
 
@@ -51,31 +51,31 @@ export const Reports = () => {
           {/* AI Business Summary Card */}
           <motion.div 
             whileHover={{ y: -4 }}
-            className={`glass-panel border-2 border-purple-500/30 rounded-3xl p-8 shadow-[0_0_30px_rgba(192,132,252,0.1)] relative overflow-hidden group ${!['Super Admin'].includes(user?.role) ? 'opacity-60 grayscale' : ''}`}
+            className={`glass-panel border-2 border-amber-500/30 rounded-3xl p-8 shadow-[0_0_30px_rgba(192,132,252,0.1)] relative overflow-hidden group ${!['Super Admin'].includes(user?.role) ? 'opacity-60 grayscale' : ''}`}
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-purple-500/20 transition-all duration-700"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-amber-500/20 transition-all duration-700"></div>
             
             <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-8 gap-4">
                <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 bg-purple-500/20 rounded-2xl border border-purple-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(192,132,252,0.2)]">
-                     <BrainCircuit size={28} className="text-purple-400" />
+                  <div className="w-14 h-14 bg-amber-500/20 rounded-2xl border border-amber-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(192,132,252,0.2)]">
+                     <BrainCircuit size={28} className="text-amber-400" />
                   </div>
                   <div>
                      <h3 className="text-2xl font-extrabold text-white tracking-tight">AI Business Summary</h3>
                      <p className="text-sm font-medium text-[var(--text-secondary)] mt-1">Generative executive summary for Q4</p>
                   </div>
                </div>
-               <span className="text-[10px] font-extrabold text-cyan-400 border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5 rounded-md uppercase tracking-[0.2em] shrink-0 h-fit">HIGH PRIORITY</span>
+               <span className="text-[10px] font-extrabold text-emerald-400 border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 rounded-md uppercase tracking-[0.2em] shrink-0 h-fit">HIGH PRIORITY</span>
             </div>
 
             <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-6 mb-8 relative">
-               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-purple-500 rounded-l-2xl"></div>
+               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-amber-500 rounded-l-2xl"></div>
                <div className="flex items-center gap-2 mb-4">
-                  <BrainCircuit size={16} className="text-cyan-400" />
-                  <span className="text-[10px] font-extrabold text-cyan-400 uppercase tracking-[0.2em]">AI PREDICTION INSIGHT</span>
+                  <BrainCircuit size={16} className="text-emerald-400" />
+                  <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em]">AI PREDICTION INSIGHT</span>
                </div>
                <p className="text-base text-white/90 italic leading-relaxed font-medium">
-                 "Revenue is projected to increase by <span className="font-extrabold text-cyan-400">14.2%</span> based on current tournament registration trends. Recommend opening 2 additional court slots for weekend peak hours to maximize throughput."
+                 "Revenue is projected to increase by <span className="font-extrabold text-emerald-400">14.2%</span> based on current tournament registration trends. Recommend opening 2 additional court slots for weekend peak hours to maximize throughput."
                </p>
             </div>
 
@@ -93,7 +93,7 @@ export const Reports = () => {
                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                  onClick={() => handleDownload('/reports/business-summary/pdf', 'ai_business_summary.pdf')}
                  disabled={!['Super Admin'].includes(user?.role)}
-                 className="flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-8 py-3.5 rounded-xl font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                 className="flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-400 to-blue-500 text-black px-8 py-3.5 rounded-xl font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                >
                  <Download size={18} />
                  {['Super Admin'].includes(user?.role) ? 'Generate Report' : 'Access Denied'}
@@ -121,7 +121,7 @@ export const Reports = () => {
                 className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-[var(--border-subtle)] text-white px-5 py-4 rounded-xl font-extrabold transition-colors group/btn"
               >
                 <div className="flex items-center gap-3">
-                  <Download size={18} className="text-purple-400" />
+                  <Download size={18} className="text-amber-400" />
                   Download PDF
                 </div>
                 <ChevronRight size={18} className="text-[var(--text-secondary)] group-hover/btn:text-white transition-colors group-hover/btn:translate-x-1" />
