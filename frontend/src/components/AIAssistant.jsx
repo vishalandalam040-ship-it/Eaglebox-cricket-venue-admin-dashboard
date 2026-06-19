@@ -33,12 +33,12 @@ export const AIAssistant = () => {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-tr from-blue-500 to-amber-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-amber-500/30 hover:scale-105 transition-all duration-300 z-50 ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-28 right-4 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-emerald-500 to-amber-500 rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:scale-105 transition-all duration-300 z-50 ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
       >
-        <MessageSquare size={28} />
+        <MessageSquare size={24} className="md:w-7 md:h-7" />
       </button>
 
-      <div className={`fixed bottom-8 right-8 w-96 glass bg-[var(--bg-color)]/95 flex flex-col shadow-2xl rounded-3xl overflow-hidden transition-all duration-300 transform origin-bottom-right z-50 ${isOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'}`} style={{ height: '550px' }}>
+      <div className={`fixed bottom-28 right-4 left-4 md:left-auto md:bottom-8 md:right-8 md:w-96 glass-panel bg-[var(--bg-surface)]/95 flex flex-col shadow-2xl rounded-3xl overflow-hidden transition-all duration-300 transform origin-bottom-right z-50 border border-[var(--border-subtle)] ${isOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'}`} style={{ height: '550px', maxHeight: '60vh' }}>
         <div className="p-5 border-b border-[var(--border-color)] bg-gradient-to-r from-blue-500/10 to-amber-500/10 flex justify-between items-center backdrop-blur-md">
           <h3 className="font-bold text-lg flex items-center gap-2 m-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-amber-500">
             <Sparkles size={20} className="text-blue-500" /> Venue AI
