@@ -98,6 +98,21 @@ export const Tournaments = () => {
       .catch(err => alert("Failed to fetch teams"));
   };
 
+  const handleUpdateFee = () => {
+    if (user?.role === 'Viewer') return;
+    setIsSavingManageFee(true);
+    api.put(`/tournaments/${activeTournamentId}/fee`, { entryFee: activeTournamentFee })
+      .then(res => {
+        setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, entryFee: activeTournamentFee } : t));
+        alert("Tournament entry fee permanently updated!");
+        setIsSavingManageFee(false);
+      })
+      .catch(err => {
+        alert("Failed to update tournament fee.");
+        setIsSavingManageFee(false);
+      });
+  };
+
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     in: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } },
@@ -394,6 +409,22 @@ export const Tournaments = () => {
                 </button>
               </div>
               
+              {user?.role !== 'Viewer' && (
+                <div className="mb-6 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex flex-col md:flex-row md:items-end gap-4 shrink-0">
+                  <div className="flex-1">
+                    <label className="block text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mb-2">Update Entry Fee (₹)</label>
+                    <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-extrabold" />
+                  </div>
+                  <button 
+                    onClick={handleUpdateFee}
+                    disabled={isSavingManageFee}
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 text-black font-extrabold shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:from-emerald-300 hover:to-emerald-400 transition-colors disabled:opacity-50 whitespace-nowrap"
+                  >
+                    {isSavingManageFee ? 'Saving...' : 'Save Price'}
+                  </button>
+                </div>
+              )}
+
               <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 relative z-10">
                 {teams.length === 0 ? (
                   <div className="py-12 text-center text-[var(--text-secondary)] font-medium bg-white/5 rounded-2xl border border-[var(--border-subtle)]">No squads registered yet.</div>
