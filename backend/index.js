@@ -121,13 +121,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     }
 
     // Initialize default hourly rate if it doesn't exist
-    const exists = await db.get('SELECT * FROM settings WHERE key = "hourlyRate"');
+    const exists = await db.get("SELECT * FROM settings WHERE key = 'hourlyRate'");
     if (!exists) {
       await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['hourlyRate', '1000']);
     }
 
     // Initialize default minTournamentFee if it doesn't exist
-    const existsTournamentFee = await db.get('SELECT * FROM settings WHERE key = "minTournamentFee"');
+    const existsTournamentFee = await db.get("SELECT * FROM settings WHERE key = 'minTournamentFee'");
     if (!existsTournamentFee) {
       await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['minTournamentFee', '2500']);
     }
@@ -158,7 +158,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.put('/api/settings/hourlyRate', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         const { hourlyRate } = req.body;
-        await db.run('UPDATE settings SET value = ? WHERE key = "hourlyRate"', [hourlyRate.toString()]);
+        await db.run("UPDATE settings SET value = ? WHERE key = 'hourlyRate'", [hourlyRate.toString()]);
         res.json({ message: 'Settings updated successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -168,7 +168,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.put('/api/settings/minTournamentFee', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         const { minTournamentFee } = req.body;
-        await db.run('UPDATE settings SET value = ? WHERE key = "minTournamentFee"', [minTournamentFee.toString()]);
+        await db.run("UPDATE settings SET value = ? WHERE key = 'minTournamentFee'", [minTournamentFee.toString()]);
         res.json({ message: 'Settings updated successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -240,7 +240,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     app.put('/api/bookings/:id/cancel', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
-        await db.run('UPDATE bookings SET status = "Cancelled" WHERE id = ?', [req.params.id]);
+        await db.run("UPDATE bookings SET status = 'Cancelled' WHERE id = ?", [req.params.id]);
         res.json({ message: 'Booking cancelled successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
