@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
+const { Pool } = require('pg');
 const { verifyToken, authorizeRole } = require('./middleware/auth');
 
 const app = express();
@@ -16,12 +15,38 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // Initialize application
 (async () => {
   try {
-    const db = await open({
-      filename: './database.sqlite',
-      driver: sqlite3.Database
+    if (!process.env.DATABASE_URL) {
+      console.warn("WARNING: No DATABASE_URL found. Please set it in your environment variables.");
+    }
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
     });
 
-    console.log('Connected to SQLite database.');
+    const db = {
+      get: async (text, params) => {
+        let i = 1;
+        const pgText = text.replace(/\?/g, () => `$${i++}`);
+        const res = await pool.query(pgText, params);
+        return res.rows[0];
+      },
+      all: async (text, params) => {
+        let i = 1;
+        const pgText = text.replace(/\?/g, () => `$${i++}`);
+        const res = await pool.query(pgText, params);
+        return res.rows;
+      },
+      run: async (text, params) => {
+        let i = 1;
+        const pgText = text.replace(/\?/g, () => `$${i++}`);
+        await pool.query(pgText, params);
+      },
+      exec: async (text) => {
+        await pool.query(text);
+      }
+    };
+
+    console.log('Connected to PostgreSQL database.');
 
     // Create Tables
     await db.exec(`
@@ -115,7 +140,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     // Basic health check
     app.get('/api/health', (req, res) => {
-      res.json({ status: 'OK', message: 'Venue Admin Dashboard Backend is running with SQLite' });
+      res.json({ status: 'OK', message: 'Venue Admin Dashboard Backend is running with PostgreSQL' });
     });
 
     // --- API for Settings ---
