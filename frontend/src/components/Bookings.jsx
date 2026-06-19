@@ -394,7 +394,7 @@ export const Bookings = () => {
                 
                 <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 mt-2">
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
-                    Total Revenue
+                    TOTAL PRICE
                   </label>
                   <div className="flex items-center gap-4">
                     <div className="flex-1">
