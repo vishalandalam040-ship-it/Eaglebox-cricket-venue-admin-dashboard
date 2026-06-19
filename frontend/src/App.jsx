@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown, BrainCircuit } from 'lucide-react';
+import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown, BrainCircuit, ChevronRight } from 'lucide-react';
 import { Bookings } from './components/Bookings';
 import { Customers } from './components/Customers';
 import { Tournaments } from './components/Tournaments';
@@ -11,6 +11,7 @@ import { Login } from './components/Login';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Reports } from './components/Reports';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { motion, AnimatePresence } from 'framer-motion';
 import api from './api';
 import boxCricketImg from './assets/box-cricket.png';
 import './index.css';
@@ -19,7 +20,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const { logout, user } = useAuth();
   const location = useLocation();
   let navItems = [
-    { path: '/', name: 'Dashboard', icon: LayoutDashboard },
+    { path: '/', name: 'Overview', icon: LayoutDashboard },
     { path: '/bookings', name: 'Bookings', icon: Calendar },
     { path: '/customers', name: 'Customers', icon: Users },
     { path: '/tournaments', name: 'Tournaments', icon: Trophy },
@@ -34,51 +35,98 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-[#0A0F1C] h-full transition-all duration-300 border-r border-[#1E293B] ${isOpen ? 'w-64' : 'w-20'}`}>
-        <div className="p-6 flex items-center gap-3 h-24">
-          <div className="bg-cyan-400 p-2 rounded-xl text-black shrink-0 shadow-[0_0_15px_rgba(0,242,254,0.3)] cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-            <div className="w-6 h-6 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-            </div>
-          </div>
-          {isOpen && (
-            <div className="flex flex-col overflow-hidden">
-               <h2 className="font-bold text-xl leading-tight text-white m-0">VenueOS</h2>
-               <span className="text-[8px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">Sleek Intelligence</span>
-            </div>
-          )}
+      <motion.div 
+        initial={false}
+        animate={{ width: isOpen ? 280 : 88 }}
+        className="hidden md:flex flex-col glass-panel h-full border-r border-[var(--border-subtle)] z-20 relative"
+      >
+        <div className="p-6 flex items-center gap-4 h-28 relative">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] cursor-pointer shrink-0" 
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <Trophy size={20} className="text-white" />
+          </motion.div>
+          
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                className="flex flex-col overflow-hidden whitespace-nowrap"
+              >
+                 <h2 className="font-extrabold text-2xl tracking-tight text-white m-0">VenueOS</h2>
+                 <span className="text-[9px] font-bold tracking-[0.2em] text-cyan-400 uppercase">Premium Edition</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-        <div className="flex-1 py-4 flex flex-col gap-1 px-4">
+
+        <div className="flex-1 py-6 flex flex-col gap-2 px-4 overflow-y-auto overflow-x-hidden custom-scrollbar">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-[#102A30] border border-cyan-500/20' : 'hover:bg-white/5 border border-transparent'}`}>
-                <Icon size={20} className={isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'} />
-                {isOpen && <span className={`font-bold text-sm ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>}
+              <Link key={item.path} to={item.path}>
+                <motion.div 
+                  whileHover={{ x: 4 }}
+                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-cyan-500/10 border border-cyan-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-white/5 border border-transparent'}`}
+                >
+                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 rounded-r-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
+                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)] group-hover:text-white'}`} />
+                  
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.span 
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: 'auto' }}
+                        exit={{ opacity: 0, width: 0 }}
+                        className={`font-semibold text-sm whitespace-nowrap ${isActive ? 'text-white' : 'text-[var(--text-secondary)] group-hover:text-white'}`}
+                      >
+                        {item.name}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               </Link>
             );
           })}
         </div>
+
         {user && (
-          <div className="p-6 border-t border-[#1E293B]">
-            <button onClick={logout} className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-white transition-colors w-full">
-              <LogOut size={20} />
-              {isOpen && <span className="font-bold text-sm">Logout</span>}
+          <div className="p-6 border-t border-[var(--border-subtle)]">
+            <button onClick={logout} className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-rose-400 transition-colors w-full group overflow-hidden whitespace-nowrap">
+              <LogOut size={22} className="shrink-0" />
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.span 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="font-semibold text-sm"
+                  >
+                    Disconnect
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </button>
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--surface-color)] border-t border-[var(--border-color)] pb-safe z-50">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 glass-panel border-t border-[var(--border-subtle)] pb-safe z-50">
         <div className="flex justify-around items-center p-2">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1">
-                <Icon size={24} className={isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'} />
+              <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1 relative">
+                {isActive && <div className="absolute top-0 w-8 h-1 bg-cyan-400 rounded-b-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
+                <Icon size={24} className={isActive ? 'text-cyan-400 mt-1' : 'text-[var(--text-secondary)]'} />
                 <span className={`text-[10px] mt-1 font-medium ${isActive ? 'text-cyan-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
@@ -92,31 +140,53 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 const Topbar = () => {
   const { user } = useAuth();
   return (
-    <div className="flex items-center justify-between p-6 sticky top-0 z-10 bg-[#0B1120]/80 backdrop-blur-md border-b border-[#1E293B]">
+    <motion.div 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="flex items-center justify-between p-6 sticky top-0 z-10 glass-panel border-b border-[var(--border-subtle)]"
+    >
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-white mr-4" />
-        <h2 className="font-bold text-xl m-0 text-cyan-400">VenueOS</h2>
+        <h2 className="font-extrabold text-xl m-0 neon-text-cyan">VenueOS</h2>
       </div>
       
-      <div className="hidden md:flex items-center gap-3 bg-[#151C2C] border border-[#1E293B] rounded-xl px-4 py-2 w-full max-w-md">
-         <Search size={16} className="text-[var(--text-secondary)]" />
-         <input type="text" placeholder="Search insights, bookings..." className="bg-transparent outline-none flex-1 text-sm text-white placeholder-[var(--text-secondary)]" />
+      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-cyan-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
+         <Search size={18} className="text-[var(--text-secondary)]" />
+         <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-white placeholder-[var(--text-secondary)] font-medium" />
       </div>
 
-      <div className="flex items-center gap-4 ml-auto">
+      <div className="flex items-center gap-5 ml-auto">
+        <button className="relative p-2 text-[var(--text-secondary)] hover:text-white transition-colors">
+          <Bell size={20} />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span>
+        </button>
+
+        <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
+
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-white group-hover:text-cyan-400 transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'Super Admin'}</span>
-             <span className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">{user?.role === 'Viewer' ? 'READ ONLY' : 'SYSTEM ADMIN'}</span>
+             <span className="text-sm font-bold leading-tight text-white group-hover:neon-text-cyan transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
+             <span className="text-[9px] font-extrabold text-cyan-400 uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[#3B82F6] flex items-center justify-center text-white font-bold text-lg shadow-lg border border-white/10">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(0,242,254,0.3)] ring-2 ring-white/10 group-hover:ring-cyan-400/50 transition-all">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
+
+// Skeleton Loader for Dashboard Cards
+const StatCardSkeleton = () => (
+  <div className="glass-panel rounded-2xl p-6 h-32 flex flex-col justify-between">
+    <div className="flex items-center gap-2 mb-2">
+      <div className="w-4 h-4 rounded bg-white/10 skeleton-shimmer"></div>
+      <div className="h-3 w-24 rounded bg-white/10 skeleton-shimmer"></div>
+    </div>
+    <div className="h-8 w-20 rounded bg-white/10 skeleton-shimmer mt-auto"></div>
+  </div>
+);
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -140,13 +210,11 @@ const Dashboard = () => {
           }
         });
         
-        // Generate last N days
         const days = parseInt(timeframe, 10);
         const data = [];
         for (let i = days - 1; i >= 0; i--) {
           const d = new Date();
           d.setDate(d.getDate() - i);
-          // format YYYY-MM-DD
           const year = d.getFullYear();
           const month = String(d.getMonth() + 1).padStart(2, '0');
           const day = String(d.getDate()).padStart(2, '0');
@@ -160,9 +228,11 @@ const Dashboard = () => {
         
         setChartData(data);
 
-        // Fetch other stats
-        const resCustomers = await api.get('/customers');
-        const resTournaments = await api.get('/tournaments');
+        // Fetch other stats concurrently
+        const [resCustomers, resTournaments] = await Promise.all([
+          api.get('/customers'),
+          api.get('/tournaments')
+        ]);
         
         const todayStr = new Date().toISOString().split('T')[0];
         let todayRev = 0;
@@ -178,7 +248,7 @@ const Dashboard = () => {
         });
 
       } catch (err) {
-        console.error("Failed to fetch bookings for chart", err);
+        console.error("Failed to fetch dashboard data", err);
       } finally {
         setLoading(false);
       }
@@ -187,67 +257,91 @@ const Dashboard = () => {
     fetchAndProcessData();
   }, [timeframe]);
 
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } },
+    out: { opacity: 0, y: -20 }
+  };
+
+  const itemVariants = {
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24 md:pb-0 px-2 md:px-0">
-      <div className="mb-6">
-        <h1 className="text-2xl font-normal text-white mb-1">Dashboard <span className="font-bold text-cyan-400">Overview</span></h1>
-        <p className="text-sm text-[var(--text-secondary)]">Intelligent system status for Elite Sports Arena.</p>
-      </div>
+    <motion.div 
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
+    >
+      <motion.div variants={itemVariants} className="mb-8">
+        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold neon-text-cyan">Overview</span></h1>
+        <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
+      </motion.div>
 
       <div className="flex flex-col xl:flex-row gap-6 mb-8">
-        <div className="xl:w-2/3 flex flex-col gap-6">
-          <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 relative overflow-hidden h-[300px] flex flex-col">
-            <div className="flex justify-between items-start mb-4">
+        <motion.div variants={itemVariants} className="xl:w-2/3 flex flex-col gap-6">
+          <div className="glass-panel rounded-3xl p-6 relative h-[380px] flex flex-col overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-cyan-500/20 transition-all duration-700"></div>
+            
+            <div className="flex justify-between items-start mb-6 z-10">
                <div>
-                  <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">TOTAL REVENUE</h3>
-                  <div className="flex items-center gap-3">
-                    <p className="text-3xl font-bold text-white">₹ {stats.revenue.toLocaleString()}</p>
-                    <span className="text-[9px] font-bold text-cyan-400 bg-cyan-400/10 border border-cyan-500/20 px-2 py-0.5 rounded text-center leading-none flex items-center">TODAY</span>
+                  <h3 className="text-[11px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">GROSS REVENUE</h3>
+                  <div className="flex items-center gap-4">
+                    {loading ? (
+                      <div className="h-10 w-40 rounded bg-white/10 skeleton-shimmer"></div>
+                    ) : (
+                      <>
+                        <p className="text-4xl font-extrabold text-white tracking-tight">₹ {stats.revenue.toLocaleString()}</p>
+                        <span className="text-[10px] font-bold text-cyan-400 bg-cyan-400/10 border border-cyan-500/30 px-2.5 py-1 rounded-md tracking-wider flex items-center shadow-[0_0_10px_rgba(0,242,254,0.2)]">TODAY LIVE</span>
+                      </>
+                    )}
                   </div>
                </div>
-               <div className="flex items-center gap-2 bg-[#1E293B] border border-[#334155] rounded-lg px-3 py-1.5 cursor-pointer hover:bg-white/5 transition-colors">
-                 <Calendar size={14} className="text-cyan-400" />
+               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-xl px-3 py-2 cursor-pointer hover:bg-white/5 transition-all z-20">
+                 <Calendar size={16} className="text-cyan-400" />
                  <select 
                    value={timeframe} 
                    onChange={(e) => setTimeframe(e.target.value)}
                    className="bg-transparent text-xs font-bold text-white outline-none cursor-pointer appearance-none pr-4"
                  >
-                   <option value="7" className="bg-[#151C2C] text-white">Last 7 Days</option>
-                   <option value="30" className="bg-[#151C2C] text-white">Last 30 Days</option>
+                   <option value="7" className="bg-[var(--bg-base)] text-white">Last 7 Days</option>
+                   <option value="30" className="bg-[var(--bg-base)] text-white">Last 30 Days</option>
                  </select>
                </div>
             </div>
             
-            <div className="flex-1 -mx-6 -mb-6 mt-4 relative">
-               <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent"></div>
-               {loading ? null : (
+            <div className="flex-1 -mx-6 -mb-6 mt-4 relative z-0">
+               <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/5 to-transparent z-10 pointer-events-none"></div>
+               {loading ? (
+                 <div className="w-full h-full bg-white/5 skeleton-shimmer opacity-50"></div>
+               ) : (
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                    <AreaChart data={chartData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorRevCyan" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.8}/>
-                          <stop offset="95%" stopColor="#22d3ee" stopOpacity={0}/>
+                          <stop offset="0%" stopColor="#00F2FE" stopOpacity={0.6}/>
+                          <stop offset="100%" stopColor="#00F2FE" stopOpacity={0.01}/>
                         </linearGradient>
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                           <feGaussianBlur stdDeviation="4" result="blur" />
-                           <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
                       </defs>
                       <XAxis dataKey="date" hide />
                       <Tooltip 
+                        cursor={{ stroke: 'rgba(0, 242, 254, 0.4)', strokeWidth: 1, strokeDasharray: '5 5' }}
                         content={({ active, payload, label }) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="bg-[#151C2C] border border-[#1E293B] p-3 rounded-xl shadow-xl">
-                                <p className="text-white text-xs font-bold mb-1">{`Date: ${label}`}</p>
-                                <p className="text-cyan-400 text-sm font-bold">{`Revenue: ₹${Number(payload[0].value).toLocaleString()}`}</p>
+                              <div className="glass-panel p-4 rounded-xl shadow-2xl border border-cyan-500/30">
+                                <p className="text-[var(--text-secondary)] text-xs font-bold mb-1 uppercase tracking-wider">{label}</p>
+                                <p className="text-cyan-400 text-lg font-extrabold">₹{Number(payload[0].value).toLocaleString()}</p>
                               </div>
                             );
                           }
                           return null;
                         }}
                       />
-                      <Area type="monotone" dataKey="revenue" stroke="#22d3ee" strokeWidth={4} fillOpacity={1} fill="url(#colorRevCyan)" filter="url(#glow)" />
+                      <Area type="monotone" dataKey="revenue" stroke="#00F2FE" strokeWidth={3} fillOpacity={1} fill="url(#colorRevCyan)" activeDot={{ r: 6, fill: '#00F2FE', stroke: '#fff', strokeWidth: 2, shadow: '0 0 10px #00F2FE' }} />
                     </AreaChart>
                   </ResponsiveContainer>
                )}
@@ -255,88 +349,119 @@ const Dashboard = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
-               <div>
-                 <div className="flex items-center gap-2 mb-2">
-                    <Calendar size={14} className="text-cyan-400" />
-                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">TOTAL BOOKINGS</h3>
-                 </div>
-                 <p className="text-3xl font-bold text-white">{stats.bookings}</p>
-               </div>
-            </div>
+            {loading ? (
+              <>
+                <StatCardSkeleton />
+                <StatCardSkeleton />
+                <StatCardSkeleton />
+              </>
+            ) : (
+              <>
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
+                   <div>
+                     <div className="flex items-center gap-2 mb-3">
+                        <Calendar size={16} className="text-cyan-400" />
+                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOTAL BOOKINGS</h3>
+                     </div>
+                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.bookings}</p>
+                   </div>
+                   <div className="w-12 h-12 rounded-full bg-cyan-400/10 flex items-center justify-center">
+                     <ChevronRight size={20} className="text-cyan-400 opacity-50" />
+                   </div>
+                </motion.div>
 
-            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
-               <div>
-                 <div className="flex items-center gap-2 mb-2">
-                    <Users size={14} className="text-purple-400" />
-                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">CUSTOMERS <span className="bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded text-[8px] ml-1">LIVE</span></h3>
-                 </div>
-                 <p className="text-3xl font-bold text-white">{stats.customers}</p>
-               </div>
-            </div>
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
+                   <div>
+                     <div className="flex items-center gap-2 mb-3">
+                        <Users size={16} className="text-purple-400" />
+                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded ml-2 shadow-[0_0_8px_rgba(192,132,252,0.3)]">LIVE</span></h3>
+                     </div>
+                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.customers}</p>
+                   </div>
+                </motion.div>
 
-            <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-6 flex items-center justify-between">
-               <div>
-                 <div className="flex items-center gap-2 mb-2">
-                    <Trophy size={14} className="text-emerald-400" />
-                    <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">TOURNAMENTS</h3>
-                 </div>
-                 <p className="text-3xl font-bold text-white">{stats.tournaments}</p>
-               </div>
-            </div>
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
+                   <div>
+                     <div className="flex items-center gap-2 mb-3">
+                        <Trophy size={16} className="text-emerald-400" />
+                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOURNAMENTS</h3>
+                     </div>
+                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.tournaments}</p>
+                   </div>
+                </motion.div>
+              </>
+            )}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="xl:w-1/3">
-          <div className="bg-[#1E253A] border border-[#2D3748] rounded-2xl p-6 h-full shadow-[0_0_30px_rgba(34,211,238,0.05)] bg-gradient-to-b from-[#1E253A] to-[#151C2C]">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="bg-cyan-400 p-2 rounded-xl text-black shadow-[0_0_15px_rgba(0,242,254,0.3)]">
-                <BrainCircuit size={20} />
-              </div>
+        <motion.div variants={itemVariants} className="xl:w-1/3 flex flex-col h-full">
+          <div className="glass-panel rounded-3xl p-8 flex-1 relative overflow-hidden group border-t border-t-cyan-500/30">
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-transparent z-0 opacity-50"></div>
+            
+            <div className="flex items-center gap-4 mb-8 relative z-10">
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-cyan-500/30 shadow-[0_0_20px_rgba(0,242,254,0.3)] flex items-center justify-center"
+              >
+                <BrainCircuit size={24} className="text-cyan-400" />
+              </motion.div>
               <div>
-                <h3 className="text-lg font-bold text-white leading-tight">AI Analysis</h3>
-                <p className="text-[8px] font-bold text-cyan-400 uppercase tracking-widest">SYSTEM THINKING...</p>
+                <h3 className="text-xl font-extrabold text-white leading-tight">Neural Insights</h3>
+                <p className="text-[9px] font-extrabold text-cyan-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_5px_#00F2FE]"></span>
+                  SYSTEM THINKING
+                </p>
               </div>
             </div>
 
-            <div className="bg-[#0B1120]/50 border border-[#1E293B] rounded-xl p-5 mb-4 relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400"></div>
-               <p className="text-xs text-white leading-relaxed mb-4">
-                 Peak utilization detected between <br/><span className="text-cyan-400 font-bold text-sm">18:00 - 21:00</span>.
-               </p>
-               <div className="w-full h-1 bg-[#1E293B] rounded-full overflow-hidden">
-                  <div className="h-full bg-cyan-400 w-3/4 rounded-full shadow-[0_0_10px_rgba(0,242,254,0.8)]"></div>
-               </div>
-            </div>
+            <div className="space-y-4 relative z-10">
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
+                 <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400 shadow-[0_0_10px_#00F2FE]"></div>
+                 <p className="text-sm text-white leading-relaxed mb-4 font-medium">
+                   Peak utilization detected between <br/><span className="text-cyan-400 font-bold text-base">18:00 - 21:00</span>.
+                 </p>
+                 <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: "75%" }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="h-full bg-cyan-400 rounded-full shadow-[0_0_10px_#00F2FE]"
+                    ></motion.div>
+                 </div>
+              </motion.div>
 
-            <div className="bg-[#0B1120]/50 border border-[#1E293B] rounded-xl p-5 relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-               <p className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Recommendation:</p>
-               <p className="text-xs text-white leading-relaxed">
-                 Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-purple-400">~14%</span>.
-               </p>
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
+                 <div className="absolute top-0 left-0 w-1 h-full bg-purple-500 shadow-[0_0_10px_#C084FC]"></div>
+                 <p className="text-[10px] font-extrabold text-purple-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    Actionable Recommendation
+                 </p>
+                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-medium">
+                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-white bg-purple-500/20 px-1 rounded">~14%</span>.
+                 </p>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-base font-bold text-white">Venue Intelligence Feed</h2>
-        <button className="text-cyan-400 text-xs font-bold hover:text-cyan-300 transition-colors flex items-center gap-1">
-          View Facility Gallery <span className="text-lg leading-none">›</span>
+      <motion.div variants={itemVariants} className="mb-6 flex items-center justify-between">
+        <h2 className="text-lg font-bold text-white tracking-tight">Facility Showcase</h2>
+        <button className="text-cyan-400 text-sm font-bold hover:text-white transition-colors flex items-center gap-1 group">
+          View Gallery <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
         </button>
-      </div>
+      </motion.div>
 
-      <div className="relative rounded-2xl overflow-hidden h-40 md:h-64 group border border-[#1E293B]">
-         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120]/90 via-[#0B1120]/40 to-transparent"></div>
-         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-cyan-400/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-cyan-400/40 shadow-[0_0_20px_rgba(0,242,254,0.2)]">
-            <div className="w-8 h-8 rounded-full border-2 border-cyan-400 flex items-center justify-center">
-              <div className="w-3 h-3 bg-cyan-400 rounded-sm rotate-45"></div>
+      <motion.div variants={itemVariants} className="relative rounded-3xl overflow-hidden h-48 md:h-72 group border border-[var(--border-subtle)] shadow-2xl">
+         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/40 to-transparent opacity-80"></div>
+         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-cyan-400/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-cyan-400/50 shadow-[0_0_30px_rgba(0,242,254,0.3)] cursor-pointer hover:bg-cyan-400/20 transition-all group-hover:-translate-y-2">
+            <div className="w-10 h-10 rounded-full border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,242,254,0.5)]">
+              <div className="w-4 h-4 bg-cyan-400 rounded-sm rotate-45 shadow-[0_0_10px_#00F2FE]"></div>
             </div>
          </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -347,13 +472,15 @@ const AppContent = () => {
 
   if (loading) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[var(--bg-color)]">
-        <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="h-screen flex items-center justify-center bg-[var(--bg-base)]">
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-white/10 rounded-full"></div>
+          <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin absolute top-0 left-0 shadow-[0_0_20px_rgba(0,242,254,0.5)]"></div>
+        </div>
       </div>
     );
   }
 
-  // If not logged in, only allow access to login page
   if (!user) {
     return (
       <Routes>
@@ -363,29 +490,30 @@ const AppContent = () => {
     );
   }
 
-  // If logged in and trying to access login page, redirect to appropriate default page
   if (location.pathname === '/login') {
     return <Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />;
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--bg-color)] text-[var(--text-primary)] font-sans selection:bg-cyan-500/30">
+    <div className="flex h-screen overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] selection:bg-cyan-500/30 font-sans">
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <main className="flex-1 overflow-y-auto relative">
+      <main className="flex-1 overflow-y-auto relative custom-scrollbar">
         <Topbar />
-        <div className="px-4 md:px-8 pb-6 max-w-7xl mx-auto">
-          <Routes>
-            <Route path="/" element={
-              user.role === 'Viewer' ? <Navigate to="/bookings" replace /> : 
-              <ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Dashboard /></ProtectedRoute>
-            } />
-            <Route path="/bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
-            <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
-            <Route path="/tournaments" element={<ProtectedRoute><Tournaments /></ProtectedRoute>} />
-            <Route path="/memberships" element={<ProtectedRoute><Memberships /></ProtectedRoute>} />
-            <Route path="/reports" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Reports /></ProtectedRoute>} />
-            <Route path="*" element={<Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />} />
-          </Routes>
+        <div className="px-4 md:px-10 pb-10 max-w-7xl mx-auto pt-4">
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={
+                user.role === 'Viewer' ? <Navigate to="/bookings" replace /> : 
+                <ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Dashboard /></ProtectedRoute>
+              } />
+              <Route path="/bookings" element={<ProtectedRoute><Bookings /></ProtectedRoute>} />
+              <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+              <Route path="/tournaments" element={<ProtectedRoute><Tournaments /></ProtectedRoute>} />
+              <Route path="/memberships" element={<ProtectedRoute><Memberships /></ProtectedRoute>} />
+              <Route path="/reports" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Reports /></ProtectedRoute>} />
+              <Route path="*" element={<Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />} />
+            </Routes>
+          </AnimatePresence>
         </div>
         <AIAssistant />
       </main>

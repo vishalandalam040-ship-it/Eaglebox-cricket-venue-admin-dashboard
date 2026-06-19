@@ -1,40 +1,97 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-color: #0B1120;
-    --surface-color: #151C2C;
-    --surface-light: #1E293B;
-    --text-primary: #FFFFFF;
-    --text-secondary: #94A3B8;
-    --border-color: rgba(255, 255, 255, 0.05);
-    --accent-cyan: #00F2FE;
-    --accent-purple: #C084FC;
-    --sidebar-bg: #0B1120;
-  }
+@theme {
+  --font-sans: 'Outfit', sans-serif;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  :root {
+    /* Deep Obsidian & Neon Theme */
+    --bg-base: #050814;
+    --bg-surface: rgba(13, 17, 33, 0.65);
+    --bg-surface-hover: rgba(22, 30, 56, 0.85);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #94A3B8;
+    --text-accent: #00F2FE;
+    
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-glow: rgba(0, 242, 254, 0.15);
+    
+    --accent-cyan: #00F2FE;
+    --accent-purple: #C084FC;
+    --accent-emerald: #10B981;
+    --accent-rose: #F43F5E;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(192, 132, 252, 0.08), transparent 25%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
 }
 
 @layer utilities {
-  .glass {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-  }
-  
-  .glass-card {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    @apply rounded-2xl shadow-sm transition-all duration-200 p-6;
+  .glass-panel {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 
-  .text-secondary {
-    color: var(--text-secondary);
+  .glass-panel-interactive {
+    @apply glass-panel transition-all duration-300 ease-out;
   }
+  
+  .glass-panel-interactive:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0, 242, 254, 0.1);
+  }
+
+  .neon-text-cyan {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+  }
+
+  .neon-border-cyan {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2), inset 0 0 10px rgba(0, 242, 254, 0.1);
+  }
+  
+  /* Skeleton Loader Animation */
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
