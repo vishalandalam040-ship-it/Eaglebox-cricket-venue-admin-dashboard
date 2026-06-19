@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
-import { Users, TrendingUp, Download } from 'lucide-react';
+import { Users, TrendingUp, ChevronRight, User, X, Mail, Phone, Calendar as CalendarIcon, Activity } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const Customers = () => {
   const { user } = useAuth();
@@ -10,7 +11,6 @@ export const Customers = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   useEffect(() => {
-    // Fetch mock data from backend
     api.get('/customers')
       .then(res => {
         setCustomers(res.data);
@@ -22,140 +22,239 @@ export const Customers = () => {
       });
   }, []);
 
-  return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24 md:pb-0">
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold text-white mb-1">Customer Management</h1>
-        <p className="text-sm text-[var(--text-secondary)]">Manage your venue community and loyalty data</p>
-      </div>
+  const pageVariants = {
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0, transition: { duration: 0.5, staggerChildren: 0.1 } },
+    out: { opacity: 0, y: -20 }
+  };
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-5 flex flex-col justify-between">
-          <div className="flex justify-between items-start mb-2">
-            <div className="bg-[#1E293B] p-3 rounded-full">
-              <Users size={20} className="text-purple-400" />
+  const itemVariants = {
+    initial: { opacity: 0, y: 20 },
+    in: { opacity: 1, y: 0 }
+  };
+
+  return (
+    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
+      <motion.div variants={itemVariants} className="mb-8">
+        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Client <span className="font-extrabold neon-text-cyan">Intelligence</span></h1>
+        <p className="text-sm font-medium text-[var(--text-secondary)]">Manage your venue community and loyalty data.</p>
+      </motion.div>
+
+      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="glass-panel rounded-3xl p-6 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-purple-500/20 transition-all duration-700"></div>
+          <div className="flex justify-between items-start mb-4 z-10">
+            <div className="bg-[var(--bg-base)] p-3 rounded-2xl border border-purple-500/20 shadow-[0_0_15px_rgba(192,132,252,0.1)]">
+              <Users size={22} className="text-purple-400" />
             </div>
-            <div className="flex items-center text-emerald-400 text-xs font-bold">
-              <TrendingUp size={14} className="mr-1" /> +12%
+            <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+              <TrendingUp size={12} className="mr-1.5" /> +12% Growth
             </div>
           </div>
-          <p className="text-sm font-medium text-[var(--text-secondary)] mb-1">Total Customers</p>
-          <p className="text-3xl font-bold text-white">{customers.length}</p>
+          <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-1">Total Customers</p>
+          {loading ? (
+             <div className="w-24 h-10 skeleton-shimmer rounded"></div>
+          ) : (
+             <p className="text-4xl font-extrabold text-white tracking-tight">{customers.length}</p>
+          )}
         </div>
 
         {user?.role !== 'Viewer' && (
-          <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl p-5 flex flex-col justify-between">
-            <div className="flex justify-between items-start mb-2">
-              <div className="bg-[#1E293B] p-3 rounded-full">
-                <TrendingUp size={20} className="text-emerald-400" />
+          <div className="glass-panel rounded-3xl p-6 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-[40px] -z-10 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+            <div className="flex justify-between items-start mb-4 z-10">
+              <div className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                <TrendingUp size={22} className="text-emerald-400" />
               </div>
-              <div className="flex items-center text-emerald-400 text-xs font-bold">
-                <TrendingUp size={14} className="mr-1" /> +8.4%
+              <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                <Activity size={12} className="mr-1.5" /> High Retention
               </div>
             </div>
-            <p className="text-sm font-medium text-[var(--text-secondary)] mb-1">Avg. LTV</p>
-            <p className="text-3xl font-bold text-white">
-              ₹ {customers.length > 0 
-                ? Math.round(customers.reduce((sum, c) => sum + c.lifetimeRevenue, 0) / customers.length).toLocaleString() 
-                : 0}
-            </p>
+            <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-1">Avg. Lifetime Value</p>
+            {loading ? (
+               <div className="w-32 h-10 skeleton-shimmer rounded"></div>
+            ) : (
+               <p className="text-4xl font-extrabold text-white tracking-tight">
+                 ₹ {customers.length > 0 
+                   ? Math.round(customers.reduce((sum, c) => sum + c.lifetimeRevenue, 0) / customers.length).toLocaleString() 
+                   : 0}
+               </p>
+            )}
           </div>
         )}
-      </div>
+      </motion.div>
 
-      <div className="bg-[#151C2C] border border-[#1E293B] rounded-2xl overflow-hidden">
-        <div className="p-5 border-b border-[#1E293B] flex justify-between items-center">
-          <h2 className="text-lg font-bold text-white">Active Customers</h2>
+      <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-purple-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
+        
+        <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
+          <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DATABASE</h2>
+          <div className="flex items-center gap-2">
+            <span className="bg-purple-500/20 text-purple-400 border border-purple-500/30 text-[10px] font-extrabold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(192,132,252,0.2)] uppercase tracking-wider">
+              {customers.length} Profiles
+            </span>
+          </div>
         </div>
         
-        {loading ? (
-          <div className="text-center p-12 text-[var(--text-secondary)] animate-pulse">Loading customers...</div>
-        ) : (
-          <div className="divide-y divide-[#1E293B]">
-            {customers.map(customer => (
-              <div key={customer.id} className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-4">
-                   <div className="relative">
-                      <img src={`https://ui-avatars.com/api/?name=${customer.name}&background=1E293B&color=fff&rounded=true`} alt={customer.name} className="w-12 h-12 rounded-full border border-purple-500/50" />
-                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#151C2C] rounded-full"></div>
-                   </div>
-                   <div>
-                      <p className="font-bold text-white text-base">{customer.name}</p>
-                      <p className="text-xs text-[var(--text-secondary)] truncate w-40 md:w-auto">ID: {customer.id}</p>
-                   </div>
-                </div>
-
-                <div className="flex items-center gap-4 md:gap-8 ml-16 md:ml-0">
-                  <div className="flex items-center bg-[#1E293B] rounded-full pr-4 pl-1 py-1">
-                    <div className="bg-[#151C2C] text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mr-2">
-                       {customer.totalBookings}
-                    </div>
-                    <span className="text-xs text-[var(--text-secondary)] font-medium">Bookings</span>
-                  </div>
-
-                  {user?.role !== 'Viewer' && (
-                    <div className="flex items-center gap-4">
-                      <p className="font-bold text-emerald-400 whitespace-nowrap">₹ {customer.lifetimeRevenue.toLocaleString()}</p>
-                      <button 
-                        onClick={() => setSelectedCustomer(customer)}
-                        className="text-cyan-400 hover:text-white hover:bg-cyan-500/20 px-4 py-1.5 rounded-lg border border-cyan-500/30 transition-colors text-xs font-bold whitespace-nowrap"
-                      >
-                        View Profile
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-            {customers.length === 0 && (
-               <div className="p-12 text-center text-[var(--text-secondary)]">No customers found.</div>
-            )}
-            <div className="p-6 text-center">
-              <span className="text-[var(--text-secondary)] text-xs font-medium uppercase tracking-widest">End of list</span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {selectedCustomer && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] animate-in fade-in px-4">
-          <div className="bg-[#151C2C] border border-[#1E293B] p-6 rounded-3xl w-full max-w-sm shadow-2xl animate-in zoom-in-95">
-            <h2 className="text-xl font-bold mb-6 text-center text-white">Customer Profile</h2>
-            <div className="flex flex-col items-center gap-4">
-              <img src={`https://ui-avatars.com/api/?name=${selectedCustomer.name}&background=1E293B&color=fff&rounded=true&size=80`} alt={selectedCustomer.name} className="w-20 h-20 rounded-full border-2 border-purple-500/50" />
-              <div className="text-center w-full">
-                <p className="text-xl font-bold text-white">{selectedCustomer.name}</p>
-                <div className="mt-6 space-y-3 bg-[#0B1120] border border-[#1E293B] p-5 rounded-2xl text-left">
-                  <div>
-                    <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Email ID</span>
-                    <p className="text-sm font-medium text-white">{selectedCustomer.email || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Phone Number</span>
-                    <p className="text-sm font-medium text-white">{selectedCustomer.phone || 'N/A'}</p>
-                  </div>
-                  <div className="flex justify-between pt-4 mt-2 border-t border-[#1E293B]">
+        <div className="relative z-10">
+          {loading ? (
+            <div className="divide-y divide-[var(--border-subtle)]">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="p-6 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-full skeleton-shimmer"></div>
                     <div>
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Bookings</span>
-                      <p className="font-bold text-white text-lg">{selectedCustomer.totalBookings}</p>
+                      <div className="w-32 h-5 skeleton-shimmer mb-2 rounded"></div>
+                      <div className="w-24 h-3 skeleton-shimmer rounded"></div>
                     </div>
-                    <div className="text-right">
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">Lifetime Rev.</span>
-                      <p className="font-bold text-emerald-400 text-lg">₹ {selectedCustomer.lifetimeRevenue.toLocaleString()}</p>
+                  </div>
+                  <div className="w-24 h-8 skeleton-shimmer rounded-xl"></div>
+                </div>
+              ))}
+            </div>
+          ) : customers.length === 0 ? (
+             <div className="p-16 text-center text-[var(--text-secondary)] font-medium">No customers found.</div>
+          ) : (
+            <div className="divide-y divide-[var(--border-subtle)]">
+              <AnimatePresence>
+                {customers.map((customer, index) => (
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    key={customer.id} 
+                    className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/5 transition-colors group cursor-pointer"
+                    onClick={() => user?.role !== 'Viewer' && setSelectedCustomer(customer)}
+                  >
+                    <div className="flex items-center gap-5">
+                       <div className="relative shrink-0">
+                          <img src={`https://ui-avatars.com/api/?name=${customer.name}&background=0B1120&color=C084FC&rounded=true&bold=true`} alt={customer.name} className="w-14 h-14 rounded-full border-2 border-purple-500/30 group-hover:border-purple-400 transition-colors shadow-[0_0_15px_rgba(192,132,252,0.1)]" />
+                          <div className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-[var(--bg-base)] rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                       </div>
+                       <div>
+                          <p className="font-extrabold text-white text-lg tracking-tight group-hover:text-purple-400 transition-colors">{customer.name}</p>
+                          <p className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5 mt-0.5"><User size={12}/> ID: {customer.id}</p>
+                       </div>
+                    </div>
+
+                    <div className="flex items-center gap-6 md:gap-10">
+                      <div className="flex items-center bg-white/5 rounded-full pr-5 pl-1.5 py-1.5 border border-[var(--border-subtle)]">
+                        <div className="bg-[var(--bg-base)] text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold mr-3 border border-purple-500/20">
+                           {customer.totalBookings}
+                        </div>
+                        <span className="text-[10px] text-[var(--text-secondary)] font-extrabold uppercase tracking-widest">Sessions</span>
+                      </div>
+
+                      {user?.role !== 'Viewer' && (
+                        <div className="flex items-center gap-6">
+                          <div className="flex flex-col text-right">
+                             <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Lifetime Value</span>
+                             <p className="font-extrabold text-emerald-400 text-lg tracking-tight">₹ {customer.lifetimeRevenue.toLocaleString()}</p>
+                          </div>
+                          <motion.div 
+                            whileHover={{ x: 4 }}
+                            className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-white transition-all shadow-[0_0_15px_rgba(192,132,252,0.2)] hidden md:flex"
+                          >
+                            <ChevronRight size={18} />
+                          </motion.div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Premium Customer Profile Modal */}
+      <AnimatePresence>
+        {selectedCustomer && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl flex items-center justify-center z-[100] px-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              className="glass-panel border border-[var(--border-subtle)] p-8 rounded-3xl w-full max-w-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-cyan-500"></div>
+              
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Profile Overview</span>
+                <button onClick={() => setSelectedCustomer(null)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                  <X size={16} className="text-[var(--text-secondary)]" />
+                </button>
+              </div>
+
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-purple-500/20 blur-xl rounded-full"></div>
+                  <img src={`https://ui-avatars.com/api/?name=${selectedCustomer.name}&background=0B1120&color=C084FC&rounded=true&bold=true&size=100`} alt={selectedCustomer.name} className="w-24 h-24 rounded-full border-2 border-purple-400 shadow-[0_0_20px_rgba(192,132,252,0.4)] relative z-10" />
+                </div>
+                
+                <div className="text-center w-full">
+                  <p className="text-2xl font-light text-white tracking-tight">{selectedCustomer.name}</p>
+                  <p className="text-xs text-[var(--text-secondary)] font-medium mt-1">ID: {selectedCustomer.id}</p>
+                  
+                  <div className="mt-8 space-y-4 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] p-6 rounded-2xl text-left relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-400 to-cyan-500"></div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Mail size={16} className="text-[var(--text-secondary)]" />
+                      <div>
+                        <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">Email Address</span>
+                        <p className="text-sm font-medium text-white">{selectedCustomer.email || 'N/A'}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Phone size={16} className="text-[var(--text-secondary)]" />
+                      <div>
+                        <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">Phone Number</span>
+                        <p className="text-sm font-medium text-white">{selectedCustomer.phone || 'N/A'}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between pt-5 mt-3 border-t border-[var(--border-subtle)]">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                           <CalendarIcon size={16} />
+                        </div>
+                        <div>
+                          <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Sessions</span>
+                          <p className="font-extrabold text-white text-lg leading-none">{selectedCustomer.totalBookings}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 text-right">
+                        <div>
+                          <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Value</span>
+                          <p className="font-extrabold neon-text-cyan text-lg leading-none">₹ {selectedCustomer.lifetimeRevenue.toLocaleString()}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <button 
-              onClick={() => setSelectedCustomer(null)}
-              className="mt-6 w-full bg-[#1E293B] hover:bg-white/10 text-white py-3 rounded-xl font-bold transition-colors border border-[var(--border-color)]"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+              
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setSelectedCustomer(null)}
+                className="mt-6 w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-3.5 rounded-xl font-extrabold transition-all shadow-[0_0_20px_rgba(192,132,252,0.3)] tracking-wide"
+              >
+                Close Profile
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
