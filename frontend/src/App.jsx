@@ -192,8 +192,9 @@ const Dashboard = () => {
   const { user } = useAuth();
   const [timeframe, setTimeframe] = useState('7');
   const [chartData, setChartData] = useState([]);
-  const [stats, setStats] = useState({ revenue: 0, bookings: 0, customers: 0, tournaments: 0 });
+  const [stats, setStats] = useState({ revenue: 0, totalRevenue: 0, bookings: 0, customers: 0, tournaments: 0 });
   const [loading, setLoading] = useState(true);
+  const [revenueView, setRevenueView] = useState('today');
 
   useEffect(() => {
     const fetchAndProcessData = async () => {
@@ -236,12 +237,17 @@ const Dashboard = () => {
         
         const todayStr = new Date().toISOString().split('T')[0];
         let todayRev = 0;
+        let totalRev = 0;
         bookings.forEach(b => {
-           if (b.date === todayStr && b.status !== 'Cancelled') todayRev += Number(b.amount || 0);
+           if (b.status !== 'Cancelled') {
+             totalRev += Number(b.amount || 0);
+             if (b.date === todayStr) todayRev += Number(b.amount || 0);
+           }
         });
 
         setStats({
           revenue: todayRev,
+          totalRevenue: totalRev,
           bookings: bookings.length,
           customers: resCustomers.data.length,
           tournaments: resTournaments.data.filter(t => t.status === 'Upcoming').length || resTournaments.data.length
@@ -288,14 +294,22 @@ const Dashboard = () => {
             
             <div className="flex justify-between items-start mb-6 z-10">
                <div>
-                  <h3 className="text-[11px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">GROSS REVENUE</h3>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-[11px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">GROSS REVENUE</h3>
+                    <div className="flex bg-white/5 border border-[var(--border-subtle)] rounded-lg p-0.5">
+                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-white'}`}>Today</button>
+                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-white'}`}>All Time</button>
+                    </div>
+                  </div>
                   <div className="flex items-center gap-4">
                     {loading ? (
                       <div className="h-10 w-40 rounded bg-white/10 skeleton-shimmer"></div>
                     ) : (
                       <>
-                        <p className="text-4xl font-extrabold text-white tracking-tight">₹ {stats.revenue.toLocaleString()}</p>
-                        <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 border border-emerald-500/30 px-2.5 py-1 rounded-md tracking-wider flex items-center shadow-[0_0_10px_rgba(0,242,254,0.2)]">TODAY LIVE</span>
+                        <p className="text-4xl font-extrabold text-white tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
+                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider flex items-center border ${revenueView === 'today' ? 'text-emerald-400 bg-emerald-400/10 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]' : 'text-amber-400 bg-amber-400/10 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]'}`}>
+                          {revenueView === 'today' ? 'TODAY LIVE' : 'ALL TIME'}
+                        </span>
                       </>
                     )}
                   </div>
