@@ -47,7 +47,12 @@
   }
 
   .glass-panel-interactive {
-    @apply glass-panel transition-all duration-300 ease-out;
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    @apply transition-all duration-300 ease-out;
   }
   
   .glass-panel-interactive:hover {
