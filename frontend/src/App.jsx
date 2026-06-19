@@ -445,22 +445,7 @@ const Dashboard = () => {
         </motion.div>
       </div>
 
-      <motion.div variants={itemVariants} className="mb-6 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-white tracking-tight">Facility Showcase</h2>
-        <button className="text-emerald-400 text-sm font-bold hover:text-white transition-colors flex items-center gap-1 group">
-          View Gallery <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-        </button>
-      </motion.div>
 
-      <motion.div variants={itemVariants} className="relative rounded-3xl overflow-hidden h-48 md:h-72 group border border-[var(--border-subtle)] shadow-2xl">
-         <img src={boxCricketImg} alt="Box Cricket Venue" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/40 to-transparent opacity-80"></div>
-         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 bg-emerald-400/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-emerald-400/50 shadow-[0_0_30px_rgba(0,242,254,0.3)] cursor-pointer hover:bg-emerald-400/20 transition-all group-hover:-translate-y-2">
-            <div className="w-10 h-10 rounded-full border-2 border-emerald-400 flex items-center justify-center shadow-[0_0_15px_rgba(0,242,254,0.5)]">
-              <div className="w-4 h-4 bg-emerald-400 rounded-sm rotate-45 shadow-[0_0_10px_#00F2FE]"></div>
-            </div>
-         </div>
-      </motion.div>
     </motion.div>
   );
 };

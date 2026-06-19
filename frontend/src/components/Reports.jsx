@@ -101,58 +101,30 @@ export const Reports = () => {
             </div>
           </motion.div>
 
-          {/* Secondary Reports Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Bookings Report Card */}
-            <motion.div whileHover={{ y: -4 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl p-8 shadow-xl flex flex-col group">
-              <div className="w-12 h-12 bg-white/5 p-3 rounded-2xl border border-[var(--border-subtle)] mb-6 flex items-center justify-center group-hover:bg-white/10 transition-colors">
-                 <Calendar size={24} className="text-white" />
+          {/* Bookings Report Card */}
+          <motion.div whileHover={{ y: -4 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl p-8 shadow-xl flex flex-col group w-full">
+            <div className="w-12 h-12 bg-white/5 p-3 rounded-2xl border border-[var(--border-subtle)] mb-6 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+               <Calendar size={24} className="text-white" />
+            </div>
+            <h3 className="text-xl font-extrabold text-white mb-3">Bookings Report</h3>
+            <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 flex-1">
+               Utilization metrics across all courts and facilities. Identifies peak usage times and high-churn cancellation patterns.
+            </p>
+            <div className="flex justify-between items-center mb-6 pt-6 border-t border-[var(--border-subtle)]">
+               <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">DATA SCOPE</span>
+               <span className="text-xs font-extrabold text-white">31 Facilities</span>
+            </div>
+            <button 
+              onClick={() => handleDownload('/reports/bookings/pdf', 'bookings_report.pdf')}
+              className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-[var(--border-subtle)] text-white px-5 py-4 rounded-xl font-extrabold transition-colors group/btn"
+            >
+              <div className="flex items-center gap-3">
+                <Download size={18} className="text-amber-400" />
+                Download PDF
               </div>
-              <h3 className="text-xl font-extrabold text-white mb-3">Bookings Report</h3>
-              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 flex-1">
-                 Utilization metrics across all courts and facilities. Identifies peak usage times and high-churn cancellation patterns.
-              </p>
-              <div className="flex justify-between items-center mb-6 pt-6 border-t border-[var(--border-subtle)]">
-                 <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">DATA SCOPE</span>
-                 <span className="text-xs font-extrabold text-white">31 Facilities</span>
-              </div>
-              <button 
-                onClick={() => handleDownload('/reports/bookings/pdf', 'bookings_report.pdf')}
-                className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-[var(--border-subtle)] text-white px-5 py-4 rounded-xl font-extrabold transition-colors group/btn"
-              >
-                <div className="flex items-center gap-3">
-                  <Download size={18} className="text-amber-400" />
-                  Download PDF
-                </div>
-                <ChevronRight size={18} className="text-[var(--text-secondary)] group-hover/btn:text-white transition-colors group-hover/btn:translate-x-1" />
-              </button>
-            </motion.div>
-
-            {/* Platform Health Report Card */}
-            <motion.div whileHover={{ y: -4 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl p-8 shadow-xl flex flex-col group">
-              <div className="w-12 h-12 bg-emerald-500/10 p-3 rounded-2xl border border-emerald-500/20 mb-6 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-                 <RefreshCcw size={24} className="text-emerald-400" />
-              </div>
-              <h3 className="text-xl font-extrabold text-white mb-3">System Health</h3>
-              <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 flex-1">
-                 Uptime metrics, API response times, and error rates for the entire venue management infrastructure.
-              </p>
-              <div className="flex justify-between items-center mb-6 pt-6 border-t border-[var(--border-subtle)]">
-                 <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">STATUS</span>
-                 <span className="text-[10px] font-extrabold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">ALL SYSTEMS GO</span>
-              </div>
-              <button 
-                onClick={() => alert("Platform health dashboard coming soon.")}
-                className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-[var(--border-subtle)] text-white px-5 py-4 rounded-xl font-extrabold transition-colors group/btn"
-              >
-                <div className="flex items-center gap-3">
-                  <FileText size={18} className="text-emerald-400" />
-                  View Logs
-                </div>
-                <ChevronRight size={18} className="text-[var(--text-secondary)] group-hover/btn:text-white transition-colors group-hover/btn:translate-x-1" />
-              </button>
-            </motion.div>
-          </div>
+              <ChevronRight size={18} className="text-[var(--text-secondary)] group-hover/btn:text-white transition-colors group-hover/btn:translate-x-1" />
+            </button>
+          </motion.div>
         </div>
 
         {/* Revenue Report Card (Sidebar) */}
