@@ -178,7 +178,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // --- API for Booking ---
     app.get('/api/bookings', verifyToken, async (req, res) => {
       try {
-        const bookings = await db.all('SELECT * FROM bookings');
+        const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
         res.json(bookings);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -309,7 +309,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // --- API for Tournaments ---
     app.get('/api/tournaments', verifyToken, async (req, res) => {
       try {
-        const tournaments = await db.all('SELECT * FROM tournaments');
+        const tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
         res.json(tournaments);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -352,7 +352,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     app.get('/api/tournaments/:id/teams', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
-        const teams = await db.all('SELECT * FROM tournament_teams WHERE tournamentId = ?', [req.params.id]);
+        const teams = await db.all('SELECT id, tournamentid AS "tournamentId", userid AS "userId", teamname AS "teamName", playerscount AS "playersCount" FROM tournament_teams WHERE tournamentid = ?', [req.params.id]);
         res.json(teams);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -404,7 +404,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // --- API for Memberships ---
     app.get('/api/memberships', verifyToken, async (req, res) => {
       try {
-        const memberships = await db.all('SELECT * FROM memberships');
+        const memberships = await db.all('SELECT id, customername AS "customerName", phone, email, plantype AS "planType", startdate AS "startDate", enddate AS "endDate", amountpaid AS "amountPaid", status FROM memberships');
         res.json(memberships);
       } catch (err) {
         res.status(500).json({ error: err.message });
