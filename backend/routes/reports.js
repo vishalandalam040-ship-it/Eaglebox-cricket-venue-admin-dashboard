@@ -26,7 +26,7 @@ module.exports = (db) => {
   // GET /api/reports/revenue/pdf
   router.get('/revenue/pdf', authorizeRole(['Super Admin', 'Staff', 'Viewer']), async (req, res) => {
     try {
-      const bookings = await db.all('SELECT * FROM bookings WHERE status = "Confirmed"');
+      const bookings = await db.all('SELECT * FROM bookings WHERE status = \'Confirmed\'');
       const totalRevenue = bookings.reduce((sum, b) => sum + (b.amount || 0), 0);
 
       const doc = createPdfStream(res, 'Revenue Report');
