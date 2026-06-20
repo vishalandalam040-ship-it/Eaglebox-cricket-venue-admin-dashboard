@@ -229,8 +229,8 @@ export const Tournaments = () => {
                        </div>
                     </div>
                     
-                    {user?.role !== 'Viewer' && (
-                      <div className="flex flex-wrap gap-3 mt-4 xl:mt-0">
+                    <div className="flex flex-wrap gap-3 mt-4 xl:mt-0">
+                      {user?.role !== 'Viewer' && (
                         <motion.button 
                           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                           onClick={() => openManageModal(tournament.id)} 
@@ -238,15 +238,15 @@ export const Tournaments = () => {
                         >
                           Manage Rosters
                         </motion.button>
-                        <motion.button 
-                          whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                          onClick={() => openJoinModal(tournament.id)} 
-                          className="px-6 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-400 hover:text-black font-extrabold transition-all shadow-[0_0_15px_rgba(0,242,254,0.1)] text-xs uppercase tracking-wider"
-                        >
-                          Register Team
-                        </motion.button>
-                      </div>
-                    )}
+                      )}
+                      <motion.button 
+                        whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                        onClick={() => openJoinModal(tournament.id)} 
+                        className="px-6 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-400 hover:text-black font-extrabold transition-all shadow-[0_0_15px_rgba(0,242,254,0.1)] text-xs uppercase tracking-wider"
+                      >
+                        Register Team
+                      </motion.button>
+                    </div>
                  </div>
 
                  {/* Right Section - Stats Cards */}
