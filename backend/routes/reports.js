@@ -26,7 +26,7 @@ module.exports = (db) => {
   // GET /api/reports/revenue/pdf
   router.get('/revenue/pdf', authorizeRole(['Super Admin', 'Staff', 'Viewer']), async (req, res) => {
     try {
-      const bookings = await db.all('SELECT * FROM bookings WHERE status = \'Confirmed\'');
+      const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE status = \'Confirmed\'');
       const totalRevenue = bookings.reduce((sum, b) => sum + (b.amount || 0), 0);
 
       const doc = createPdfStream(res, 'Revenue Report');
@@ -55,7 +55,7 @@ module.exports = (db) => {
   // GET /api/reports/bookings/pdf
   router.get('/bookings/pdf', authorizeRole(['Super Admin', 'Staff', 'Viewer']), async (req, res) => {
     try {
-      const bookings = await db.all('SELECT * FROM bookings ORDER BY date DESC LIMIT 20');
+      const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings ORDER BY date DESC LIMIT 20');
 
       const doc = createPdfStream(res, 'Bookings Report');
 
@@ -77,7 +77,7 @@ module.exports = (db) => {
   // GET /api/reports/business-summary/pdf
   router.get('/business-summary/pdf', authorizeRole(['Super Admin']), async (req, res) => {
     try {
-      const bookings = await db.all('SELECT * FROM bookings');
+      const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
       const customers = await db.all('SELECT * FROM customers');
       const confirmedBookings = bookings.filter(b => b.status === "Confirmed");
       const totalRevenue = confirmedBookings.reduce((sum, b) => sum + (b.amount || 0), 0);

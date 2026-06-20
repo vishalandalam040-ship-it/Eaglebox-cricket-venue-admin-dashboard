@@ -210,7 +210,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     app.put('/api/bookings/:id', verifyToken, async (req, res) => {
       try {
-        const booking = await db.get('SELECT * FROM bookings WHERE id = ?', [req.params.id]);
+        const booking = await db.get('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE id = ?', [req.params.id]);
         if (!booking) return res.status(404).json({ error: 'Booking not found' });
         
         if (req.user.role === 'Viewer' && booking.userId !== req.user.id) {
@@ -250,7 +250,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // --- API for Customers ---
     app.get('/api/customers', verifyToken, async (req, res) => {
       try {
-        const bookings = await db.all('SELECT * FROM bookings');
+        const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
         const users = await db.all('SELECT * FROM users');
         
         const customerMap = {};
