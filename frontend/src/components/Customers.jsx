@@ -36,7 +36,7 @@ export const Customers = () => {
   return (
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Client <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Intelligence</span></h1>
+        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Client <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Intelligence</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Manage your venue community and loyalty data.</p>
       </motion.div>
 
@@ -55,7 +55,7 @@ export const Customers = () => {
           {loading ? (
              <div className="w-24 h-10 skeleton-shimmer rounded"></div>
           ) : (
-             <p className="text-4xl font-extrabold text-white tracking-tight">{customers.length}</p>
+             <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{customers.length}</p>
           )}
         </div>
 
@@ -74,7 +74,7 @@ export const Customers = () => {
             {loading ? (
                <div className="w-32 h-10 skeleton-shimmer rounded"></div>
             ) : (
-               <p className="text-4xl font-extrabold text-white tracking-tight">
+               <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">
                  ₹ {customers.length > 0 
                    ? Math.round(customers.reduce((sum, c) => sum + c.lifetimeRevenue, 0) / customers.length).toLocaleString() 
                    : 0}
@@ -87,7 +87,7 @@ export const Customers = () => {
       <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden relative">
         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-amber-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
         
-        <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
+        <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] backdrop-blur-md">
           <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DATABASE</h2>
           <div className="flex items-center gap-2">
             <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-extrabold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(192,132,252,0.2)] uppercase tracking-wider">
@@ -123,7 +123,7 @@ export const Customers = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                     key={customer.id} 
-                    className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/5 transition-colors group cursor-pointer"
+                    className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[var(--overlay-bg)] transition-colors group cursor-pointer"
                     onClick={() => user?.role !== 'Viewer' && setSelectedCustomer(customer)}
                   >
                     <div className="flex items-center gap-5">
@@ -132,14 +132,14 @@ export const Customers = () => {
                           <div className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-[var(--bg-base)] rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
                        </div>
                        <div>
-                          <p className="font-extrabold text-white text-lg tracking-tight group-hover:text-amber-400 transition-colors">{customer.name}</p>
+                          <p className="font-extrabold text-[var(--text-primary)] text-lg tracking-tight group-hover:text-amber-400 transition-colors">{customer.name}</p>
                           <p className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5 mt-0.5"><User size={12}/> ID: {customer.id}</p>
                        </div>
                     </div>
 
                     <div className="flex items-center gap-6 md:gap-10">
-                      <div className="flex items-center bg-white/5 rounded-full pr-5 pl-1.5 py-1.5 border border-[var(--border-subtle)]">
-                        <div className="bg-[var(--bg-base)] text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold mr-3 border border-amber-500/20">
+                      <div className="flex items-center bg-[var(--overlay-bg)] rounded-full pr-5 pl-1.5 py-1.5 border border-[var(--border-subtle)]">
+                        <div className="bg-[var(--bg-base)] text-[var(--text-primary)] w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold mr-3 border border-amber-500/20">
                            {customer.totalBookings}
                         </div>
                         <span className="text-[10px] text-[var(--text-secondary)] font-extrabold uppercase tracking-widest">Sessions</span>
@@ -153,7 +153,7 @@ export const Customers = () => {
                           </div>
                           <motion.div 
                             whileHover={{ x: 4 }}
-                            className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-white transition-all shadow-[0_0_15px_rgba(192,132,252,0.2)] hidden md:flex"
+                            className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-[var(--text-primary)] transition-all shadow-[0_0_15px_rgba(192,132,252,0.2)] hidden md:flex"
                           >
                             <ChevronRight size={18} />
                           </motion.div>
@@ -187,7 +187,7 @@ export const Customers = () => {
               
               <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Profile Overview</span>
-                <button onClick={() => setSelectedCustomer(null)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setSelectedCustomer(null)} className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={16} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
@@ -199,7 +199,7 @@ export const Customers = () => {
                 </div>
                 
                 <div className="text-center w-full">
-                  <p className="text-2xl font-light text-white tracking-tight">{selectedCustomer.name}</p>
+                  <p className="text-2xl font-light text-[var(--text-primary)] tracking-tight">{selectedCustomer.name}</p>
                   <p className="text-xs text-[var(--text-secondary)] font-medium mt-1">ID: {selectedCustomer.id}</p>
                   
                   <div className="mt-8 space-y-4 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] p-6 rounded-2xl text-left relative overflow-hidden">
@@ -209,7 +209,7 @@ export const Customers = () => {
                       <Mail size={16} className="text-[var(--text-secondary)]" />
                       <div>
                         <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">Email Address</span>
-                        <p className="text-sm font-medium text-white">{selectedCustomer.email || 'N/A'}</p>
+                        <p className="text-sm font-medium text-[var(--text-primary)]">{selectedCustomer.email || 'N/A'}</p>
                       </div>
                     </div>
                     
@@ -217,7 +217,7 @@ export const Customers = () => {
                       <Phone size={16} className="text-[var(--text-secondary)]" />
                       <div>
                         <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">Phone Number</span>
-                        <p className="text-sm font-medium text-white">{selectedCustomer.phone || 'N/A'}</p>
+                        <p className="text-sm font-medium text-[var(--text-primary)]">{selectedCustomer.phone || 'N/A'}</p>
                       </div>
                     </div>
                     
@@ -228,7 +228,7 @@ export const Customers = () => {
                         </div>
                         <div>
                           <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Sessions</span>
-                          <p className="font-extrabold text-white text-lg leading-none">{selectedCustomer.totalBookings}</p>
+                          <p className="font-extrabold text-[var(--text-primary)] text-lg leading-none">{selectedCustomer.totalBookings}</p>
                         </div>
                       </div>
                       
@@ -247,7 +247,7 @@ export const Customers = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedCustomer(null)}
-                className="mt-6 w-full bg-gradient-to-r from-amber-500 to-emerald-500 text-white py-3.5 rounded-xl font-extrabold transition-all shadow-[0_0_20px_rgba(192,132,252,0.3)] tracking-wide"
+                className="mt-6 w-full bg-gradient-to-r from-amber-500 to-emerald-500 text-[var(--text-primary)] py-3.5 rounded-xl font-extrabold transition-all shadow-[0_0_20px_rgba(192,132,252,0.3)] tracking-wide"
               >
                 Close Profile
               </motion.button>

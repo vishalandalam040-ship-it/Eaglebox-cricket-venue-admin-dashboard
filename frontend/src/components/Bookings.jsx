@@ -164,7 +164,7 @@ export const Bookings = () => {
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Active <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Bookings</span></h1>
+          <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Active <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Bookings</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage court reservations and schedule.</p>
         </div>
         
@@ -174,12 +174,12 @@ export const Bookings = () => {
               <CreditCard size={16} className="text-emerald-400" />
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate</span>
               <div className="w-px h-4 bg-[var(--border-subtle)]"></div>
-              <span className="text-xs font-bold text-white">₹</span>
+              <span className="text-xs font-bold text-[var(--text-primary)]">₹</span>
               <input 
                 type="number" 
                 value={hourlyRate}
                 onChange={e => setHourlyRate(e.target.value)}
-                className="w-14 bg-transparent border-none outline-none text-white font-extrabold text-sm"
+                className="w-14 bg-transparent border-none outline-none text-[var(--text-primary)] font-extrabold text-sm"
               />
               <button 
                 onClick={() => {
@@ -189,7 +189,7 @@ export const Bookings = () => {
                     .catch(() => setIsSavingRate(false));
                 }}
                 disabled={isSavingRate}
-                className="ml-1 p-1 hover:bg-white/10 text-emerald-400 rounded-md transition-colors disabled:opacity-50"
+                className="ml-1 p-1 hover:bg-[var(--overlay-hover)] text-emerald-400 rounded-md transition-colors disabled:opacity-50"
               >
                 {isSavingRate ? <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div> : <span className="text-xs font-bold">SAVE</span>}
               </button>
@@ -199,7 +199,7 @@ export const Bookings = () => {
               <CreditCard size={16} className="text-emerald-400" />
               <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Rate</span>
               <div className="w-px h-4 bg-[var(--border-subtle)]"></div>
-              <span className="text-white font-extrabold text-sm">₹ {hourlyRate} / hr</span>
+              <span className="text-[var(--text-primary)] font-extrabold text-sm">₹ {hourlyRate} / hr</span>
             </div>
           )}
           
@@ -217,7 +217,7 @@ export const Bookings = () => {
       <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden relative">
         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-emerald-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
         
-        <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
+        <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] backdrop-blur-md">
           <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">UPCOMING SCHEDULE</h2>
           <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-extrabold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(0,242,254,0.2)]">
             {bookings.length}
@@ -254,7 +254,7 @@ export const Bookings = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     key={booking.id} 
-                    className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-6 hover:bg-white/5 transition-colors group"
+                    className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-6 hover:bg-[var(--overlay-bg)] transition-colors group"
                   >
                     <div className="flex items-center gap-5">
                        <div className="relative shrink-0">
@@ -263,7 +263,7 @@ export const Bookings = () => {
                        </div>
                        <div>
                           <div className="flex items-center gap-3 mb-1">
-                             <p className="font-extrabold text-white text-lg tracking-tight">{booking.customerName}</p>
+                             <p className="font-extrabold text-[var(--text-primary)] text-lg tracking-tight">{booking.customerName}</p>
                              <span className={`px-2.5 py-1 rounded-md text-[9px] font-extrabold uppercase tracking-widest ${booking.status === 'Confirmed' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.2)]' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.2)]'}`}>
                                {booking.status}
                              </span>
@@ -281,14 +281,14 @@ export const Bookings = () => {
                     </div>
 
                     <div className="flex flex-wrap md:flex-nowrap items-center gap-4 xl:gap-8 justify-end">
-                      <div className="flex flex-wrap md:flex-nowrap items-center gap-6 bg-white/5 xl:bg-transparent p-4 xl:p-0 rounded-2xl border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
+                      <div className="flex flex-wrap md:flex-nowrap items-center gap-6 bg-[var(--overlay-bg)] xl:bg-transparent p-4 xl:p-0 rounded-2xl border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
                          <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
                             <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                               <CalendarIcon size={18} />
                             </div>
                             <div className="flex flex-col">
                               <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Date</span>
-                              <p className="text-sm font-bold text-white whitespace-nowrap">{booking.date}</p>
+                              <p className="text-sm font-bold text-[var(--text-primary)] whitespace-nowrap">{booking.date}</p>
                             </div>
                          </div>
                          
@@ -298,7 +298,7 @@ export const Bookings = () => {
                             </div>
                             <div className="flex flex-col">
                               <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Time</span>
-                              <p className="text-sm font-bold text-white whitespace-nowrap">{booking.time}{booking.endTime ? ` - ${booking.endTime}` : ''}</p>
+                              <p className="text-sm font-bold text-[var(--text-primary)] whitespace-nowrap">{booking.time}{booking.endTime ? ` - ${booking.endTime}` : ''}</p>
                             </div>
                          </div>
 
@@ -316,18 +316,18 @@ export const Bookings = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => sendWhatsApp(booking)}
-                            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/30 transition-all font-bold text-xs shadow-[0_0_10px_rgba(16,185,129,0.1)]"
+                            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-[var(--text-primary)] border border-emerald-500/30 transition-all font-bold text-xs shadow-[0_0_10px_rgba(16,185,129,0.1)]"
                           >
                             <MessageCircle size={16} /> WhatsApp
                           </motion.button>
                         )}
                         {user?.role !== 'Viewer' && (
-                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleEditClick(booking)} className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors border border-[var(--border-subtle)]">
+                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleEditClick(booking)} className="p-2.5 rounded-xl bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] text-[var(--text-primary)] transition-colors border border-[var(--border-subtle)]">
                             <Edit2 size={16} />
                           </motion.button>
                         )}
-                        {user?.role !== 'Viewer' && (
-                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleCancelBooking(booking.id)} className="p-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white transition-colors border border-rose-500/20">
+                        {user?.role !== 'Viewer' && booking.status !== 'Cancelled' && (
+                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleCancelBooking(booking.id)} className="p-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-[var(--text-primary)] transition-colors border border-rose-500/20">
                              <X size={16} />
                           </motion.button>
                         )}
@@ -360,10 +360,10 @@ export const Bookings = () => {
               
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-white tracking-tight">{isEditMode ? 'Edit' : 'New'} <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Booking</span></h2>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">{isEditMode ? 'Edit' : 'New'} <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Booking</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Schedule Court Time</p>
                 </div>
-                <button onClick={closeModal} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                <button onClick={closeModal} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
@@ -371,24 +371,24 @@ export const Bookings = () => {
               <form onSubmit={handleCreateBooking} className="flex flex-col gap-5">
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Customer Name</label>
-                  <input required type="text" value={newBooking.customerName} onChange={e => setNewBooking({...newBooking, customerName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="Enter full name" />
+                  <input required type="text" value={newBooking.customerName} onChange={e => setNewBooking({...newBooking, customerName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-[var(--text-primary)] font-medium transition-all" placeholder="Enter full name" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">WhatsApp Number</label>
-                  <input required type="tel" value={newBooking.phone} onChange={e => setNewBooking({...newBooking, phone: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-white font-medium transition-all" placeholder="10-digit number" />
+                  <input required type="tel" value={newBooking.phone} onChange={e => setNewBooking({...newBooking, phone: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[0_0_15px_rgba(0,242,254,0.1)] text-[var(--text-primary)] font-medium transition-all" placeholder="10-digit number" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Date</label>
-                    <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="date" value={newBooking.date} onChange={e => setNewBooking({...newBooking, date: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start</label>
-                    <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">End</label>
-                    <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
+                    <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                   </div>
                 </div>
                 
@@ -401,7 +401,7 @@ export const Bookings = () => {
                       <input required readOnly type="number" value={newBooking.amount} className="w-full bg-transparent border-none outline-none text-3xl font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] placeholder-emerald-900" placeholder="0" />
                     </div>
                     {user?.membership && !isDiscountApplied && (
-                      <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_15px_rgba(192,132,252,0.4)]">
+                      <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-[var(--text-primary)] font-bold text-xs uppercase tracking-wider transition-colors shadow-[0_0_15px_rgba(192,132,252,0.4)]">
                         Apply Discount
                       </button>
                     )}
@@ -414,7 +414,7 @@ export const Bookings = () => {
                 </div>
 
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={closeModal} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
+                  <button type="button" onClick={closeModal} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

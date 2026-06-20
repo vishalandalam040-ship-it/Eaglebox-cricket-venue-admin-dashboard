@@ -47,7 +47,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] cursor-pointer shrink-0" 
             onClick={() => setIsOpen(!isOpen)}
           >
-            <Trophy size={20} className="text-white" />
+            <Trophy size={20} className="text-[var(--text-primary)]" />
           </motion.div>
           
           <AnimatePresence>
@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex flex-col overflow-hidden whitespace-nowrap"
               >
-                 <h2 className="font-extrabold text-2xl tracking-tight text-white m-0">VenueOS</h2>
+                 <h2 className="font-extrabold text-2xl tracking-tight text-[var(--text-primary)] m-0">VenueOS</h2>
                  <span className="text-[9px] font-bold tracking-[0.2em] text-emerald-400 uppercase">Premium Edition</span>
               </motion.div>
             )}
@@ -73,10 +73,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <Link key={item.path} to={item.path}>
                 <motion.div 
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-emerald-500/10 border border-emerald-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-white/5 border border-transparent'}`}
+                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-emerald-500/10 border border-emerald-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-[var(--overlay-bg)] border border-transparent'}`}
                 >
                   {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-400 rounded-r-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
-                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-white'}`} />
+                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`} />
                   
                   <AnimatePresence>
                     {isOpen && (
@@ -84,7 +84,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                         initial={{ opacity: 0, width: 0 }}
                         animate={{ opacity: 1, width: 'auto' }}
                         exit={{ opacity: 0, width: 0 }}
-                        className={`font-semibold text-sm whitespace-nowrap ${isActive ? 'text-white' : 'text-[var(--text-secondary)] group-hover:text-white'}`}
+                        className={`font-semibold text-sm whitespace-nowrap ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`}
                       >
                         {item.name}
                       </motion.span>
@@ -126,7 +126,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             return (
               <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1 relative group">
                 {isActive && <div className="absolute -top-2 w-8 h-1 bg-emerald-400 rounded-b-full shadow-[0_0_10px_rgba(16,185,129,0.8)]" />}
-                <Icon size={22} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-white transition-colors'} />
+                <Icon size={22} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
                 <span className={`text-[9px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
@@ -295,7 +295,7 @@ const Topbar = () => {
                         <div 
                           key={idx}
                           onClick={() => handleNotificationClick(n.path, n.id)}
-                          className="p-4 border-b border-[var(--border-subtle)] hover:bg-white/5 cursor-pointer transition-colors"
+                          className="p-4 border-b border-[var(--border-subtle)] hover:bg-[var(--overlay-bg)] cursor-pointer transition-colors"
                         >
                           <p className="text-xs font-bold text-[var(--accent-emerald)] mb-1">{n.title}</p>
                           <p className="text-sm font-medium text-[var(--text-primary)]">{n.desc}</p>
@@ -316,7 +316,7 @@ const Topbar = () => {
              <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
              <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-[var(--text-primary)] font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
@@ -329,10 +329,10 @@ const Topbar = () => {
 const StatCardSkeleton = () => (
   <div className="glass-panel rounded-2xl p-6 h-32 flex flex-col justify-between">
     <div className="flex items-center gap-2 mb-2">
-      <div className="w-4 h-4 rounded bg-white/10 skeleton-shimmer"></div>
-      <div className="h-3 w-24 rounded bg-white/10 skeleton-shimmer"></div>
+      <div className="w-4 h-4 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
+      <div className="h-3 w-24 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
     </div>
-    <div className="h-8 w-20 rounded bg-white/10 skeleton-shimmer mt-auto"></div>
+    <div className="h-8 w-20 rounded bg-[var(--overlay-hover)] skeleton-shimmer mt-auto"></div>
   </div>
 );
 
@@ -431,7 +431,7 @@ const Dashboard = () => {
       className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
     >
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Overview</span></h1>
+        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Overview</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
       </motion.div>
 
@@ -444,17 +444,17 @@ const Dashboard = () => {
                <div>
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="text-[11px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">GROSS REVENUE</h3>
-                    <div className="flex bg-white/5 border border-[var(--border-subtle)] rounded-lg p-0.5">
-                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-white'}`}>Today</button>
-                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-white'}`}>All Time</button>
+                    <div className="flex bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-lg p-0.5">
+                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Today</button>
+                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>All Time</button>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     {loading ? (
-                      <div className="h-10 w-40 rounded bg-white/10 skeleton-shimmer"></div>
+                      <div className="h-10 w-40 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
                     ) : (
                       <>
-                        <p className="text-4xl font-extrabold text-white tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
+                        <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
                         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider flex items-center border ${revenueView === 'today' ? 'text-emerald-400 bg-emerald-400/10 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]' : 'text-amber-400 bg-amber-400/10 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]'}`}>
                           {revenueView === 'today' ? 'TODAY LIVE' : 'ALL TIME'}
                         </span>
@@ -462,15 +462,15 @@ const Dashboard = () => {
                     )}
                   </div>
                </div>
-               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-xl px-3 py-2 cursor-pointer hover:bg-white/5 transition-all z-20">
+               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-xl px-3 py-2 cursor-pointer hover:bg-[var(--overlay-bg)] transition-all z-20">
                  <Calendar size={16} className="text-emerald-400" />
                  <select 
                    value={timeframe} 
                    onChange={(e) => setTimeframe(e.target.value)}
-                   className="bg-transparent text-xs font-bold text-white outline-none cursor-pointer appearance-none pr-4"
+                   className="bg-transparent text-xs font-bold text-[var(--text-primary)] outline-none cursor-pointer appearance-none pr-4"
                  >
-                   <option value="7" className="bg-[var(--bg-base)] text-white">Last 7 Days</option>
-                   <option value="30" className="bg-[var(--bg-base)] text-white">Last 30 Days</option>
+                   <option value="7" className="bg-[var(--bg-base)] text-[var(--text-primary)]">Last 7 Days</option>
+                   <option value="30" className="bg-[var(--bg-base)] text-[var(--text-primary)]">Last 30 Days</option>
                  </select>
                </div>
             </div>
@@ -478,7 +478,7 @@ const Dashboard = () => {
             <div className="flex-1 -mx-6 -mb-6 mt-4 relative z-0">
                <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/5 to-transparent z-10 pointer-events-none"></div>
                {loading ? (
-                 <div className="w-full h-full bg-white/5 skeleton-shimmer opacity-50"></div>
+                 <div className="w-full h-full bg-[var(--overlay-bg)] skeleton-shimmer opacity-50"></div>
                ) : (
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
@@ -525,7 +525,7 @@ const Dashboard = () => {
                         <Calendar size={16} className="text-emerald-400" />
                         <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOTAL BOOKINGS</h3>
                      </div>
-                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.bookings}</p>
+                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.bookings}</p>
                    </div>
                    <div className="w-12 h-12 rounded-full bg-emerald-400/10 flex items-center justify-center">
                      <ChevronRight size={20} className="text-emerald-400 opacity-50" />
@@ -538,7 +538,7 @@ const Dashboard = () => {
                         <Users size={16} className="text-amber-400" />
                         <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded ml-2 shadow-[0_0_8px_rgba(192,132,252,0.3)]">LIVE</span></h3>
                      </div>
-                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.customers}</p>
+                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.customers}</p>
                    </div>
                 </motion.div>
 
@@ -548,7 +548,7 @@ const Dashboard = () => {
                         <Trophy size={16} className="text-emerald-400" />
                         <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOURNAMENTS</h3>
                      </div>
-                     <p className="text-4xl font-extrabold text-white tracking-tight">{stats.tournaments}</p>
+                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.tournaments}</p>
                    </div>
                 </motion.div>
               </>
@@ -569,7 +569,7 @@ const Dashboard = () => {
                 <BrainCircuit size={24} className="text-emerald-400" />
               </motion.div>
               <div>
-                <h3 className="text-xl font-extrabold text-white leading-tight">Neural Insights</h3>
+                <h3 className="text-xl font-extrabold text-[var(--text-primary)] leading-tight">Neural Insights</h3>
                 <p className="text-[9px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_5px_#00F2FE]"></span>
                   SYSTEM THINKING
@@ -578,12 +578,12 @@ const Dashboard = () => {
             </div>
 
             <div className="space-y-4 relative z-10">
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
                  <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400 shadow-[0_0_10px_#00F2FE]"></div>
-                 <p className="text-sm text-white leading-relaxed mb-4 font-medium">
+                 <p className="text-sm text-[var(--text-primary)] leading-relaxed mb-4 font-medium">
                    Peak utilization detected between <br/><span className="text-emerald-400 font-bold text-base">18:00 - 21:00</span>.
                  </p>
-                 <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                 <div className="w-full h-1.5 bg-[var(--overlay-hover)] rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: "75%" }}
@@ -593,13 +593,13 @@ const Dashboard = () => {
                  </div>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
                  <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 shadow-[0_0_10px_#C084FC]"></div>
                  <p className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                     Actionable Recommendation
                  </p>
                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-medium">
-                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-white bg-amber-500/20 px-1 rounded">~14%</span>.
+                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-[var(--text-primary)] bg-amber-500/20 px-1 rounded">~14%</span>.
                  </p>
               </motion.div>
             </div>

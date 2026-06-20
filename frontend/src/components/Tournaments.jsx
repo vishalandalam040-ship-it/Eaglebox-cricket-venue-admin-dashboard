@@ -150,7 +150,7 @@ export const Tournaments = () => {
              </div>
              <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em]">Tournament Center</span>
           </div>
-          <h2 className="text-4xl font-light text-white mb-4 tracking-tight">Host Professional <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Esports & Events</span></h2>
+          <h2 className="text-4xl font-light text-[var(--text-primary)] mb-4 tracking-tight">Host Professional <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Esports & Events</span></h2>
           <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl">Elevate your venue with full-scale tournament management. From registration to live fixtures, handle everything in one intelligence-driven dashboard.</p>
           
           <div className="flex flex-wrap gap-4">
@@ -168,7 +168,7 @@ export const Tournaments = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href={`${import.meta.env.BASE_URL}tournament_rules.pdf`} download="Tournament_Rules.pdf" 
-              className="glass-panel px-6 py-3 rounded-xl font-extrabold transition-all border border-[var(--border-subtle)] text-white hover:bg-white/5 flex items-center justify-center gap-2"
+              className="glass-panel px-6 py-3 rounded-xl font-extrabold transition-all border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] flex items-center justify-center gap-2"
             >
               Download Policy
             </motion.a>
@@ -180,7 +180,7 @@ export const Tournaments = () => {
       <motion.div variants={itemVariants} className="mb-6 flex justify-between items-end">
          <div className="flex flex-col">
             <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-1">Live Feed</h3>
-            <h2 className="text-xl font-bold text-white tracking-tight">Active Tournaments</h2>
+            <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">Active Tournaments</h2>
          </div>
       </motion.div>
 
@@ -215,14 +215,14 @@ export const Tournaments = () => {
                          <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">ID: {tournament.id}</span>
                        </div>
                        
-                       <h3 className="text-3xl font-extrabold text-white mb-3 tracking-tight">{tournament.name}</h3>
+                       <h3 className="text-3xl font-extrabold text-[var(--text-primary)] mb-3 tracking-tight">{tournament.name}</h3>
                        
                        <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-[var(--text-secondary)] mb-6">
-                          <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
+                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
                              <Calendar size={14} className="text-emerald-400" /> 
                              {new Date(tournament.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                           </div>
-                          <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
+                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
                              <Users size={14} className="text-amber-400" /> 
                              Main Arena
                           </div>
@@ -234,7 +234,7 @@ export const Tournaments = () => {
                         <motion.button 
                           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                           onClick={() => openManageModal(tournament.id)} 
-                          className="px-6 py-2.5 rounded-xl border border-[var(--border-subtle)] bg-white/5 hover:bg-white/10 text-white font-bold transition-colors text-xs uppercase tracking-wider"
+                          className="px-6 py-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] text-[var(--text-primary)] font-bold transition-colors text-xs uppercase tracking-wider"
                         >
                           Manage Rosters
                         </motion.button>
@@ -257,11 +257,11 @@ export const Tournaments = () => {
                        <div>
                           <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Users size={12} className="text-amber-400"/> REGISTERED TEAMS</h4>
                           <div className="flex items-baseline gap-2 mb-6">
-                             <span className="text-5xl font-extrabold text-white tracking-tighter">{tournament.teams}</span>
+                             <span className="text-5xl font-extrabold text-[var(--text-primary)] tracking-tighter">{tournament.teams}</span>
                              <span className="text-sm font-bold text-[var(--text-secondary)]">/ {tournament.maxTeams || 16}</span>
                           </div>
                        </div>
-                       <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                       <div className="w-full bg-[var(--overlay-bg)] h-1.5 rounded-full overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(tournament.teams / (tournament.maxTeams || 16)) * 100}%` }}
@@ -276,7 +276,7 @@ export const Tournaments = () => {
                        <div className="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
                        <div>
                           <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Trophy size={12} className="text-amber-400"/> PRIZE POOL</h4>
-                          <p className="text-3xl font-extrabold text-white flex items-baseline gap-1 mb-1 tracking-tight">
+                          <p className="text-3xl font-extrabold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
                             <span className="text-sm text-amber-400">₹</span> {tournament.prizePool.toLocaleString()}
                           </p>
                           <p className="text-[10px] font-bold text-[var(--text-secondary)]">Winner takes 60%</p>
@@ -291,7 +291,7 @@ export const Tournaments = () => {
                        <div className="absolute top-0 left-0 w-full h-1 bg-emerald-400"></div>
                        <div>
                           <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Plus size={12} className="text-emerald-400"/> REGISTRATION FEE</h4>
-                          <p className="text-3xl font-extrabold text-white flex items-baseline gap-1 mb-1 tracking-tight">
+                          <p className="text-3xl font-extrabold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
                             <span className="text-sm text-emerald-400">₹</span> {(tournament.entryFee || 0).toLocaleString()}
                           </p>
                           <p className="text-[10px] font-bold text-[var(--text-secondary)]">Per team base rate</p>
@@ -312,38 +312,38 @@ export const Tournaments = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-blue-500"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-white tracking-tight">New <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tournament</span></h2>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">New <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tournament</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Configure Event Parameters</p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
               <form onSubmit={handleCreateTournament} className="flex flex-col gap-5">
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Tournament Name</label>
-                  <input required type="text" value={newTournament.name} onChange={e => setNewTournament({...newTournament, name: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium transition-all" placeholder="e.g. Champions League 2024" />
+                  <input required type="text" value={newTournament.name} onChange={e => setNewTournament({...newTournament, name: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium transition-all" placeholder="e.g. Champions League 2024" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start Date</label>
-                  <input required type="date" value={newTournament.startDate} onChange={e => setNewTournament({...newTournament, startDate: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium [color-scheme:dark]" />
+                  <input required type="date" value={newTournament.startDate} onChange={e => setNewTournament({...newTournament, startDate: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Prize Pool (₹)</label>
-                    <input required type="number" value={newTournament.prizePool} onChange={e => setNewTournament({...newTournament, prizePool: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium" placeholder="50000" />
+                    <input required type="number" value={newTournament.prizePool} onChange={e => setNewTournament({...newTournament, prizePool: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="50000" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Entry Fee (₹)</label>
-                    <input required type="number" value={newTournament.entryFee} onChange={e => setNewTournament({...newTournament, entryFee: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium" placeholder="2500" />
+                    <input required type="number" value={newTournament.entryFee} onChange={e => setNewTournament({...newTournament, entryFee: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="2500" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Max Teams</label>
-                  <input required type="number" min="2" value={newTournament.maxTeams} onChange={e => setNewTournament({...newTournament, maxTeams: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-medium" placeholder="16" />
+                  <input required type="number" min="2" value={newTournament.maxTeams} onChange={e => setNewTournament({...newTournament, maxTeams: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="16" />
                 </div>
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
                   <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 text-black font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] transition-all">
                     Initialize
                   </motion.button>
@@ -361,21 +361,21 @@ export const Tournaments = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-white tracking-tight">Register <span className="font-extrabold text-amber-400">Team</span></h2>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Register <span className="font-extrabold text-amber-400">Team</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Secure your tournament slot</p>
                 </div>
-                <button onClick={() => setIsJoinModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsJoinModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
               <form onSubmit={handleJoinTeam} className="flex flex-col gap-5">
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Team Name</label>
-                  <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-white font-medium" placeholder="Thunderbolts" />
+                  <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="Thunderbolts" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
-                  <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => setNewTeam({...newTeam, playersCount: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-white font-medium" placeholder="11" />
+                  <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => setNewTeam({...newTeam, playersCount: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="11" />
                 </div>
                 <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 mt-2">
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
@@ -384,8 +384,8 @@ export const Tournaments = () => {
                   <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className="w-full bg-transparent border-none outline-none text-3xl font-extrabold text-amber-400 placeholder-amber-900" placeholder="0" />
                 </div>
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-amber-500 text-white font-extrabold shadow-[0_0_20px_rgba(192,132,252,0.4)] transition-all disabled:opacity-50 disabled:shadow-none">
+                  <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-amber-500 text-[var(--text-primary)] font-extrabold shadow-[0_0_20px_rgba(192,132,252,0.4)] transition-all disabled:opacity-50 disabled:shadow-none">
                     Confirm Registration
                   </motion.button>
                 </div>
@@ -401,10 +401,10 @@ export const Tournaments = () => {
             <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
               <div className="flex justify-between items-center mb-6 shrink-0">
                 <div>
-                  <h2 className="text-2xl font-light text-white tracking-tight">Manage <span className="font-extrabold text-emerald-400">Rosters</span></h2>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Manage <span className="font-extrabold text-emerald-400">Rosters</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Tournament Administration</p>
                 </div>
-                <button onClick={() => setIsManageModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsManageModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
@@ -413,7 +413,7 @@ export const Tournaments = () => {
                 <div className="mb-6 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex flex-col md:flex-row md:items-end gap-4 shrink-0">
                   <div className="flex-1">
                     <label className="block text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mb-2">Update Entry Fee (₹)</label>
-                    <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-white font-extrabold" />
+                    <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-extrabold" />
                   </div>
                   <button 
                     onClick={handleUpdateFee}
@@ -427,7 +427,7 @@ export const Tournaments = () => {
 
               <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 relative z-10">
                 {teams.length === 0 ? (
-                  <div className="py-12 text-center text-[var(--text-secondary)] font-medium bg-white/5 rounded-2xl border border-[var(--border-subtle)]">No squads registered yet.</div>
+                  <div className="py-12 text-center text-[var(--text-secondary)] font-medium bg-[var(--overlay-bg)] rounded-2xl border border-[var(--border-subtle)]">No squads registered yet.</div>
                 ) : (
                   <div className="space-y-3">
                     {teams.map((team, idx) => (
@@ -437,7 +437,7 @@ export const Tournaments = () => {
                              <Users size={16} />
                            </div>
                            <div>
-                             <p className="font-extrabold text-white text-base">{team.teamName}</p>
+                             <p className="font-extrabold text-[var(--text-primary)] text-base">{team.teamName}</p>
                              <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">ID: {team.id}</p>
                            </div>
                         </div>

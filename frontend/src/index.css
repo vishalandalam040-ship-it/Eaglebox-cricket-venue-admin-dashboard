@@ -21,6 +21,9 @@
     --accent-emerald: #10B981;
     --accent-amber: #F59E0B;
     --accent-rose: #F43F5E;
+    
+    --overlay-bg: rgba(255, 255, 255, 0.05);
+    --overlay-hover: rgba(255, 255, 255, 0.1);
   }
 
   :root.light {
@@ -34,6 +37,9 @@
     
     --border-subtle: rgba(0, 0, 0, 0.08);
     --border-glow: rgba(16, 185, 129, 0.4);
+    
+    --overlay-bg: rgba(0, 0, 0, 0.05);
+    --overlay-hover: rgba(0, 0, 0, 0.1);
   }
 
   body {

@@ -104,7 +104,7 @@ export const Memberships = () => {
       
       <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-white mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tiers</span></h1>
+          <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tiers</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage and monitor venue access and subscriber lifecycle.</p>
         </div>
         {user?.role !== 'Viewer' && (
@@ -134,12 +134,12 @@ export const Memberships = () => {
                  <div className="w-24 h-10 skeleton-shimmer rounded"></div>
               ) : (
                 <div className="flex items-baseline gap-2">
-                  <p className="text-4xl font-extrabold text-white tracking-tight">{memberships.length}</p>
+                  <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{memberships.length}</p>
                   <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">+12%</span>
                 </div>
               )}
             </div>
-            <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+            <div className="w-full h-1.5 rounded-full bg-[var(--overlay-bg)] overflow-hidden">
                <motion.div initial={{ width: 0 }} animate={{ width: "80%" }} className="bg-emerald-400 h-full w-full shadow-[0_0_10px_rgba(0,242,254,0.5)]"></motion.div>
             </div>
           </div>
@@ -164,7 +164,7 @@ export const Memberships = () => {
                 </div>
               )}
             </div>
-            <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+            <div className="w-full h-1.5 rounded-full bg-[var(--overlay-bg)] overflow-hidden">
                <motion.div initial={{ width: 0 }} animate={{ width: "75%" }} className="bg-amber-400 h-full shadow-[0_0_10px_rgba(192,132,252,0.5)]"></motion.div>
             </div>
           </div>
@@ -194,7 +194,7 @@ export const Memberships = () => {
                 </div>
               )}
             </div>
-            <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+            <div className="w-full h-1.5 rounded-full bg-[var(--overlay-bg)] overflow-hidden">
                <motion.div initial={{ width: 0 }} animate={{ width: "30%" }} className="bg-amber-500 h-full shadow-[0_0_10px_rgba(245,158,11,0.5)]"></motion.div>
             </div>
           </div>
@@ -206,7 +206,7 @@ export const Memberships = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-emerald-500/5 to-amber-500/5 z-0 blur-[100px]"></div>
           
           <div className="relative z-10 text-center mb-12">
-            <h2 className="text-3xl font-light text-white mb-2 tracking-tight">Tier <span className="font-extrabold text-emerald-400">Pricing</span></h2>
+            <h2 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Tier <span className="font-extrabold text-emerald-400">Pricing</span></h2>
             <p className="text-[var(--text-secondary)] font-medium text-sm">Choose a plan that fits your needs to unlock exclusive discounts.</p>
           </div>
           
@@ -215,7 +215,7 @@ export const Memberships = () => {
             <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden group">
                <div className="absolute top-0 left-0 w-full h-1 bg-slate-300"></div>
                <h3 className="text-xl font-extrabold text-slate-300 mb-2 uppercase tracking-[0.2em]">Silver</h3>
-               <p className="text-white font-extrabold text-4xl mb-6 tracking-tight">₹1,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Month</span></p>
+               <p className="text-[var(--text-primary)] font-extrabold text-4xl mb-6 tracking-tight">₹1,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Month</span></p>
                <div className="bg-slate-300/10 py-3 rounded-xl border border-slate-300/20 text-slate-300 font-extrabold text-xs uppercase tracking-wider">10% Off Bookings</div>
             </motion.div>
             
@@ -224,7 +224,7 @@ export const Memberships = () => {
                <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-black text-[9px] font-extrabold px-4 py-1 rounded-full uppercase tracking-widest shadow-lg">Most Popular</div>
                <h3 className="text-xl font-extrabold text-amber-400 mb-2 uppercase tracking-[0.2em] mt-2">Gold</h3>
-               <p className="text-white font-extrabold text-4xl mb-6 tracking-tight">₹2,500 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 3 Months</span></p>
+               <p className="text-[var(--text-primary)] font-extrabold text-4xl mb-6 tracking-tight">₹2,500 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 3 Months</span></p>
                <div className="bg-amber-500/10 py-3 rounded-xl border border-amber-500/20 text-amber-400 font-extrabold text-xs uppercase tracking-wider">15% Off Bookings</div>
             </motion.div>
             
@@ -232,7 +232,7 @@ export const Memberships = () => {
             <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden group">
                <div className="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
                <h3 className="text-xl font-extrabold text-amber-400 mb-2 uppercase tracking-[0.2em]">Platinum</h3>
-               <p className="text-white font-extrabold text-4xl mb-6 tracking-tight">₹8,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Year</span></p>
+               <p className="text-[var(--text-primary)] font-extrabold text-4xl mb-6 tracking-tight">₹8,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Year</span></p>
                <div className="bg-amber-500/10 py-3 rounded-xl border border-amber-500/20 text-amber-400 font-extrabold text-xs uppercase tracking-wider">20% Off Bookings</div>
             </motion.div>
           </div>
@@ -241,7 +241,7 @@ export const Memberships = () => {
       <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden shadow-2xl relative">
         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-emerald-500/5 to-transparent z-0 opacity-50 pointer-events-none"></div>
 
-        <div className="p-5 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-white/5 backdrop-blur-md">
+        <div className="p-5 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] backdrop-blur-md">
            <h2 className="text-xs font-extrabold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DIRECTORY</h2>
         </div>
         
@@ -295,13 +295,13 @@ export const Memberships = () => {
                          animate={{ opacity: 1, x: 0 }}
                          transition={{ delay: index * 0.05 }}
                          key={member.id} 
-                         className="hover:bg-white/5 transition-colors group"
+                         className="hover:bg-[var(--overlay-bg)] transition-colors group"
                        >
                           <td className="px-8 py-5">
                              <div className="flex items-center gap-4">
                                 <img src={`https://ui-avatars.com/api/?name=${member.customerName}&background=0B1120&color=fff&rounded=true&bold=true`} alt={member.customerName} className="w-12 h-12 rounded-full border border-[var(--border-subtle)]" />
                                 <div>
-                                   <p className="font-extrabold text-white text-base tracking-tight">{member.customerName}</p>
+                                   <p className="font-extrabold text-[var(--text-primary)] text-base tracking-tight">{member.customerName}</p>
                                    <div className="flex items-center gap-2 mt-0.5">
                                       <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1"><User size={10}/> #{member.id}</span>
                                       <span className="w-1 h-1 rounded-full bg-[var(--border-subtle)]"></span>
@@ -318,7 +318,7 @@ export const Memberships = () => {
                           <td className="px-8 py-5">
                              <div className="flex items-center gap-2 mb-1.5">
                                <Calendar size={14} className="text-[var(--text-secondary)]" />
-                               <p className="text-sm font-bold text-white tracking-tight">
+                               <p className="text-sm font-bold text-[var(--text-primary)] tracking-tight">
                                  {new Date(member.startDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })} <span className="text-[var(--text-secondary)] font-normal mx-1">→</span> {new Date(member.endDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
                                </p>
                              </div>
@@ -366,10 +366,10 @@ export const Memberships = () => {
               
               <div className="flex justify-between items-center mb-8">
                  <div>
-                   <h2 className="text-2xl font-light text-white tracking-tight">Grant <span className="font-extrabold text-amber-400">Membership</span></h2>
+                   <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Grant <span className="font-extrabold text-amber-400">Membership</span></h2>
                    <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Activate Subscription</p>
                  </div>
-                 <button onClick={() => setShowModal(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors border border-[var(--border-subtle)]">
+                 <button onClick={() => setShowModal(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                    <X size={18} className="text-[var(--text-secondary)]" />
                  </button>
               </div>
@@ -377,22 +377,22 @@ export const Memberships = () => {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Customer Name</label>
-                  <input required type="text" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-white font-medium transition-colors" value={formData.customerName} onChange={e => setFormData({...formData, customerName: e.target.value})} placeholder="Enter full name" />
+                  <input required type="text" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium transition-colors" value={formData.customerName} onChange={e => setFormData({...formData, customerName: e.target.value})} placeholder="Enter full name" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Email</label>
-                    <input required type="email" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-white font-medium" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="abc@xyz.com" />
+                    <input required type="email" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="abc@xyz.com" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Phone</label>
-                    <input required type="text" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-white font-medium" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="Phone number" />
+                    <input required type="text" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="Phone number" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Tier Assignment</label>
                   <div className="relative">
-                    <select className="w-full bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 outline-none focus:border-amber-500/50 text-white font-extrabold appearance-none shadow-[0_0_15px_rgba(0,0,0,0.5)]" value={formData.planType} onChange={handlePlanChange}>
+                    <select className="w-full bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-xl px-4 py-3.5 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-extrabold appearance-none shadow-[0_0_15px_rgba(0,0,0,0.5)]" value={formData.planType} onChange={handlePlanChange}>
                       <option value="Silver (1 Month)" className="bg-[var(--bg-base)]">Silver Core (₹1,000 / mo)</option>
                       <option value="Gold (3 Months)" className="bg-[var(--bg-base)] text-amber-400">Gold Pro (₹2,500 / 3 mo)</option>
                       <option value="Platinum (1 Year)" className="bg-[var(--bg-base)] text-amber-400">Platinum Elite (₹8,000 / yr)</option>
@@ -404,7 +404,7 @@ export const Memberships = () => {
                 </div>
                 
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={() => setShowModal(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-white font-bold hover:bg-white/5 transition-colors">Cancel</button>
+                  <button type="button" onClick={() => setShowModal(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
                   <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 text-black font-extrabold shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2">
                     <ShieldCheck size={18} /> Confirm & Pay
                   </motion.button>

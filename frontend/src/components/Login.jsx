@@ -81,7 +81,7 @@ export const Login = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-black/5 dark:bg-white/10 border-none rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-[var(--text-primary)]"
+              className="w-full bg-black/5 dark:bg-[var(--overlay-hover)] border-none rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-[var(--text-primary)]"
               placeholder="admin@venueos.com"
             />
           </div>
@@ -93,7 +93,7 @@ export const Login = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black/5 dark:bg-white/10 border-none rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-[var(--text-primary)]"
+              className="w-full bg-black/5 dark:bg-[var(--overlay-hover)] border-none rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-[var(--text-primary)]"
               placeholder="••••••••"
             />
           </div>
@@ -101,7 +101,7 @@ export const Login = () => {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full mt-2 bg-gradient-to-tr from-blue-500 to-amber-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="w-full mt-2 bg-gradient-to-tr from-blue-500 to-amber-500 text-[var(--text-primary)] font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
           </button>

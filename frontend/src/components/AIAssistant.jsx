@@ -33,7 +33,7 @@ export const AIAssistant = () => {
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-28 right-4 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-emerald-500 to-amber-500 rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:scale-105 transition-all duration-300 z-50 ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`fixed bottom-28 right-4 md:bottom-8 md:right-8 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-tr from-emerald-500 to-amber-500 rounded-full flex items-center justify-center text-[var(--text-primary)] shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:scale-105 transition-all duration-300 z-50 ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
       >
         <MessageSquare size={24} className="md:w-7 md:h-7" />
       </button>
@@ -43,7 +43,7 @@ export const AIAssistant = () => {
           <h3 className="font-bold text-lg flex items-center gap-2 m-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-amber-500">
             <Sparkles size={20} className="text-blue-500" /> Venue AI
           </h3>
-          <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-[var(--text-primary)]">
+          <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full hover:bg-black/10 dark:hover:bg-[var(--overlay-hover)] transition-colors text-[var(--text-primary)]">
             <X size={20} />
           </button>
         </div>
@@ -51,7 +51,7 @@ export const AIAssistant = () => {
         <div className="flex-1 p-5 overflow-y-auto flex flex-col gap-4">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}`}>
-              <div className={`p-4 rounded-2xl text-sm max-w-[85%] leading-relaxed ${msg.role === 'assistant' ? 'bg-black/5 dark:bg-white/10 text-[var(--text-primary)] rounded-tl-sm' : 'bg-gradient-to-r from-blue-500 to-amber-500 text-white rounded-tr-sm shadow-md'}`}>
+              <div className={`p-4 rounded-2xl text-sm max-w-[85%] leading-relaxed ${msg.role === 'assistant' ? 'bg-black/5 dark:bg-[var(--overlay-hover)] text-[var(--text-primary)] rounded-tl-sm' : 'bg-gradient-to-r from-blue-500 to-amber-500 text-[var(--text-primary)] rounded-tr-sm shadow-md'}`}>
                 <ReactMarkdown
                   components={{
                     p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
@@ -68,7 +68,7 @@ export const AIAssistant = () => {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="p-4 rounded-2xl text-sm bg-black/5 dark:bg-white/10 rounded-tl-sm flex items-center gap-2">
+              <div className="p-4 rounded-2xl text-sm bg-black/5 dark:bg-[var(--overlay-hover)] rounded-tl-sm flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-blue-500 animate-bounce"></span>
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
                 <span className="w-2 h-2 rounded-full bg-pink-500 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
@@ -77,7 +77,7 @@ export const AIAssistant = () => {
           )}
         </div>
 
-        <form onSubmit={sendMessage} className="p-4 border-t border-[var(--border-color)] bg-black/5 dark:bg-white/5 flex gap-3 backdrop-blur-md">
+        <form onSubmit={sendMessage} className="p-4 border-t border-[var(--border-color)] bg-black/5 dark:bg-[var(--overlay-bg)] flex gap-3 backdrop-blur-md">
           <input 
             type="text" 
             value={input}
@@ -85,7 +85,7 @@ export const AIAssistant = () => {
             placeholder="Ask me anything..." 
             className="flex-1 bg-[var(--bg-color)] border border-[var(--border-color)] rounded-full px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-500/50 text-[var(--text-primary)] shadow-inner"
           />
-          <button type="submit" disabled={loading || !input.trim()} className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-500 to-amber-500 text-white flex items-center justify-center disabled:opacity-50 transition-opacity shadow-md">
+          <button type="submit" disabled={loading || !input.trim()} className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-500 to-amber-500 text-[var(--text-primary)] flex items-center justify-center disabled:opacity-50 transition-opacity shadow-md">
             <Send size={18} className="ml-1" />
           </button>
         </form>
