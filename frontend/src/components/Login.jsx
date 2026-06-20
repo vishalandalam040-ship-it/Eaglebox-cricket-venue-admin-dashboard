@@ -224,7 +224,7 @@ export const Login = () => {
               whileTap={{ scale: 0.98 }}
               type="submit" 
               disabled={loading}
-              className="w-full mt-4 bg-gradient-to-r from-[var(--button-gradient-from)] to-[var(--button-gradient-to)] text-[var(--button-text)] font-extrabold py-4 px-6 rounded-2xl shadow-[var(--button-shadow)] hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-lg"
+              className="btn-primary w-full mt-6 font-extrabold py-4 px-6 rounded-2xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-lg uppercase tracking-wide"
             >
               {loading ? (
                 <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
@@ -236,20 +236,22 @@ export const Login = () => {
             </motion.button>
           </motion.form>
 
-          <motion.div variants={itemVariants} className="mt-8 text-center">
+          <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-[var(--border-subtle)] text-center flex flex-col items-center gap-4">
             <p className="text-[var(--text-secondary)] font-medium">
-              {isLogin ? "Don't have an account? " : "Already have an account? "}
-              <button 
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  setError('');
-                  setSuccessMsg('');
-                }} 
-                className="text-[var(--accent-emerald)] font-bold hover:underline transition-all relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-500 hover:after:w-full after:transition-all after:duration-300"
-              >
-                {isLogin ? 'Sign up now' : 'Sign in'}
-              </button>
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
             </p>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setError('');
+                setSuccessMsg('');
+              }} 
+              className="px-6 py-3 rounded-xl bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] font-bold transition-all shadow-sm"
+            >
+              {isLogin ? 'Sign up now' : 'Sign in'}
+            </motion.button>
           </motion.div>
           
         </motion.div>

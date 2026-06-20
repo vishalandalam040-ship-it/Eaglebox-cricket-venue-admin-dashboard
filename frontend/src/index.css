@@ -126,6 +126,20 @@
     box-shadow: 0 0 10px rgba(16, 185, 129, 0.2), inset 0 0 10px rgba(16, 185, 129, 0.1);
   }
   
+  .btn-primary {
+    background: linear-gradient(to right, var(--button-gradient-from), var(--button-gradient-to));
+    color: var(--button-text);
+    box-shadow: var(--button-shadow);
+  }
+  
+  .btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+  }
+  
+  :root.light .btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+  }
+
   /* Skeleton Loader Animation */
   .skeleton-shimmer {
     background: var(--skeleton-bg);
