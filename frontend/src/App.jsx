@@ -139,36 +139,184 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
 const Topbar = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(true);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [hasUnread, setHasUnread] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setIsDark(savedTheme === 'dark');
+    if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.body.style.colorScheme = 'light';
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    if (newDark) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      document.body.style.colorScheme = 'dark';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.body.style.colorScheme = 'light';
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
+  useEffect(() => {
+    if (user?.role === 'Viewer') return;
+
+    const fetchNotifications = async () => {
+      try {
+        const bookingsRes = await api.get('/bookings');
+        const tournamentsRes = await api.get('/tournaments');
+        
+        let notifs = [];
+        
+        // Latest Booking
+        if (bookingsRes.data.length > 0) {
+          const latestBooking = bookingsRes.data[bookingsRes.data.length - 1];
+          notifs.push({
+            id: `booking-${latestBooking.id}`,
+            type: 'booking',
+            title: 'New Booking',
+            desc: `${latestBooking.customerName} booked for ${latestBooking.date}`,
+            time: new Date().getTime(), // In a real app we'd use creation timestamp
+            path: '/bookings'
+          });
+        }
+
+        // Latest Tournament Teams
+        const teamPromises = tournamentsRes.data.map(t => api.get(`/tournaments/${t.id}/teams`));
+        const allTeamsRes = await Promise.all(teamPromises);
+        
+        allTeamsRes.forEach((res, index) => {
+          const t = tournamentsRes.data[index];
+          if (res.data.length > 0) {
+            const latestTeam = res.data[res.data.length - 1];
+            notifs.push({
+              id: `team-${latestTeam.id}`,
+              type: 'team',
+              title: 'New Team Registration',
+              desc: `${latestTeam.teamName} joined ${t.name}`,
+              time: new Date().getTime() - 1000,
+              path: '/tournaments'
+            });
+          }
+        });
+
+        setNotifications(notifs);
+        
+        const lastSeen = localStorage.getItem('lastSeenNotifications');
+        if (!lastSeen || notifs.some(n => n.id !== lastSeen)) {
+          setHasUnread(true);
+        }
+      } catch (err) {
+        console.error("Failed to fetch notifications", err);
+      }
+    };
+
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 15000); // Poll every 15s
+    return () => clearInterval(interval);
+  }, [user]);
+
+  const handleNotificationClick = (path, id) => {
+    localStorage.setItem('lastSeenNotifications', id);
+    setHasUnread(false);
+    setShowNotifications(false);
+    navigate(path);
+  };
+
   return (
     <motion.div 
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex items-center justify-between p-6 sticky top-0 z-10 glass-panel border-b border-[var(--border-subtle)]"
+      className="flex items-center justify-between p-6 sticky top-0 z-40 glass-panel border-b border-[var(--border-subtle)]"
     >
       <div className="flex items-center md:hidden">
-        <Menu size={24} className="text-white mr-4" />
-        <h2 className="font-extrabold text-xl m-0 text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">VenueOS</h2>
+        <Menu size={24} className="text-[var(--text-primary)] mr-4" />
+        <h2 className="font-extrabold text-xl m-0 text-[var(--accent-emerald)] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">VenueOS</h2>
       </div>
       
-      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-emerald-500/50 focus-within:shadow-[0_0_15px_rgba(0,242,254,0.1)] transition-all duration-300">
+      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-[var(--accent-emerald)]/50 focus-within:shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all duration-300">
          <Search size={18} className="text-[var(--text-secondary)]" />
-         <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-white placeholder-[var(--text-secondary)] font-medium" />
+         <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)] font-medium" />
       </div>
 
-      <div className="flex items-center gap-5 ml-auto">
-        <button className="relative p-2 text-[var(--text-secondary)] hover:text-white transition-colors">
-          <Bell size={20} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span>
+      <div className="flex items-center gap-5 ml-auto relative">
+        <button onClick={toggleTheme} className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
+
+        {user?.role !== 'Viewer' && (
+          <div className="relative">
+            <button 
+              onClick={() => {
+                setShowNotifications(!showNotifications);
+                if (hasUnread) {
+                  setHasUnread(false);
+                  if (notifications.length > 0) {
+                    localStorage.setItem('lastSeenNotifications', notifications[0].id);
+                  }
+                }
+              }}
+              className="relative p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+            >
+              <Bell size={20} />
+              {hasUnread && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span>}
+            </button>
+
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  className="absolute right-0 mt-4 w-80 glass-panel border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden z-50 bg-[var(--bg-surface)]"
+                >
+                  <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-black/10">
+                    <h3 className="font-bold text-[var(--text-primary)]">Notifications</h3>
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-secondary)]">{notifications.length} New</span>
+                  </div>
+                  <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+                    {notifications.length === 0 ? (
+                      <div className="p-6 text-center text-sm font-medium text-[var(--text-secondary)]">No new alerts.</div>
+                    ) : (
+                      notifications.map((n, idx) => (
+                        <div 
+                          key={idx}
+                          onClick={() => handleNotificationClick(n.path, n.id)}
+                          className="p-4 border-b border-[var(--border-subtle)] hover:bg-white/5 cursor-pointer transition-colors"
+                        >
+                          <p className="text-xs font-bold text-[var(--accent-emerald)] mb-1">{n.title}</p>
+                          <p className="text-sm font-medium text-[var(--text-primary)]">{n.desc}</p>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
 
         <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-white group-hover:text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
-             <span className="text-[9px] font-extrabold text-emerald-400 uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
+             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
+             <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(0,242,254,0.3)] ring-2 ring-white/10 group-hover:ring-emerald-400/50 transition-all">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
@@ -522,8 +670,9 @@ const AppContent = () => {
 
 function App() {
   useEffect(() => {
-    document.body.style.colorScheme = 'dark';
-    document.documentElement.classList.add('dark');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.style.colorScheme = savedTheme;
+    document.documentElement.classList.add(savedTheme);
   }, []);
 
   return (

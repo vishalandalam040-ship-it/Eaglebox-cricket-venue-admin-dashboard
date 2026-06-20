@@ -23,6 +23,19 @@
     --accent-rose: #F43F5E;
   }
 
+  :root.light {
+    --bg-base: #F8FAFC; /* Slate 50 */
+    --bg-surface: rgba(255, 255, 255, 0.85); /* White glass */
+    --bg-surface-hover: rgba(241, 245, 249, 0.95); /* Slate 100 */
+    
+    --text-primary: #0F172A; /* Slate 900 */
+    --text-secondary: #64748B; /* Slate 500 */
+    --text-accent: #059669; /* Emerald 600 */
+    
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-glow: rgba(16, 185, 129, 0.4);
+  }
+
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
