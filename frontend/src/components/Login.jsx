@@ -238,7 +238,7 @@ export const Login = () => {
 
           <motion.div variants={itemVariants} className="mt-8 text-center">
             <p className="text-[var(--text-secondary)] font-medium">
-              {isLogin ? "System Access Required? " : "Returning Administrator? "}
+              {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button 
                 onClick={() => {
                   setIsLogin(!isLogin);
@@ -247,7 +247,7 @@ export const Login = () => {
                 }} 
                 className="text-[var(--accent-emerald)] font-bold hover:underline transition-all relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-500 hover:after:w-full after:transition-all after:duration-300"
               >
-                {isLogin ? 'Request Access' : 'Sign In Now'}
+                {isLogin ? 'Sign up now' : 'Sign in'}
               </button>
             </p>
           </motion.div>
