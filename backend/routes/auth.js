@@ -27,7 +27,7 @@ module.exports = (db) => {
       }
 
       // Fetch active membership for user
-      const membership = await db.get('SELECT planType FROM memberships WHERE email = ? AND status = \'Active\'', [email]);
+      const membership = await db.get('SELECT plantype AS "planType" FROM memberships WHERE email = ? AND status = \'Active\'', [email]);
 
       // Create JWT Payload
       const payload = {
