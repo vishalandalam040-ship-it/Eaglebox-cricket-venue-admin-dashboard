@@ -244,7 +244,7 @@ const Topbar = () => {
     >
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-[var(--text-primary)] mr-4" />
-        <h2 className="font-extrabold text-xl m-0 text-[var(--accent-emerald)] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">VenueOS</h2>
+        <h2 className="font-extrabold text-xl m-0 text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)]">VenueOS</h2>
       </div>
       
       <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-[var(--accent-emerald)]/50 focus-within:shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all duration-300">
@@ -272,7 +272,7 @@ const Topbar = () => {
               className="relative p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             >
               <Bell size={20} />
-              {hasUnread && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span>}
+              {hasUnread && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[var(--badge-glow-rose)]"></span>}
             </button>
 
             <AnimatePresence>
@@ -313,7 +313,7 @@ const Topbar = () => {
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
+             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
              <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
           </div>
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-[var(--text-primary)] font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
@@ -431,7 +431,7 @@ const Dashboard = () => {
       className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
     >
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Overview</span></h1>
+        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Overview</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
       </motion.div>
 
@@ -455,7 +455,7 @@ const Dashboard = () => {
                     ) : (
                       <>
                         <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
-                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider flex items-center border ${revenueView === 'today' ? 'text-emerald-400 bg-emerald-400/10 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]' : 'text-amber-400 bg-amber-400/10 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]'}`}>
+                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider flex items-center border ${revenueView === 'today' ? 'text-emerald-400 bg-emerald-400/10 border-emerald-500/30 shadow-[var(--badge-glow-emerald)]' : 'text-amber-400 bg-amber-400/10 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]'}`}>
                           {revenueView === 'today' ? 'TODAY LIVE' : 'ALL TIME'}
                         </span>
                       </>
@@ -564,7 +564,7 @@ const Dashboard = () => {
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/30 shadow-[0_0_20px_rgba(0,242,254,0.3)] flex items-center justify-center"
+                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/30 shadow-[var(--button-glow)] flex items-center justify-center"
               >
                 <BrainCircuit size={24} className="text-emerald-400" />
               </motion.div>

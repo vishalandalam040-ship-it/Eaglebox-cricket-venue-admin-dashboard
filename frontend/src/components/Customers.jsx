@@ -36,7 +36,7 @@ export const Customers = () => {
   return (
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Client <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Intelligence</span></h1>
+        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Client <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Intelligence</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Manage your venue community and loyalty data.</p>
       </motion.div>
 
@@ -47,7 +47,7 @@ export const Customers = () => {
             <div className="bg-[var(--bg-base)] p-3 rounded-2xl border border-amber-500/20 shadow-[0_0_15px_rgba(192,132,252,0.1)]">
               <Users size={22} className="text-amber-400" />
             </div>
-            <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+            <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[var(--badge-glow-emerald)]">
               <TrendingUp size={12} className="mr-1.5" /> +12% Growth
             </div>
           </div>
@@ -66,7 +66,7 @@ export const Customers = () => {
               <div className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                 <TrendingUp size={22} className="text-emerald-400" />
               </div>
-              <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+              <div className="flex items-center text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 shadow-[var(--badge-glow-emerald)]">
                 <Activity size={12} className="mr-1.5" /> High Retention
               </div>
             </div>
@@ -129,7 +129,7 @@ export const Customers = () => {
                     <div className="flex items-center gap-5">
                        <div className="relative shrink-0">
                           <img src={`https://ui-avatars.com/api/?name=${customer.name}&background=0B1120&color=C084FC&rounded=true&bold=true`} alt={customer.name} className="w-14 h-14 rounded-full border-2 border-amber-500/30 group-hover:border-amber-400 transition-colors shadow-[0_0_15px_rgba(192,132,252,0.1)]" />
-                          <div className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-[var(--bg-base)] rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                          <div className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-400 border-2 border-[var(--bg-base)] rounded-full shadow-[var(--badge-glow-emerald)]"></div>
                        </div>
                        <div>
                           <p className="font-extrabold text-[var(--text-primary)] text-lg tracking-tight group-hover:text-amber-400 transition-colors">{customer.name}</p>
@@ -181,7 +181,7 @@ export const Customers = () => {
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              className="glass-panel border border-[var(--border-subtle)] p-8 rounded-3xl w-full max-w-sm shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+              className="glass-panel border border-[var(--border-subtle)] p-8 rounded-3xl w-full max-w-sm shadow-[var(--modal-shadow)] relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-emerald-500"></div>
               
@@ -235,7 +235,7 @@ export const Customers = () => {
                       <div className="flex items-center gap-3 text-right">
                         <div>
                           <span className="block text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Value</span>
-                          <p className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] text-lg leading-none">₹ {selectedCustomer.lifetimeRevenue.toLocaleString()}</p>
+                          <p className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)] text-lg leading-none">₹ {selectedCustomer.lifetimeRevenue.toLocaleString()}</p>
                         </div>
                       </div>
                     </div>

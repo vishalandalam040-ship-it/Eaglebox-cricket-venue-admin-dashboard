@@ -6,6 +6,24 @@
 
 @layer base {
   :root {
+    --text-glow-emerald: 0 0 8px rgba(16,185,129,0.5);
+    --icon-glow-subtle: 0 0 15px rgba(0,242,254,0.1);
+    --icon-glow: 0 0 15px rgba(0,242,254,0.2);
+    --icon-glow-strong: 0 0 15px rgba(0,242,254,0.3);
+    --button-glow: 0 0 20px rgba(0,242,254,0.3);
+    --badge-glow-emerald: 0 0 10px rgba(16,185,129,0.2);
+    --badge-glow-rose: 0 0 10px rgba(244,63,94,0.2);
+    --badge-glow-amber: 0 0 10px rgba(245,158,11,0.2);
+    --bar-glow-amber: 0 0 10px rgba(192,132,252,0.8);
+    --button-glow-amber: 0 0 15px rgba(192,132,252,0.4);
+    --modal-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    --glass-shadow-hover: 0 8px 40px rgba(16, 185, 129, 0.1);
+    --skeleton-bg: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+
     /* Box Cricket Stadium Theme */
     --bg-base: #0F172A; /* Deep Night Sky */
     --bg-surface: rgba(30, 41, 59, 0.65); /* Slate 800 */
@@ -27,6 +45,24 @@
   }
 
   :root.light {
+    --text-glow-emerald: none;
+    --icon-glow-subtle: 0 4px 15px rgba(148, 163, 184, 0.2);
+    --icon-glow: 0 6px 20px rgba(148, 163, 184, 0.25);
+    --icon-glow-strong: 0 8px 25px rgba(148, 163, 184, 0.3);
+    --button-glow: 0 8px 25px rgba(16, 185, 129, 0.35);
+    --badge-glow-emerald: 0 2px 8px rgba(16, 185, 129, 0.15);
+    --badge-glow-rose: 0 2px 8px rgba(244, 63, 94, 0.15);
+    --badge-glow-amber: 0 2px 8px rgba(245, 158, 11, 0.15);
+    --bar-glow-amber: none;
+    --button-glow-amber: 0 8px 20px rgba(245, 158, 11, 0.3);
+    --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    --glass-shadow: 0 10px 40px rgba(148, 163, 184, 0.15);
+    --glass-shadow-hover: 0 15px 50px rgba(16, 185, 129, 0.15);
+    --skeleton-bg: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+    --scrollbar-track: rgba(0,0,0,0.02);
+    --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
+
     --bg-base: #F8FAFC; /* Slate 50 */
     --bg-surface: rgba(255, 255, 255, 0.85); /* White glass */
     --bg-surface-hover: rgba(241, 245, 249, 0.95); /* Slate 100 */
@@ -61,7 +97,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-subtle);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--glass-shadow);
   }
 
   .glass-panel-interactive {
@@ -69,7 +105,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-subtle);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--glass-shadow);
     @apply transition-all duration-300 ease-out;
   }
   
@@ -77,7 +113,7 @@
     background: var(--bg-surface-hover);
     border-color: var(--border-glow);
     transform: translateY(-2px);
-    box-shadow: 0 8px 40px rgba(16, 185, 129, 0.1);
+    box-shadow: var(--glass-shadow-hover);
   }
 
   .neon-text-emerald {
@@ -92,7 +128,7 @@
   
   /* Skeleton Loader Animation */
   .skeleton-shimmer {
-    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background: var(--skeleton-bg);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
   }
@@ -109,12 +145,12 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--scrollbar-thumb-hover);
 }

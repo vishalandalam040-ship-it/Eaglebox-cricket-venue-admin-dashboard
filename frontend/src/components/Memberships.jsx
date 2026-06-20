@@ -104,7 +104,7 @@ export const Memberships = () => {
       
       <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tiers</span></h1>
+          <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Tiers</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage and monitor venue access and subscriber lifecycle.</p>
         </div>
         {user?.role !== 'Viewer' && (
@@ -361,7 +361,7 @@ export const Memberships = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[var(--modal-shadow)] p-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-amber-600"></div>
               
               <div className="flex justify-between items-center mb-8">

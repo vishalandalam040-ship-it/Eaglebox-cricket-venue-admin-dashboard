@@ -39,7 +39,7 @@ export const Reports = () => {
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       
       <motion.div variants={itemVariants} className="mb-10">
-        <div className="flex items-center gap-2 mb-2 text-emerald-400 font-extrabold text-[10px] uppercase tracking-[0.2em] bg-emerald-500/10 w-fit px-3 py-1.5 rounded-md border border-emerald-500/20 shadow-[0_0_15px_rgba(0,242,254,0.1)]">
+        <div className="flex items-center gap-2 mb-2 text-emerald-400 font-extrabold text-[10px] uppercase tracking-[0.2em] bg-emerald-500/10 w-fit px-3 py-1.5 rounded-md border border-emerald-500/20 shadow-[var(--icon-glow-subtle)]">
            <BrainCircuit size={14} className="animate-pulse" /> INTELLIGENCE-DRIVEN INSIGHTS
         </div>
         <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400">Reports</span></h1>
@@ -93,7 +93,7 @@ export const Reports = () => {
                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                  onClick={() => handleDownload('/reports/business-summary/pdf', 'ai_business_summary.pdf')}
                  disabled={!['Super Admin'].includes(user?.role)}
-                 className="flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-400 to-blue-500 text-black px-8 py-3.5 rounded-xl font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                 className="flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-400 to-blue-500 text-black px-8 py-3.5 rounded-xl font-extrabold shadow-[var(--button-glow)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                >
                  <Download size={18} />
                  {['Super Admin'].includes(user?.role) ? 'Generate Report' : 'Access Denied'}

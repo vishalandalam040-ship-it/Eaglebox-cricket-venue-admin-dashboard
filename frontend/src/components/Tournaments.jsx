@@ -145,12 +145,12 @@ export const Tournaments = () => {
 
         <div className="relative z-10 max-w-2xl w-full">
           <div className="flex items-center gap-3 mb-4">
-             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/30 shadow-[0_0_15px_rgba(0,242,254,0.2)]">
+             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/30 shadow-[var(--icon-glow)]">
                 <Trophy size={20} />
              </div>
              <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em]">Tournament Center</span>
           </div>
-          <h2 className="text-4xl font-light text-[var(--text-primary)] mb-4 tracking-tight">Host Professional <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Esports & Events</span></h2>
+          <h2 className="text-4xl font-light text-[var(--text-primary)] mb-4 tracking-tight">Host Professional <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Esports & Events</span></h2>
           <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl">Elevate your venue with full-scale tournament management. From registration to live fixtures, handle everything in one intelligence-driven dashboard.</p>
           
           <div className="flex flex-wrap gap-4">
@@ -159,7 +159,7 @@ export const Tournaments = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-emerald-400 to-blue-500 hover:from-emerald-300 hover:to-blue-400 text-black px-6 py-3 rounded-xl font-extrabold transition-all shadow-[0_0_20px_rgba(0,242,254,0.3)] flex items-center justify-center gap-2"
+                className="bg-gradient-to-r from-emerald-400 to-blue-500 hover:from-emerald-300 hover:to-blue-400 text-black px-6 py-3 rounded-xl font-extrabold transition-all shadow-[var(--button-glow)] flex items-center justify-center gap-2"
               >
                 <Plus size={18} /> Initialize Tournament
               </motion.button>
@@ -209,7 +209,7 @@ export const Tournaments = () => {
                     
                     <div>
                        <div className="flex items-center gap-3 mb-4">
-                         <span className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                         <span className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-[var(--badge-glow-emerald)]">
                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> LIVE
                          </span>
                          <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">ID: {tournament.id}</span>
@@ -242,7 +242,7 @@ export const Tournaments = () => {
                       <motion.button 
                         whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                         onClick={() => openJoinModal(tournament.id)} 
-                        className="px-6 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-400 hover:text-black font-extrabold transition-all shadow-[0_0_15px_rgba(0,242,254,0.1)] text-xs uppercase tracking-wider"
+                        className="px-6 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-400 hover:text-black font-extrabold transition-all shadow-[var(--icon-glow-subtle)] text-xs uppercase tracking-wider"
                       >
                         Register Team
                       </motion.button>
@@ -266,7 +266,7 @@ export const Tournaments = () => {
                             initial={{ width: 0 }}
                             animate={{ width: `${(tournament.teams / (tournament.maxTeams || 16)) * 100}%` }}
                             transition={{ duration: 1.5, ease: "easeOut" }}
-                            className="bg-amber-500 h-full rounded-full shadow-[0_0_10px_rgba(192,132,252,0.8)]"
+                            className="bg-amber-500 h-full rounded-full shadow-[var(--bar-glow-amber)]"
                           ></motion.div>
                        </div>
                     </div>
@@ -308,11 +308,11 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[var(--modal-shadow)] p-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-blue-500"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">New <span className="font-extrabold text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">Tournament</span></h2>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">New <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Tournament</span></h2>
                   <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Configure Event Parameters</p>
                 </div>
                 <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
@@ -344,7 +344,7 @@ export const Tournaments = () => {
                 </div>
                 <div className="mt-8 flex gap-4">
                   <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 text-black font-extrabold shadow-[0_0_20px_rgba(0,242,254,0.3)] transition-all">
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 text-black font-extrabold shadow-[var(--button-glow)] transition-all">
                     Initialize
                   </motion.button>
                 </div>
@@ -357,7 +357,7 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isJoinModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[var(--modal-shadow)] p-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
@@ -398,7 +398,7 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isManageModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-2xl shadow-[var(--modal-shadow)] p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
               <div className="flex justify-between items-center mb-6 shrink-0">
                 <div>
                   <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Manage <span className="font-extrabold text-emerald-400">Rosters</span></h2>
@@ -418,7 +418,7 @@ export const Tournaments = () => {
                   <button 
                     onClick={handleUpdateFee}
                     disabled={isSavingManageFee}
-                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 text-black font-extrabold shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:from-emerald-300 hover:to-emerald-400 transition-colors disabled:opacity-50 whitespace-nowrap"
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 text-black font-extrabold shadow-[var(--button-glow)] hover:from-emerald-300 hover:to-emerald-400 transition-colors disabled:opacity-50 whitespace-nowrap"
                   >
                     {isSavingManageFee ? 'Saving...' : 'Save Price'}
                   </button>
