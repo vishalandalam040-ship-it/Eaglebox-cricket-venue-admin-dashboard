@@ -38,6 +38,13 @@ export const AIAssistant = () => {
         <MessageSquare size={24} className="md:w-7 md:h-7" />
       </button>
 
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300" 
+          onClick={() => setIsOpen(false)} 
+        />
+      )}
+
       <div className={`fixed bottom-28 right-4 left-4 md:left-auto md:bottom-8 md:right-8 md:w-96 glass-panel bg-[var(--bg-surface)]/95 flex flex-col shadow-2xl rounded-3xl overflow-hidden transition-all duration-300 transform origin-bottom-right z-50 border border-[var(--border-subtle)] ${isOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-90 opacity-0 pointer-events-none'}`} style={{ height: '550px', maxHeight: '60vh' }}>
         <div className="p-5 border-b border-[var(--border-color)] bg-gradient-to-r from-blue-500/10 to-amber-500/10 flex justify-between items-center backdrop-blur-md">
           <h3 className="font-bold text-lg flex items-center gap-2 m-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-amber-500">

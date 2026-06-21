@@ -277,16 +277,24 @@ const Topbar = () => {
 
             <AnimatePresence>
               {showNotifications && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute right-0 mt-4 w-80 glass-panel border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden z-50 bg-[var(--bg-surface)]"
-                >
-                  <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-black/10">
-                    <h3 className="font-bold text-[var(--text-primary)]">Notifications</h3>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-secondary)]">{notifications.length} New</span>
-                  </div>
+                <>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    onClick={() => setShowNotifications(false)}
+                  />
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="fixed top-20 right-4 left-4 md:absolute md:top-full md:mt-4 md:right-0 md:left-auto md:w-80 glass-panel border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden z-50 bg-[var(--bg-surface)]"
+                  >
+                    <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-black/10">
+                      <h3 className="font-bold text-[var(--text-primary)]">Notifications</h3>
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-secondary)]">{hasUnread ? notifications.length : 0} New</span>
+                    </div>
                   <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                     {notifications.length === 0 ? (
                       <div className="p-6 text-center text-sm font-medium text-[var(--text-secondary)]">No new alerts.</div>
