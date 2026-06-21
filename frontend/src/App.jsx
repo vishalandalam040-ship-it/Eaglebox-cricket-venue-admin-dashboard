@@ -118,16 +118,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       </motion.div>
 
       {/* Mobile Bottom Navigation (Floating Dock) */}
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-50">
-        <div className="glass-panel rounded-2xl flex justify-around items-center p-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[var(--border-subtle)]/50 bg-[var(--bg-surface)]/80 backdrop-blur-xl">
+      <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
+        <div className="glass-panel rounded-2xl flex items-center p-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[var(--border-subtle)]/50 bg-[var(--bg-surface)]/90 backdrop-blur-xl overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className="flex flex-col items-center p-2 flex-1 relative group">
+              <Link key={item.path} to={item.path} className="flex flex-col items-center justify-center p-2 min-w-[72px] relative group shrink-0 rounded-xl hover:bg-[var(--overlay-bg)] transition-colors">
                 {isActive && <div className="absolute -top-2 w-8 h-1 bg-emerald-400 rounded-b-full shadow-[0_0_10px_rgba(16,185,129,0.8)]" />}
-                <Icon size={22} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
-                <span className={`text-[9px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
+                <Icon size={20} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
+                <span className={`text-[8px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
           })}
@@ -138,7 +138,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 };
 
 const Topbar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -310,6 +310,11 @@ const Topbar = () => {
         )}
 
         <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
+
+        <button onClick={logout} className="md:hidden p-2 text-[var(--text-secondary)] hover:text-rose-400 transition-colors flex flex-col items-center gap-1">
+          <LogOut size={20} />
+          <span className="text-[8px] font-extrabold uppercase tracking-wider text-rose-400">Logout</span>
+        </button>
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
