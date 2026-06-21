@@ -102,7 +102,7 @@ export const Memberships = () => {
   return (
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       
-      <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+      <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
         <div>
           <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Access & <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Tiers</span></h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage and monitor venue access and subscriber lifecycle.</p>
@@ -119,7 +119,7 @@ export const Memberships = () => {
         )}
       </motion.div>
 
-      <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
         {/* TOTAL MEMBERS */}
         <div className="glass-panel rounded-3xl p-6 relative overflow-hidden group">
           <div className="absolute right-[-20px] top-4 opacity-5">
@@ -210,7 +210,7 @@ export const Memberships = () => {
             <p className="text-[var(--text-secondary)] font-medium text-sm">Choose a plan that fits your needs to unlock exclusive discounts.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
             {/* Silver */}
             <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden group">
                <div className="absolute top-0 left-0 w-full h-1 bg-slate-300"></div>

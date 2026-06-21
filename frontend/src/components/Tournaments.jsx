@@ -250,7 +250,7 @@ export const Tournaments = () => {
                  </div>
 
                  {/* Right Section - Stats Cards */}
-                 <div className="flex flex-col md:flex-row gap-4 xl:w-2/3">
+                 <div className="flex flex-col lg:flex-row gap-4 xl:w-2/3">
                     {/* Teams Card */}
                     <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
                        <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>

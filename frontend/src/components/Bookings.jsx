@@ -228,7 +228,7 @@ export const Bookings = () => {
           {loading ? (
             <div className="divide-y divide-[var(--border-subtle)]">
               {[1, 2, 3].map(i => (
-                <div key={i} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div key={i} className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-full skeleton-shimmer"></div>
                     <div>
@@ -280,8 +280,8 @@ export const Bookings = () => {
                        </div>
                     </div>
 
-                    <div className="flex flex-wrap md:flex-nowrap items-center gap-4 xl:gap-8 justify-end">
-                      <div className="flex flex-wrap md:flex-nowrap items-center gap-6 bg-[var(--overlay-bg)] xl:bg-transparent p-4 xl:p-0 rounded-2xl border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
+                    <div className="flex flex-wrap xl:flex-nowrap items-center gap-4 xl:gap-8 justify-end">
+                      <div className="flex flex-wrap xl:flex-nowrap items-center gap-6 bg-[var(--overlay-bg)] xl:bg-transparent p-4 xl:p-0 rounded-2xl border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
                          <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
                             <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                               <CalendarIcon size={18} />

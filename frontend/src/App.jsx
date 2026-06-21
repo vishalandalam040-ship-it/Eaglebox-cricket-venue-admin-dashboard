@@ -646,7 +646,7 @@ const AppContent = () => {
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <main className="flex-1 overflow-y-auto relative custom-scrollbar">
         <Topbar />
-        <div className="px-4 md:px-10 pb-10 max-w-7xl mx-auto pt-4">
+        <div className="px-4 lg:px-10 pb-10 max-w-7xl mx-auto pt-4">
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={
