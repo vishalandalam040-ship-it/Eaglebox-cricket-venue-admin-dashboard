@@ -312,6 +312,7 @@ const Topbar = () => {
                     )}
                   </div>
                 </motion.div>
+                </>
               )}
             </AnimatePresence>
           </div>
