@@ -437,7 +437,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.post('/api/ai/chat', verifyToken, async (req, res) => {
       try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
         
         let roleInstructions = "";
         if (req.user && req.user.role === 'Viewer') {
