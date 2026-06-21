@@ -259,7 +259,7 @@ export const Memberships = () => {
                ))}
              </div>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <table className="w-full min-w-[800px] text-left border-collapse whitespace-nowrap">
                <thead>
                  <tr className="border-b border-[var(--border-subtle)]">
                     <th className="px-8 py-5 text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Member Details</th>
