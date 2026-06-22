@@ -194,7 +194,10 @@ const crypto = require('crypto');
     // --- API for Booking ---
     app.get('/api/bookings', verifyToken, async (req, res) => {
       try {
-        const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
+        let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
+        if (req.user.role === 'Viewer') {
+          bookings = bookings.filter(b => b.userId === req.user.id);
+        }
         res.json(bookings);
       } catch (err) {
         res.status(500).json({ error: err.message });

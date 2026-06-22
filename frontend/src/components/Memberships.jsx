@@ -119,6 +119,7 @@ export const Memberships = () => {
         )}
       </motion.div>
 
+      {user?.role !== 'Viewer' && (
       <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
         {/* TOTAL MEMBERS */}
         <div className="glass-panel rounded-3xl p-6 relative overflow-hidden group">
@@ -200,6 +201,7 @@ export const Memberships = () => {
           </div>
         </div>
       </motion.div>
+      )}
 
       {user?.role === 'Viewer' ? (
         <motion.div variants={itemVariants} className="glass-panel rounded-3xl overflow-hidden p-8 lg:p-12 mb-8 relative">

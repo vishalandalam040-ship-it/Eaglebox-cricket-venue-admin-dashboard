@@ -29,7 +29,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   ];
 
   if (user?.role === 'Viewer') {
-    navItems = navItems.filter(item => item.path !== '/' && item.path !== '/reports');
+    navItems = navItems.filter(item => item.path !== '/' && item.path !== '/reports' && item.path !== '/customers');
+  } else if (user?.role === 'Staff') {
+    navItems = navItems.filter(item => item.path !== '/reports');
   }
 
   return (
