@@ -13,18 +13,18 @@ module.exports = (db) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${title.replace(/\s+/g, '_').toLowerCase()}.pdf"`);
     doc.pipe(res);
-    
+
     // Header
     doc.fontSize(20).font('Helvetica-Bold').text('VenueOS', { align: 'center' });
     doc.moveDown(0.5);
     doc.fontSize(16).font('Helvetica').text(title, { align: 'center' });
     doc.moveDown(2);
-    
+
     return doc;
   };
 
   // GET /api/reports/revenue/pdf
-  router.get('/revenue/pdf', authorizeRole(['Super Admin', 'Staff', 'Viewer']), async (req, res) => {
+  router.get('/revenue/pdf', authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
     try {
       const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE status = \'Confirmed\'');
       const totalRevenue = bookings.reduce((sum, b) => sum + (b.amount || 0), 0);
@@ -39,7 +39,7 @@ module.exports = (db) => {
 
       doc.fontSize(14).font('Helvetica-Bold').text('Recent Transactions');
       doc.moveDown(0.5);
-      
+
       bookings.slice(-10).forEach(b => {
         doc.fontSize(10).text(`${b.date} ${b.time} | ${b.customerName} | INR ${b.amount}`);
         doc.moveDown(0.2);
@@ -53,7 +53,7 @@ module.exports = (db) => {
   });
 
   // GET /api/reports/bookings/pdf
-  router.get('/bookings/pdf', authorizeRole(['Super Admin', 'Staff', 'Viewer']), async (req, res) => {
+  router.get('/bookings/pdf', authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
     try {
       const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings ORDER BY date DESC LIMIT 20');
 
@@ -61,9 +61,9 @@ module.exports = (db) => {
 
       doc.fontSize(14).font('Helvetica-Bold').text('Recent Bookings');
       doc.moveDown(1);
-      
+
       bookings.forEach(b => {
-        doc.fontSize(10).font('Helvetica').text(`ID: ${b.id.substring(0,8)} | ${b.date} ${b.time} | ${b.customerName} - ${b.status}`);
+        doc.fontSize(10).font('Helvetica').text(`ID: ${b.id.substring(0, 8)} | ${b.date} ${b.time} | ${b.customerName} - ${b.status}`);
         doc.moveDown(0.2);
       });
 
@@ -90,7 +90,7 @@ module.exports = (db) => {
       
       Provide a brief 3-paragraph executive summary with insights and 2 actionable growth recommendations. Do not use markdown formatting.`;
 
-      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash"});
+      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
       const result = await model.generateContent(prompt);
       const text = await result.response.text();
 

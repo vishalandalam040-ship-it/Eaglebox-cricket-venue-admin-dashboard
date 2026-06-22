@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // Initialize application
 (async () => {
@@ -112,7 +114,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         status TEXT
       );
     `);
-    
+
     // Migration: Add entryFee to existing tournaments table safely
     try {
       await db.run('ALTER TABLE tournaments ADD COLUMN entryFee INTEGER DEFAULT 0;');
@@ -130,6 +132,20 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const existsTournamentFee = await db.get("SELECT * FROM settings WHERE key = 'minTournamentFee'");
     if (!existsTournamentFee) {
       await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', ['minTournamentFee', '2500']);
+    }
+
+    // Seed Staff User
+    const staffEmail = 'staff@eagleboxcricket.com';
+    const staffExists = await db.get('SELECT * FROM users WHERE email = ?', [staffEmail]);
+    if (!staffExists) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('Staff@123', salt);
+      const staffId = crypto.randomUUID();
+      await db.run(
+        'INSERT INTO users (id, email, password_hash, role) VALUES (?, ?, ?, ?)',
+        [staffId, staffEmail, hashedPassword, 'Staff']
+      );
+      console.log('Seeded default Staff account.');
     }
 
     console.log('Tables initialized.');
@@ -188,7 +204,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.post('/api/bookings', verifyToken, async (req, res) => {
       try {
         const { id, customerName, phone, date, time, endTime, amount, status } = req.body;
-        
+
         // Slot overlap check
         const overlapping = await db.get(
           `SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND time < ? AND endTime > ?`,
@@ -212,11 +228,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       try {
         const booking = await db.get('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE id = ?', [req.params.id]);
         if (!booking) return res.status(404).json({ error: 'Booking not found' });
-        
+
         if (req.user.role === 'Viewer' && booking.userId !== req.user.id) {
           return res.status(403).json({ error: 'You do not have permission to edit this booking.' });
         }
-        
+
         const { customerName, phone, date, time, endTime, amount, status } = req.body;
 
         // Slot overlap check
@@ -248,13 +264,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     });
 
     // --- API for Customers ---
-    app.get('/api/customers', verifyToken, async (req, res) => {
+    app.get('/api/customers', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
         const users = await db.all('SELECT * FROM users');
-        
+
         const customerMap = {};
-        
+
         // Add users as customers
         users.forEach(u => {
           if (!customerMap[u.email]) {
@@ -273,14 +289,14 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         bookings.forEach(b => {
           // match by userId if they are logged in, else use phone or name
           let key = b.customerName;
-          
+
           if (b.userId) {
-             const user = users.find(u => u.id === b.userId);
-             if (user) key = user.email;
+            const user = users.find(u => u.id === b.userId);
+            if (user) key = user.email;
           } else {
-             // Fallback to searching if we have a customer by this name
-             // For simplicity in this demo, use customerName as key if no userId
-             key = b.customerName;
+            // Fallback to searching if we have a customer by this name
+            // For simplicity in this demo, use customerName as key if no userId
+            key = b.customerName;
           }
 
           if (!customerMap[key]) {
@@ -293,7 +309,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
               lifetimeRevenue: 0
             };
           }
-          
+
           customerMap[key].totalBookings += 1;
           if (b.status === 'Confirmed') {
             customerMap[key].lifetimeRevenue += Number(b.amount || 0);
@@ -363,10 +379,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       try {
         const { tournamentId, teamId } = req.params;
         await db.run('DELETE FROM tournament_teams WHERE id = ? AND tournamentId = ?', [teamId, tournamentId]);
-        
+
         // Decrement the tournament team count
         await db.run('UPDATE tournaments SET teams = teams - 1 WHERE id = ? AND teams > 0', [tournamentId]);
-        
+
         res.json({ message: 'Team removed successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -378,7 +394,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const { id, teamName, playersCount } = req.body;
         const tournamentId = req.params.id;
         const userId = req.user.id;
-        
+
         // Check if user already registered for this tournament (only applies to Viewers)
         if (req.user.role === 'Viewer') {
           const existing = await db.get('SELECT * FROM tournament_teams WHERE tournamentId = ? AND userId = ?', [tournamentId, userId]);
@@ -386,15 +402,15 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
             return res.status(400).json({ error: 'You have already registered a team for this tournament.' });
           }
         }
-        
+
         await db.run(
           'INSERT INTO tournament_teams (id, tournamentId, userId, teamName, playersCount) VALUES (?, ?, ?, ?, ?)',
           [id, tournamentId, userId, teamName, playersCount]
         );
-        
+
         // Increment the tournament team count
         await db.run('UPDATE tournaments SET teams = teams + 1 WHERE id = ?', [tournamentId]);
-        
+
         res.status(201).json({ message: 'Team registered successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -402,7 +418,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     });
 
     // --- API for Memberships ---
-    app.get('/api/memberships', verifyToken, async (req, res) => {
+    app.get('/api/memberships', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         const memberships = await db.all('SELECT id, customername AS "customerName", phone, email, plantype AS "planType", startdate AS "startDate", enddate AS "endDate", amountpaid AS "amountPaid", status FROM memberships');
         res.json(memberships);
@@ -437,8 +453,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     app.post('/api/ai/chat', verifyToken, async (req, res) => {
       try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
-        
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
         let roleInstructions = "";
         if (req.user && req.user.role === 'Viewer') {
           roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse and state that they do not have the required administrative permissions to view financial or sensitive business data.`;
@@ -464,7 +480,7 @@ User's request: ${message}`;
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      
+
       // Ping the server to keep it awake if deployed (e.g. Render)
       const externalUrl = process.env.RENDER_EXTERNAL_URL;
       if (externalUrl) {
