@@ -461,15 +461,35 @@ const crypto = require('crypto');
         const { message } = req.body;
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
+        let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
+        let tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
+        let teams = await db.all('SELECT id, tournamentid AS "tournamentId", userid AS "userId", teamname AS "teamName", playerscount AS "playersCount" FROM tournament_teams');
+        let memberships = [];
+
         let roleInstructions = "";
         if (req.user && req.user.role === 'Viewer') {
           roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse and state that they do not have the required administrative permissions to view financial or sensitive business data.`;
+          bookings = bookings.filter(b => b.userId === req.user.id);
+          teams = teams.filter(t => t.userId === req.user.id);
         } else {
           roleInstructions = `\nThe user you are speaking to is an Admin/Owner. You have full permission to disclose all revenue, reports, memberships, and business metrics.`;
+          memberships = await db.all('SELECT id, customername AS "customerName", phone, email, plantype AS "planType", startdate AS "startDate", enddate AS "endDate", amountpaid AS "amountPaid", status FROM memberships');
         }
+
+        const systemData = {
+           today: new Date().toISOString().split('T')[0],
+           bookings,
+           tournaments,
+           teams,
+           memberships
+        };
 
         const prompt = `You are a Venue Admin AI Assistant for a Box Cricket venue. 
 Answer concisely and professionally. Help the user manage their ground.${roleInstructions}
+
+Here is the current system database information you MUST use to answer the user's request. NEVER invent fake data:
+${JSON.stringify(systemData)}
+
 User's request: ${message}`;
 
         const result = await model.generateContent(prompt);
