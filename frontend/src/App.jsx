@@ -372,6 +372,41 @@ const Dashboard = () => {
   const [stats, setStats] = useState({ revenue: 0, totalRevenue: 0, bookings: 0, customers: 0, tournaments: 0 });
   const [loading, setLoading] = useState(true);
   const [revenueView, setRevenueView] = useState('today');
+  const [aiInsights, setAiInsights] = useState(null);
+  const [aiLoading, setAiLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        setAiLoading(true);
+        const res = await api.post('/ai/chat', {
+          message: `Analyze the provided venue data and provide exactly two short, actionable insights for the dashboard. Output strictly valid JSON in this exact array format: [{"title": "Observation", "desc": "Peak utilization detected between", "highlight": "18:00 - 21:00", "type": "observation"}, {"title": "Actionable Recommendation", "desc": "Implement early bird pricing to increase conversion by", "highlight": "~14%", "type": "recommendation"}]`
+        });
+        
+        let jsonStr = res.data.response;
+        if (jsonStr.includes('```json')) {
+           jsonStr = jsonStr.split('```json')[1].split('```')[0].trim();
+        } else if (jsonStr.includes('```')) {
+           jsonStr = jsonStr.split('```')[1].split('```')[0].trim();
+        }
+        
+        const parsed = JSON.parse(jsonStr);
+        setAiInsights(parsed);
+      } catch (err) {
+        console.error("Failed to fetch AI insights", err);
+        setAiInsights([
+          { title: "System Status", desc: "AI Insights currently unavailable.", highlight: "OFFLINE", type: "observation" },
+          { title: "Actionable Recommendation", desc: "Please try refreshing the dashboard.", highlight: "REFRESH", type: "recommendation" }
+        ]);
+      } finally {
+        setAiLoading(false);
+      }
+    };
+    
+    fetchInsights();
+    const interval = setInterval(fetchInsights, 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchAndProcessData = async () => {
@@ -607,30 +642,36 @@ const Dashboard = () => {
             </div>
 
             <div className="space-y-4 relative z-10">
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
-                 <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400 shadow-[0_0_10px_#00F2FE]"></div>
-                 <p className="text-sm text-[var(--text-primary)] leading-relaxed mb-4 font-medium">
-                   Peak utilization detected between <br/><span className="text-emerald-400 font-bold text-base">18:00 - 21:00</span>.
-                 </p>
-                 <div className="w-full h-1.5 bg-[var(--overlay-hover)] rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: "75%" }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="h-full bg-emerald-400 rounded-full shadow-[0_0_10px_#00F2FE]"
-                    ></motion.div>
-                 </div>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
-                 <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 shadow-[0_0_10px_#C084FC]"></div>
-                 <p className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                    Actionable Recommendation
-                 </p>
-                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-medium">
-                   Implement "Early Bird" tiered pricing for 08:00 - 11:00 slots to increase morning conversion by <span className="font-bold text-[var(--text-primary)] bg-amber-500/20 px-1 rounded">~14%</span>.
-                 </p>
-              </motion.div>
+              {aiLoading ? (
+                <>
+                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-2xl"></div>
+                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-2xl"></div>
+                </>
+              ) : (
+                aiInsights && aiInsights.map((insight, idx) => (
+                  <motion.div key={idx} whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
+                     <div className={`absolute top-0 left-0 w-1 h-full ${insight.type === 'recommendation' ? 'bg-amber-500 shadow-[0_0_10px_#C084FC]' : 'bg-emerald-400 shadow-[0_0_10px_#00F2FE]'}`}></div>
+                     {insight.type === 'recommendation' ? (
+                       <p className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                          {insight.title || "Actionable Recommendation"}
+                       </p>
+                     ) : null}
+                     <p className={`text-sm ${insight.type === 'recommendation' ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)] mb-4'} leading-relaxed font-medium`}>
+                       {insight.desc} {insight.highlight && <span className={`font-bold text-[var(--text-primary)] ${insight.type === 'recommendation' ? 'bg-amber-500/20 px-1 rounded ml-1' : 'text-emerald-400 text-base ml-1'}`}>{insight.highlight}</span>}
+                     </p>
+                     {insight.type !== 'recommendation' && (
+                       <div className="w-full h-1.5 bg-[var(--overlay-hover)] rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: "75%" }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            className="h-full bg-emerald-400 rounded-full shadow-[0_0_10px_#00F2FE]"
+                          ></motion.div>
+                       </div>
+                     )}
+                  </motion.div>
+                ))
+              )}
             </div>
           </div>
         </motion.div>
