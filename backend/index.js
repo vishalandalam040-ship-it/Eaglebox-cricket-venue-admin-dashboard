@@ -369,9 +369,12 @@ const crypto = require('crypto');
       }
     });
 
-    app.get('/api/tournaments/:id/teams', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+    app.get('/api/tournaments/:id/teams', verifyToken, async (req, res) => {
       try {
-        const teams = await db.all('SELECT id, tournamentid AS "tournamentId", userid AS "userId", teamname AS "teamName", playerscount AS "playersCount" FROM tournament_teams WHERE tournamentid = ?', [req.params.id]);
+        let teams = await db.all('SELECT id, tournamentid AS "tournamentId", userid AS "userId", teamname AS "teamName", playerscount AS "playersCount" FROM tournament_teams WHERE tournamentid = ?', [req.params.id]);
+        if (req.user.role === 'Viewer') {
+          teams = teams.filter(t => t.userId === req.user.id);
+        }
         res.json(teams);
       } catch (err) {
         res.status(500).json({ error: err.message });

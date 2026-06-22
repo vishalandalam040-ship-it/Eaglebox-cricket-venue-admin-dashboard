@@ -174,8 +174,6 @@ const Topbar = () => {
   };
 
   useEffect(() => {
-    if (user?.role === 'Viewer') return;
-
     const fetchNotifications = async () => {
       try {
         const bookingsRes = await api.get('/bookings');
@@ -189,8 +187,8 @@ const Topbar = () => {
           notifs.push({
             id: `booking-${latestBooking.id}`,
             type: 'booking',
-            title: 'New Booking',
-            desc: `${latestBooking.customerName} booked for ${latestBooking.date}`,
+            title: user?.role === 'Viewer' ? 'Booking Confirmed' : 'New Booking',
+            desc: user?.role === 'Viewer' ? `Your booking is confirmed on ${latestBooking.date}` : `${latestBooking.customerName} booked for ${latestBooking.date}`,
             time: new Date().getTime(), // In a real app we'd use creation timestamp
             path: '/bookings'
           });
@@ -207,8 +205,8 @@ const Topbar = () => {
             notifs.push({
               id: `team-${latestTeam.id}`,
               type: 'team',
-              title: 'New Team Registration',
-              desc: `${latestTeam.teamName} joined ${t.name}`,
+              title: user?.role === 'Viewer' ? 'Tournament Registration' : 'New Team Registration',
+              desc: user?.role === 'Viewer' ? `You registered to ${t.name}` : `${latestTeam.teamName} joined ${t.name}`,
               time: new Date().getTime() - 1000,
               path: '/tournaments'
             });
@@ -276,7 +274,6 @@ const Topbar = () => {
           {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
 
-        {user?.role !== 'Viewer' && (
           <div className="relative">
             <button 
               onClick={() => {
@@ -335,7 +332,6 @@ const Topbar = () => {
               )}
             </AnimatePresence>
           </div>
-        )}
 
         <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
 
