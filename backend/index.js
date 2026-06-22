@@ -459,7 +459,7 @@ const crypto = require('crypto');
     app.post('/api/ai/chat', verifyToken, async (req, res) => {
       try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-lite-latest" });
 
         const settingsRows = await db.all('SELECT * FROM settings');
         const settings = {};
