@@ -346,8 +346,8 @@ const Topbar = () => {
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)] transition-colors">{user?.role === 'Viewer' ? 'Viewer Account' : 'System Architect'}</span>
-             <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : 'SUPER ADMIN'}</span>
+             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
+             <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : user?.role?.toUpperCase()}</span>
           </div>
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-[var(--text-primary)] font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
             {user?.email?.[0]?.toUpperCase() || 'S'}
