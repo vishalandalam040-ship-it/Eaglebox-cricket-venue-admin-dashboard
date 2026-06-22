@@ -215,9 +215,24 @@ const Topbar = () => {
 
         setNotifications(notifs);
         
-        const lastSeen = localStorage.getItem('lastSeenNotifications');
-        if (!lastSeen || notifs.some(n => n.id !== lastSeen)) {
+        let seenIds = [];
+        try {
+          const lastSeen = localStorage.getItem('lastSeenNotifications');
+          if (lastSeen) {
+            if (lastSeen.startsWith('[')) {
+              seenIds = JSON.parse(lastSeen);
+            } else {
+              seenIds = [lastSeen];
+            }
+          }
+        } catch (e) {
+          seenIds = [];
+        }
+        
+        if (notifs.length > 0 && notifs.some(n => !seenIds.includes(n.id))) {
           setHasUnread(true);
+        } else {
+          setHasUnread(false);
         }
       } catch (err) {
         console.error("Failed to fetch notifications", err);
@@ -230,7 +245,9 @@ const Topbar = () => {
   }, [user]);
 
   const handleNotificationClick = (path, id) => {
-    localStorage.setItem('lastSeenNotifications', id);
+    if (notifications.length > 0) {
+      localStorage.setItem('lastSeenNotifications', JSON.stringify(notifications.map(n => n.id)));
+    }
     setHasUnread(false);
     setShowNotifications(false);
     navigate(path);
@@ -265,7 +282,7 @@ const Topbar = () => {
                 if (hasUnread) {
                   setHasUnread(false);
                   if (notifications.length > 0) {
-                    localStorage.setItem('lastSeenNotifications', notifications[0].id);
+                    localStorage.setItem('lastSeenNotifications', JSON.stringify(notifications.map(n => n.id)));
                   }
                 }
               }}

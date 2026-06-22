@@ -464,6 +464,16 @@ User's request: ${message}`;
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      
+      // Ping the server to keep it awake if deployed (e.g. Render)
+      const externalUrl = process.env.RENDER_EXTERNAL_URL;
+      if (externalUrl) {
+        setInterval(() => {
+          fetch(`${externalUrl}/api/health`)
+            .then(res => console.log(`Keep-alive ping status: ${res.status}`))
+            .catch(err => console.error(`Keep-alive ping failed:`, err.message));
+        }, 14 * 60 * 1000); // Every 14 minutes
+      }
     });
 
   } catch (err) {
