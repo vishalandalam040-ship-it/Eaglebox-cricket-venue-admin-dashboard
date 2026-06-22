@@ -62,7 +62,7 @@ module.exports = (db) => {
 
       const existingUser = await db.get('SELECT * FROM users WHERE email = ?', [email]);
       if (existingUser) {
-        return res.status(400).json({ error: 'User already exists' });
+        return res.status(400).json({ error: 'Email is already been used, use another email for signing up' });
       }
 
       const salt = await bcrypt.genSalt(10);
