@@ -459,7 +459,11 @@ const crypto = require('crypto');
     app.post('/api/ai/chat', verifyToken, async (req, res) => {
       try {
         const { message } = req.body;
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const settingsRows = await db.all('SELECT * FROM settings');
+        const settings = {};
+        settingsRows.forEach(r => settings[r.key] = r.value);
 
         let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
         let tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
@@ -468,16 +472,17 @@ const crypto = require('crypto');
 
         let roleInstructions = "";
         if (req.user && req.user.role === 'Viewer') {
-          roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse and state that they do not have the required administrative permissions to view financial or sensitive business data.`;
+          roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding overall revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse. HOWEVER, the user CAN ask about their own bookings, their own tournament registrations, and the current slot hour pricing. You must answer using ONLY the provided system data for them. ALL monetary values MUST be formatted in INR (e.g. ₹5,000).`;
           bookings = bookings.filter(b => b.userId === req.user.id);
           teams = teams.filter(t => t.userId === req.user.id);
         } else {
-          roleInstructions = `\nThe user you are speaking to is an Admin/Owner. You have full permission to disclose all revenue, reports, memberships, and business metrics.`;
+          roleInstructions = `\nThe user you are speaking to is an Admin/Owner. You have full permission to disclose all revenue, reports, memberships, and business metrics. ALL monetary values MUST be formatted in Indian National Rupees (INR), e.g. ₹5,000 or 5,000 INR. Never use dollars.`;
           memberships = await db.all('SELECT id, customername AS "customerName", phone, email, plantype AS "planType", startdate AS "startDate", enddate AS "endDate", amountpaid AS "amountPaid", status FROM memberships');
         }
 
         const systemData = {
            today: new Date().toISOString().split('T')[0],
+           settings,
            bookings,
            tournaments,
            teams,
