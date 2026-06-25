@@ -14,19 +14,15 @@ export const Feedback = () => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (user?.role !== 'Viewer') {
-      api.get('/feedback')
-        .then(res => {
-          setFeedbackList(res.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error("Error fetching feedback", err);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
+    api.get('/feedback')
+      .then(res => {
+        setFeedbackList(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching feedback", err);
+        setLoading(false);
+      });
   }, [user]);
 
   const handleSubmit = (e) => {
@@ -38,6 +34,7 @@ export const Feedback = () => {
         setIsSubmitting(false);
         setSubmitted(true);
         setNewFeedback({ customerEmail: user?.email || '', details: '' });
+        api.get('/feedback').then(res => setFeedbackList(res.data));
         setTimeout(() => setSubmitted(false), 5000);
       })
       .catch(err => {
@@ -138,6 +135,43 @@ export const Feedback = () => {
                 </motion.form>
               )}
             </AnimatePresence>
+          </div>
+
+          <div className="mt-12">
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6 tracking-tight">Your Feedback History</h3>
+            {loading ? (
+              <div className="glass-panel border border-[var(--border-subtle)] rounded-2xl p-6 h-32 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full border-2 border-white/10 border-t-emerald-400 animate-spin"></div>
+              </div>
+            ) : feedbackList.length === 0 ? (
+              <div className="glass-panel border border-[var(--border-subtle)] rounded-2xl p-8 text-center text-[var(--text-secondary)] font-medium text-sm">
+                You haven't submitted any feedback yet.
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <AnimatePresence>
+                  {feedbackList.map((fb, idx) => (
+                    <motion.div 
+                      key={fb.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
+                    >
+                      <div className="flex justify-between items-center mb-3">
+                        <p className="text-xs font-extrabold text-[var(--text-primary)]">{fb.customerEmail || 'Anonymous'}</p>
+                        <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase flex items-center gap-1">
+                          <Clock size={10} /> {new Date(fb.timestamp).toLocaleString()}
+                        </span>
+                      </div>
+                      <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
+                        {fb.details}
+                      </p>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
         </motion.div>
       ) : (

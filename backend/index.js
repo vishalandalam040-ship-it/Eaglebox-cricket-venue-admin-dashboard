@@ -456,9 +456,12 @@ const crypto = require('crypto');
     });
 
     // --- API for Feedback ---
-    app.get('/api/feedback', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+    app.get('/api/feedback', verifyToken, async (req, res) => {
       try {
-        const feedbackList = await db.all('SELECT id, userid AS "userId", customeremail AS "customerEmail", details, timestamp FROM feedback ORDER BY timestamp DESC');
+        let feedbackList = await db.all('SELECT id, userid AS "userId", customeremail AS "customerEmail", details, timestamp FROM feedback ORDER BY timestamp DESC');
+        if (req.user.role === 'Viewer') {
+          feedbackList = feedbackList.filter(f => f.userId === req.user.id);
+        }
         res.json(feedbackList);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -563,6 +566,42 @@ User's request: ${message}`;
         res.status(500).json({ response: "I encountered an error connecting to my core processing unit. Please ensure the API key is valid." });
       }
     });
+
+    // --- Automated Email Reminders ---
+    setInterval(async () => {
+      try {
+        console.log("Running automated membership expiry check...");
+        const memberships = await db.all('SELECT * FROM memberships WHERE status = ?', ['Active']);
+        const now = new Date();
+
+        for (const m of memberships) {
+          const endDate = new Date(m.endDate);
+          const daysLeft = Math.ceil((endDate - now) / (1000 * 60 * 60 * 24));
+
+          if (daysLeft <= 10 && daysLeft > 0) {
+            // Send email using EmailJS REST API
+            const payload = {
+              service_id: 'service_jjrbdlf',
+              template_id: 'template_48wbbl9',
+              user_id: 'FwnHDTuxpHD_Hsv8l',
+              template_params: {
+                user_email: m.email || 'customer@example.com',
+                message: `Hello ${m.customerName}, your ${m.planType} membership is expiring in ${daysLeft} days on ${m.endDate}. Please renew soon!`
+              }
+            };
+
+            await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            console.log(`Sent expiry reminder to ${m.email} (${daysLeft} days left)`);
+          }
+        }
+      } catch (err) {
+        console.error("Automated check failed:", err.message);
+      }
+    }, 24 * 60 * 60 * 1000); // Once every 24 hours
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {

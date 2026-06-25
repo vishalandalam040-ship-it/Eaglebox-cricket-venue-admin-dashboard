@@ -3,6 +3,7 @@ import api from '../api';
 import { Crown, Plus, Trash2, ShieldCheck, User, Calendar, X, Activity } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 export const Memberships = () => {
   const { user } = useAuth();
@@ -45,6 +46,20 @@ export const Memberships = () => {
         status: 'Active'
       };
       await api.post('/memberships', newMembership);
+
+      // Send confirmation email
+      if (formData.email) {
+        emailjs.send(
+          'service_jjrbdlf', 
+          'template_48wbbl9', 
+          {
+            user_email: formData.email,
+            message: `Hello ${formData.customerName}, your ${formData.planType} membership has been successfully created. It is valid from ${formData.startDate} to ${formData.endDate}. Welcome to the club!`
+          }, 
+          'FwnHDTuxpHD_Hsv8l'
+        ).catch(err => console.error("EmailJS error:", err));
+      }
+
       setShowModal(false);
       fetchMemberships();
     } catch (err) {
