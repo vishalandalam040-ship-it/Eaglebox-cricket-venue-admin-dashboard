@@ -13,7 +13,7 @@ export const Tournaments = () => {
 
   const [activeTournamentId, setActiveTournamentId] = useState(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
-  const [newTeam, setNewTeam] = useState({ teamName: '', playersCount: '', amountPaid: '' });
+  const [newTeam, setNewTeam] = useState({ teamName: '', playersCount: '', amountPaid: '', playerNames: [] });
   
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [teams, setTeams] = useState([]);
@@ -68,14 +68,14 @@ export const Tournaments = () => {
 
   const openJoinModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
-    setNewTeam({ teamName: '', playersCount: '', amountPaid: '' });
+    setNewTeam({ teamName: '', playersCount: '', amountPaid: '', playerNames: [] });
     setIsJoinModalOpen(true);
   };
 
   const handleJoinTeam = (e) => {
     e.preventDefault();
     const id = 'team' + Date.now();
-    api.post(`/tournaments/${activeTournamentId}/teams`, { id, ...newTeam })
+    api.post(`/tournaments/${activeTournamentId}/teams`, { id, ...newTeam, players: newTeam.playerNames })
       .then(() => {
         setIsJoinModalOpen(false);
         setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, teams: t.teams + 1 } : t));
@@ -375,8 +375,36 @@ export const Tournaments = () => {
                 </div>
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
-                  <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => setNewTeam({...newTeam, playersCount: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="11" />
+                  <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => {
+                    const count = parseInt(e.target.value) || 0;
+                    setNewTeam({
+                      ...newTeam, 
+                      playersCount: e.target.value,
+                      playerNames: Array(count).fill('').map((_, i) => newTeam.playerNames[i] || '')
+                    })
+                  }} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="11" />
                 </div>
+                
+                {Number(newTeam.playersCount) > 0 && (
+                  <div className="mt-4 max-h-48 overflow-y-auto custom-scrollbar pr-2 space-y-3 border border-[var(--border-subtle)] p-4 rounded-xl bg-[var(--bg-base)]/30">
+                    <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2 sticky top-0 bg-[var(--bg-base)] py-1 z-10">Player Roster</label>
+                    {newTeam.playerNames.map((name, idx) => (
+                      <input 
+                        key={idx}
+                        required 
+                        type="text" 
+                        value={name} 
+                        onChange={e => {
+                          const newNames = [...newTeam.playerNames];
+                          newNames[idx] = e.target.value;
+                          setNewTeam({...newTeam, playerNames: newNames});
+                        }} 
+                        className="w-full bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-lg px-3 py-2 outline-none focus:border-amber-500/50 text-[var(--text-primary)] text-sm" 
+                        placeholder={`Player ${idx + 1} Name`} 
+                      />
+                    ))}
+                  </div>
+                )}
                 <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 mt-2">
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
                     Payment Amount (Min: ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0})
@@ -431,26 +459,35 @@ export const Tournaments = () => {
                 ) : (
                   <div className="space-y-3">
                     {teams.map((team, idx) => (
-                      <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }} key={team.id} className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-4 flex justify-between items-center hover:border-emerald-500/30 transition-colors">
-                        <div className="flex items-center gap-4">
-                           <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
-                             <Users size={16} />
-                           </div>
-                           <div>
-                             <p className="font-extrabold text-[var(--text-primary)] text-base">{team.teamName}</p>
-                             <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">ID: {team.id}</p>
-                           </div>
+                      <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }} key={team.id} className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-4 flex flex-col gap-4 hover:border-emerald-500/30 transition-colors">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-4">
+                             <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
+                               <Users size={16} />
+                             </div>
+                             <div>
+                               <p className="font-extrabold text-[var(--text-primary)] text-base">{team.teamName}</p>
+                               <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">ID: {team.id}</p>
+                             </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <span className="bg-amber-500/10 text-amber-400 px-3 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest border border-amber-500/20">
+                              {team.playersCount} Players
+                            </span>
+                            {user?.role !== 'Viewer' && (
+                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="w-8 h-8 rounded-full flex items-center justify-center text-rose-500 hover:bg-rose-500/10 hover:text-rose-400 transition-colors border border-transparent hover:border-rose-500/20" title="Remove Team">
+                                 <X size={14} />
+                              </button>
+                            )}
+                          </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                          <span className="bg-amber-500/10 text-amber-400 px-3 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest border border-amber-500/20">
-                            {team.playersCount} Players
-                          </span>
-                          {user?.role !== 'Viewer' && (
-                            <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="w-8 h-8 rounded-full flex items-center justify-center text-rose-500 hover:bg-rose-500/10 hover:text-rose-400 transition-colors border border-transparent hover:border-rose-500/20" title="Remove Team">
-                               <X size={14} />
-                            </button>
-                          )}
-                        </div>
+                        {team.players && team.players.length > 0 && (
+                          <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border-subtle)]">
+                            {team.players.map(p => (
+                              <span key={p.id} className="text-xs bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--text-secondary)] px-2.5 py-1 rounded-md">{p.playerName}</span>
+                            ))}
+                          </div>
+                        )}
                       </motion.div>
                     ))}
                   </div>

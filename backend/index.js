@@ -97,6 +97,20 @@ const crypto = require('crypto');
         playersCount INTEGER
       );
 
+      CREATE TABLE IF NOT EXISTS tournament_players (
+        id TEXT PRIMARY KEY,
+        teamId TEXT,
+        playerName TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS feedback (
+        id TEXT PRIMARY KEY,
+        userId TEXT,
+        customerEmail TEXT,
+        details TEXT,
+        timestamp TEXT
+      );
+
       CREATE TABLE IF NOT EXISTS settings (
         key TEXT PRIMARY KEY,
         value TEXT
@@ -361,6 +375,7 @@ const crypto = require('crypto');
 
     app.delete('/api/tournaments/:id', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
+        await db.run('DELETE FROM tournament_players WHERE teamId IN (SELECT id FROM tournament_teams WHERE tournamentId = ?)', [req.params.id]);
         await db.run('DELETE FROM tournaments WHERE id = ?', [req.params.id]);
         await db.run('DELETE FROM tournament_teams WHERE tournamentId = ?', [req.params.id]);
         res.json({ message: 'Tournament deleted successfully' });
@@ -375,6 +390,11 @@ const crypto = require('crypto');
         if (req.user.role === 'Viewer') {
           teams = teams.filter(t => t.userId === req.user.id);
         }
+        
+        for (let team of teams) {
+          team.players = await db.all('SELECT id, playername AS "playerName" FROM tournament_players WHERE teamId = ?', [team.id]);
+        }
+
         res.json(teams);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -384,6 +404,7 @@ const crypto = require('crypto');
     app.delete('/api/tournaments/:tournamentId/teams/:teamId', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         const { tournamentId, teamId } = req.params;
+        await db.run('DELETE FROM tournament_players WHERE teamId = ?', [teamId]);
         await db.run('DELETE FROM tournament_teams WHERE id = ? AND tournamentId = ?', [teamId, tournamentId]);
 
         // Decrement the tournament team count
@@ -397,7 +418,7 @@ const crypto = require('crypto');
 
     app.post('/api/tournaments/:id/teams', verifyToken, async (req, res) => {
       try {
-        const { id, teamName, playersCount } = req.body;
+        const { id, teamName, playersCount, players } = req.body;
         const tournamentId = req.params.id;
         const userId = req.user.id;
 
@@ -414,10 +435,45 @@ const crypto = require('crypto');
           [id, tournamentId, userId, teamName, playersCount]
         );
 
+        // Insert players
+        if (players && Array.isArray(players)) {
+          for (let name of players) {
+            const playerId = 'p' + Date.now() + Math.floor(Math.random() * 1000);
+            await db.run(
+              'INSERT INTO tournament_players (id, teamId, playerName) VALUES (?, ?, ?)',
+              [playerId, id, name]
+            );
+          }
+        }
+
         // Increment the tournament team count
         await db.run('UPDATE tournaments SET teams = teams + 1 WHERE id = ?', [tournamentId]);
 
         res.status(201).json({ message: 'Team registered successfully' });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    // --- API for Feedback ---
+    app.get('/api/feedback', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+      try {
+        const feedbackList = await db.all('SELECT id, userid AS "userId", customeremail AS "customerEmail", details, timestamp FROM feedback ORDER BY timestamp DESC');
+        res.json(feedbackList);
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    app.post('/api/feedback', verifyToken, async (req, res) => {
+      try {
+        const { id, customerEmail, details } = req.body;
+        const timestamp = new Date().toISOString();
+        await db.run(
+          'INSERT INTO feedback (id, userId, customerEmail, details, timestamp) VALUES (?, ?, ?, ?, ?)',
+          [id, req.user.id, customerEmail, details, timestamp]
+        );
+        res.status(201).json({ message: 'Feedback submitted successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
       }

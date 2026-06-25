@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown, BrainCircuit, ChevronRight } from 'lucide-react';
+import { LayoutDashboard, Calendar, Users, Trophy, Menu, Bell, Search, Sun, Moon, FileText, LogOut, Crown, BrainCircuit, ChevronRight, MessageSquare } from 'lucide-react';
 import { Bookings } from './components/Bookings';
 import { Customers } from './components/Customers';
 import { Tournaments } from './components/Tournaments';
 import { Memberships } from './components/Memberships';
+import { Feedback } from './components/Feedback';
 import { AIAssistant } from './components/AIAssistant';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Login } from './components/Login';
@@ -25,6 +26,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     { path: '/customers', name: 'Customers', icon: Users },
     { path: '/tournaments', name: 'Tournaments', icon: Trophy },
     { path: '/memberships', name: 'Plans', icon: Crown },
+    { path: '/feedback', name: 'Feedback', icon: MessageSquare },
     { path: '/reports', name: 'Reports', icon: FileText },
   ];
 
@@ -727,6 +729,7 @@ const AppContent = () => {
               <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
               <Route path="/tournaments" element={<ProtectedRoute><Tournaments /></ProtectedRoute>} />
               <Route path="/memberships" element={<ProtectedRoute><Memberships /></ProtectedRoute>} />
+              <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
               <Route path="/reports" element={<ProtectedRoute allowedRoles={['Super Admin', 'Staff']}><Reports /></ProtectedRoute>} />
               <Route path="*" element={<Navigate to={user.role === 'Viewer' ? '/bookings' : '/'} replace />} />
             </Routes>
