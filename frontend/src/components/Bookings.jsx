@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import api from '../api';
-import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2 } from 'lucide-react';
+import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2, Mail } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,7 +12,7 @@ export const Bookings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [newBooking, setNewBooking] = useState({ customerName: '', phone: '', date: '', time: '', endTime: '', amount: '', status: 'Confirmed' });
+  const [newBooking, setNewBooking] = useState({ customerName: '', email: '', phone: '', date: '', time: '', endTime: '', amount: '', status: 'Confirmed' });
   const [hourlyRate, setHourlyRate] = useState(1000);
   const [isSavingRate, setIsSavingRate] = useState(false);
   const [isDiscountApplied, setIsDiscountApplied] = useState(false);
@@ -74,6 +75,7 @@ export const Bookings = () => {
   const handleEditClick = (booking) => {
     setNewBooking({
       customerName: booking.customerName,
+      email: booking.email || '',
       phone: booking.phone,
       date: booking.date,
       time: booking.time,
@@ -122,6 +124,32 @@ export const Bookings = () => {
           setBookings([bookingToCreate, ...bookings]); // Prepend to show at top
           closeModal();
           sendWhatsApp(bookingToCreate);
+
+          // EmailJS integration
+          if (newBooking.email) {
+            const templateParams = {
+              customerName: newBooking.customerName,
+              email: newBooking.email,
+              date: newBooking.date,
+              time: newBooking.time,
+              endTime: newBooking.endTime,
+              amount: newBooking.amount,
+            };
+
+            emailjs.send(
+              'service_jjrbdlf', 
+              'template_48wbbl9', 
+              templateParams, 
+              'FwnHDTuxpHD_Hsv8l'
+            ).then(
+              () => {
+                console.log('Confirmation email sent successfully!');
+              },
+              (error) => {
+                console.error('Email sending failed...', error);
+              }
+            );
+          }
         })
         .catch(err => alert(err.response?.data?.error || "Failed to create booking."));
     }
@@ -131,7 +159,7 @@ export const Bookings = () => {
     setIsEditMode(false);
     setEditingId(null);
     setIsDiscountApplied(false);
-    setNewBooking({ customerName: '', phone: '', date: '', time: '', endTime: '', amount: '', status: 'Confirmed' });
+    setNewBooking({ customerName: '', email: '', phone: '', date: '', time: '', endTime: '', amount: '', status: 'Confirmed' });
     setIsModalOpen(true);
   };
 
@@ -376,6 +404,10 @@ export const Bookings = () => {
                 <div>
                   <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">WhatsApp Number</label>
                   <input required type="tel" value={newBooking.phone} onChange={e => setNewBooking({...newBooking, phone: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[var(--icon-glow-subtle)] text-[var(--text-primary)] font-medium transition-all" placeholder="10-digit number" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Email Address (For Confirmation)</label>
+                  <input type="email" value={newBooking.email} onChange={e => setNewBooking({...newBooking, email: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 focus:shadow-[var(--icon-glow-subtle)] text-[var(--text-primary)] font-medium transition-all" placeholder="customer@example.com" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
