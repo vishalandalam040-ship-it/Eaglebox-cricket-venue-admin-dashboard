@@ -585,7 +585,12 @@ User's request: ${message}`;
               template_id: 'template_48wbbl9',
               user_id: 'FwnHDTuxpHD_Hsv8l',
               template_params: {
-                user_email: m.email || 'customer@example.com',
+                customerName: m.customerName,
+                email: m.email || 'customer@example.com',
+                date: 'Membership Expiry Alert',
+                time: `${daysLeft} Days Left`,
+                endTime: 'Expiring: ' + m.endDate,
+                amount: 'N/A',
                 message: `Hello ${m.customerName}, your ${m.planType} membership is expiring in ${daysLeft} days on ${m.endDate}. Please renew soon!`
               }
             };

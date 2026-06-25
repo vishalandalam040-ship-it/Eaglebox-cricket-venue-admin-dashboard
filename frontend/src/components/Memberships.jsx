@@ -53,8 +53,13 @@ export const Memberships = () => {
           'service_jjrbdlf', 
           'template_48wbbl9', 
           {
-            user_email: formData.email,
-            message: `Hello ${formData.customerName}, your ${formData.planType} membership has been successfully created. It is valid from ${formData.startDate} to ${formData.endDate}. Welcome to the club!`
+            customerName: formData.customerName,
+            email: formData.email,
+            date: `Membership: ${formData.planType}`,
+            time: 'Start: ' + formData.startDate,
+            endTime: 'End: ' + formData.endDate,
+            amount: formData.amountPaid,
+            message: `Your ${formData.planType} membership is active!`
           }, 
           'FwnHDTuxpHD_Hsv8l'
         ).catch(err => console.error("EmailJS error:", err));
