@@ -344,9 +344,9 @@ const Topbar = () => {
         </button>
 
         <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
-             <span className={`text-[9px] font-bold uppercase tracking-widest ${user?.membership?.includes('Expired') ? 'text-[var(--accent-rose)]' : 'text-[var(--accent-emerald)]'}`}>
+          <div className="flex flex-col items-end mr-2 md:mr-0">
+             <span className="text-xs md:text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
+             <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest ${user?.membership?.includes('Expired') ? 'text-[var(--accent-rose)]' : 'text-[var(--accent-emerald)]'}`}>
                {user?.role === 'Viewer' 
                  ? (user?.membership ? `${user.membership} | READ ONLY` : 'READ ONLY') 
                  : user?.role?.toUpperCase()}
