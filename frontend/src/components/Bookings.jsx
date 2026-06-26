@@ -50,7 +50,9 @@ export const Bookings = () => {
     if (newBooking.time && newBooking.endTime) {
       const startParts = newBooking.time.split(':');
       const endParts = newBooking.endTime.split(':');
-      const durationHours = (parseInt(endParts[0]) + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
+      let endHour = parseInt(endParts[0]);
+      if (endHour === 0 && parseInt(startParts[0]) > 0) endHour = 24;
+      const durationHours = (endHour + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
       
       if (durationHours > 0) {
         let minimumAmount = durationHours * hourlyRate;
@@ -105,7 +107,9 @@ export const Bookings = () => {
     }
     const startParts = newBooking.time.split(':');
     const endParts = newBooking.endTime.split(':');
-    const durationHours = (parseInt(endParts[0]) + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
+    let endHour = parseInt(endParts[0]);
+    if (endHour === 0 && parseInt(startParts[0]) > 0) endHour = 24;
+    const durationHours = (endHour + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
     
     if (durationHours < 1) {
       alert("A minimum of one-hour slot should be booked.");
@@ -115,7 +119,10 @@ export const Bookings = () => {
     if (isEditMode) {
       api.put(`/bookings/${editingId}`, newBooking)
         .then(res => {
-          setBookings(bookings.map(b => b.id === editingId ? { id: editingId, ...newBooking } : b));
+          setBookings(bookings.map(b => b.id === editingId ? { id: editingId, ...newBooking } : b).sort((a, b) => {
+            if (a.date !== b.date) return new Date(b.date) - new Date(a.date);
+            return b.time.localeCompare(a.time);
+          }));
           closeModal();
         })
         .catch(err => alert(err.response?.data?.error || "Failed to update booking."));
@@ -124,9 +131,11 @@ export const Bookings = () => {
       const bookingToCreate = { id, ...newBooking, status: 'Confirmed' };
       api.post('/bookings', bookingToCreate)
         .then(res => {
-          setBookings([bookingToCreate, ...bookings]); // Prepend to show at top
+          setBookings([bookingToCreate, ...bookings].sort((a, b) => {
+            if (a.date !== b.date) return new Date(b.date) - new Date(a.date);
+            return b.time.localeCompare(a.time);
+          }));
           closeModal();
-          sendWhatsApp(bookingToCreate);
 
           // EmailJS integration
           if (newBooking.email) {

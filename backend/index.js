@@ -216,7 +216,7 @@ const crypto = require('crypto');
     // --- API for Booking ---
     app.get('/api/bookings', verifyToken, async (req, res) => {
       try {
-        let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings');
+        let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings ORDER BY date DESC, time DESC');
         if (req.user.role === 'Viewer') {
           bookings = bookings.filter(b => b.userId === req.user.id);
         }
@@ -230,10 +230,13 @@ const crypto = require('crypto');
       try {
         const { id, customerName, phone, date, time, endTime, amount, status } = req.body;
 
+        const checkEndTime = endTime === '00:00' ? '24:00' : endTime;
+        const checkTime = time === '00:00' ? '24:00' : time;
+
         // Slot overlap check
         const overlapping = await db.get(
-          `SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND time < ? AND endTime > ?`,
-          [date, endTime, time]
+          `SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND (CASE WHEN time = '00:00' THEN '24:00' ELSE time END) < ? AND (CASE WHEN endTime = '00:00' THEN '24:00' ELSE endTime END) > ?`,
+          [date, checkEndTime, checkTime]
         );
         if (overlapping) {
           return res.status(400).json({ error: 'This slot has been already booked. Try to select another slot.' });
@@ -266,10 +269,13 @@ const crypto = require('crypto');
 
         const { customerName, phone, date, time, endTime, amount, status } = req.body;
 
+        const checkEndTime = endTime === '00:00' ? '24:00' : endTime;
+        const checkTime = time === '00:00' ? '24:00' : time;
+
         // Slot overlap check
         const overlapping = await db.get(
-          `SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND id != ? AND time < ? AND endTime > ?`,
-          [date, req.params.id, endTime, time]
+          `SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND id != ? AND (CASE WHEN time = '00:00' THEN '24:00' ELSE time END) < ? AND (CASE WHEN endTime = '00:00' THEN '24:00' ELSE endTime END) > ?`,
+          [date, req.params.id, checkEndTime, checkTime]
         );
         if (overlapping) {
           return res.status(400).json({ error: 'This slot has been already booked. Try to select another slot.' });
