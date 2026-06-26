@@ -128,9 +128,9 @@ export const Customers = () => {
                     onClick={() => user?.role !== 'Viewer' && setSelectedCustomer(customer)}
                   >
                     <div className="flex items-center gap-5">
-                       <img src={`https://ui-avatars.com/api/?name=${customer.customerName}&background=0A0A0A&color=EDEDED&rounded=true&bold=true`} alt={customer.customerName} className="w-14 h-14 rounded-full border border-[var(--border-subtle)] group-hover:border-[var(--accent-primary)] transition-colors" />
+                       <img src={`https://ui-avatars.com/api/?name=${customer.name}&background=0A0A0A&color=EDEDED&rounded=true&bold=true`} alt={customer.name} className="w-14 h-14 rounded-full border border-[var(--border-subtle)] group-hover:border-[var(--accent-primary)] transition-colors" />
                        <div>
-                          <p className="font-semibold text-[var(--text-primary)] text-lg tracking-tight mb-1">{customer.customerName}</p>
+                          <p className="font-semibold text-[var(--text-primary)] text-lg tracking-tight mb-1">{customer.name}</p>
                           <p className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5 mt-0.5"><User size={12}/> ID: {customer.id}</p>
                        </div>
                     </div>
@@ -147,7 +147,7 @@ export const Customers = () => {
                         <div className="flex items-center gap-6">
                           <div className="flex flex-col text-right">
                              <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">Lifetime Value</span>
-                             <p className="text-xl font-semibold data-number text-[var(--accent-primary)] whitespace-nowrap">₹ {customer.totalSpent.toLocaleString()}</p>
+                             <p className="text-xl font-semibold data-number text-[var(--accent-primary)] whitespace-nowrap">₹ {customer.lifetimeRevenue.toLocaleString()}</p>
                           </div>
                           <button 
                             className="flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[var(--overlay-bg)] text-[var(--text-primary)] hover:bg-[var(--accent-primary)] hover:text-white border border-[var(--border-subtle)] transition-all font-medium text-xs hidden md:flex"
