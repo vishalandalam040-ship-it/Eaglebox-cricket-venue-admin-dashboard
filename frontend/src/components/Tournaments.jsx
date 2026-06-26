@@ -3,7 +3,7 @@ import api from '../api';
 import { Trophy, Users, Calendar, Plus, ChevronRight, X, User } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import emailjs from '@emailjs/browser';
 export const Tournaments = () => {
   const { user } = useAuth();
   const [tournaments, setTournaments] = useState([]);
@@ -13,7 +13,7 @@ export const Tournaments = () => {
 
   const [activeTournamentId, setActiveTournamentId] = useState(null);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
-  const [newTeam, setNewTeam] = useState({ teamName: '', playersCount: '', amountPaid: '', playerNames: [] });
+  const [newTeam, setNewTeam] = useState({ teamName: '', email: '', playersCount: '', amountPaid: '', playerNames: [] });
   
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [teams, setTeams] = useState([]);
@@ -68,7 +68,7 @@ export const Tournaments = () => {
 
   const openJoinModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
-    setNewTeam({ teamName: '', playersCount: '', amountPaid: '', playerNames: [] });
+    setNewTeam({ teamName: '', email: '', playersCount: '', amountPaid: '', playerNames: [] });
     setIsJoinModalOpen(true);
   };
 
@@ -79,6 +79,25 @@ export const Tournaments = () => {
       .then(() => {
         setIsJoinModalOpen(false);
         setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, teams: t.teams + 1 } : t));
+        
+        if (newTeam.email) {
+          const tournament = tournaments.find(t => t.id === activeTournamentId);
+          emailjs.send(
+            'service_jjrbdlf', 
+            'template_48wbbl9', 
+            {
+              customerName: newTeam.teamName,
+              email: newTeam.email,
+              date: `Tournament: ${tournament?.name || 'Esports Event'}`,
+              time: `Players: ${newTeam.playerNames.join(', ')}`,
+              endTime: 'Eagle in Eagle Box Ticket',
+              amount: newTeam.amountPaid,
+              message: `Successfully your team is registered for this tournament!`
+            }, 
+            'FwnHDTuxpHD_Hsv8l'
+          ).catch(err => console.error("EmailJS error:", err));
+        }
+
         alert('Team registered successfully!');
       })
       .catch(err => alert(err.response?.data?.error || 'Failed to register team.'));
@@ -137,8 +156,8 @@ export const Tournaments = () => {
              src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Stadium" 
              className="w-full h-full object-cover opacity-20" 
            />
-           <div className="absolute inset-0  from-[var(--bg-base)] via-[var(--bg-base)]/80 "></div>
-           <div className="absolute inset-0  from-[var(--bg-base)]  opacity-80"></div>
+           <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-base)] via-[var(--bg-base)]/80 to-transparent"></div>
+           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/40 to-transparent"></div>
         </div>
         
         <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--overlay-bg)] rounded-sm blur-[80px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
@@ -370,9 +389,15 @@ export const Tournaments = () => {
                 </button>
               </div>
               <form onSubmit={handleJoinTeam} className="flex flex-col gap-5">
-                <div>
-                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Team Name</label>
-                  <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="Thunderbolts" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Team Name</label>
+                    <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="Thunderbolts" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Contact Email</label>
+                    <input required type="email" value={newTeam.email} onChange={e => setNewTeam({...newTeam, email: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="captain@example.com" />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
