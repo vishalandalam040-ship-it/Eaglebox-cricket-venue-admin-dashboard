@@ -484,7 +484,7 @@ export const Bookings = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="submit" 
-                    className="flex-1 px-4 py-3.5 rounded-sm    text-black font-bold  transition-all"
+                    className="flex-1 px-4 py-3.5 rounded-sm btn-primary flex items-center justify-center font-bold transition-all text-sm uppercase tracking-wider"
                   >
                     {isEditMode ? 'Update Session' : 'Confirm Slot'}
                   </motion.button>
