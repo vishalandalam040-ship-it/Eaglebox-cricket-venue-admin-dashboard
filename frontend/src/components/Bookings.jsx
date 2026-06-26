@@ -115,6 +115,11 @@ export const Bookings = () => {
       alert("A minimum of one-hour slot should be booked.");
       return;
     }
+
+    if ((durationHours * 60) % 30 !== 0) {
+      alert("Bookings must be in exact 30-minute increments (e.g., 1.5 hours, 2.0 hours).");
+      return;
+    }
     
     if (isEditMode) {
       api.put(`/bookings/${editingId}`, newBooking)
@@ -441,11 +446,11 @@ export const Bookings = () => {
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start</label>
-                    <input required type="time" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
+                    <input required type="time" step="1800" value={newBooking.time} onChange={e => setNewBooking({...newBooking, time: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">End</label>
-                    <input required type="time" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
+                    <input required type="time" step="1800" value={newBooking.endTime} onChange={e => setNewBooking({...newBooking, endTime: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                   </div>
                 </div>
                 
