@@ -154,10 +154,10 @@ export const Tournaments = () => {
              animate={{ scale: 1 }}
              transition={{ duration: 10, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
              src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Stadium" 
-             className="w-full h-full object-cover opacity-20" 
+             className="w-full h-full object-cover opacity-30 dark:opacity-20 mix-blend-luminosity" 
            />
-           <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-base)] via-[var(--bg-base)]/80 to-transparent"></div>
-           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/40 to-transparent"></div>
+           <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-base)] via-[var(--bg-base)]/90 to-transparent"></div>
+           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/50 to-transparent"></div>
         </div>
         
         <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--overlay-bg)] rounded-sm blur-[80px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
@@ -226,34 +226,34 @@ export const Tournaments = () => {
                     className="w-[85vw] sm:w-[400px] shrink-0 snap-center relative overflow-hidden rounded-3xl group cursor-pointer border border-[var(--border-subtle)] hover:border-[var(--accent-emerald)] transition-all duration-500 h-[500px]"
                     onClick={() => openJoinModal(tournament.id)}
                   >
-                    <div className="absolute inset-0 bg-[var(--bg-base)]/60 z-10 transition-all duration-500 group-hover:bg-[var(--bg-base)]/40"></div>
-                    <img src={`https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&sig=${index}`} alt="Tournament" className="absolute inset-0 w-full h-full object-cover z-0 filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/90 to-transparent z-10"></div>
+                    <div className="absolute inset-0 bg-black/50 z-10 transition-all duration-500 group-hover:bg-black/30"></div>
+                    <img src={`https://images.unsplash.com/photo-1542652694-40abf526446e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&sig=${index}`} alt="Tournament" className="absolute inset-0 w-full h-full object-cover z-0 filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/80 to-transparent z-10"></div>
                     
                     <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
                       <div className="mb-auto self-start">
-                        <span className="flex items-center gap-1.5 bg-[var(--bg-base)]/80 backdrop-blur-md border border-[var(--border-subtle)] text-[var(--accent-emerald)] text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest ">
+                        <span className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md border border-white/10 text-[var(--accent-emerald)] text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest ">
                           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-emerald)] animate-pulse shadow-[0_0_10px_var(--accent-emerald)]"></span> LIVE EVENT
                         </span>
                       </div>
                       
-                      <h3 className="text-3xl font-black text-[var(--text-primary)] mb-2 tracking-tight group-hover:-translate-y-2 transition-transform duration-500">{tournament.name}</h3>
+                      <h3 className="text-3xl font-black text-white mb-2 tracking-tight group-hover:-translate-y-2 transition-transform duration-500">{tournament.name}</h3>
                       
-                      <div className="flex items-center gap-4 text-xs font-bold text-[var(--text-secondary)] mb-6 group-hover:-translate-y-2 transition-transform duration-500 delay-75">
+                      <div className="flex items-center gap-4 text-xs font-bold text-gray-300 mb-6 group-hover:-translate-y-2 transition-transform duration-500 delay-75">
                          <div className="flex items-center gap-1.5">
                             <Calendar size={14} className="text-[var(--accent-emerald)]" /> 
-                            {new Date(tournament.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            {tournament.startDate ? new Date(tournament.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'TBD'}
                          </div>
-                         <div className="w-1 h-1 rounded-full bg-[var(--border-subtle)]"></div>
-                         <div className="flex items-center gap-1.5 text-[var(--accent-primary)]">
-                            ₹{tournament.prizePool.toLocaleString()} PRIZE
+                         <div className="w-1 h-1 rounded-full bg-gray-500"></div>
+                         <div className="flex items-center gap-1.5 text-emerald-400">
+                            ₹{tournament.prizePool?.toLocaleString() || 0} PRIZE
                          </div>
                       </div>
                       
                       <div className="flex items-center justify-between mt-4">
                         <div className="flex flex-col">
-                          <span className="text-[9px] text-[var(--text-secondary)] uppercase tracking-widest font-bold mb-1">Entry Fee</span>
-                          <span className="text-xl font-black text-[var(--text-primary)]">₹{tournament.entryFee}</span>
+                          <span className="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Entry Fee</span>
+                          <span className="text-xl font-black text-white">₹{tournament.entryFee || 0}</span>
                         </div>
                         <button className="bg-[var(--accent-emerald)] text-black px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]">
                           Join Squad
