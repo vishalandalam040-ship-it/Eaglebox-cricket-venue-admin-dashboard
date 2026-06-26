@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import api from '../api';
-import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2, Mail } from 'lucide-react';
+import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2, Mail, Info } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,6 +16,9 @@ export const Bookings = () => {
   const [hourlyRate, setHourlyRate] = useState(1000);
   const [isSavingRate, setIsSavingRate] = useState(false);
   const [isDiscountApplied, setIsDiscountApplied] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [bookingLogs, setBookingLogs] = useState([]);
 
   useEffect(() => {
     fetchBookings();
@@ -175,6 +178,14 @@ export const Bookings = () => {
         })
         .catch(err => alert("Failed to cancel booking."));
     }
+  };
+
+  const handleViewDetails = (booking) => {
+    setSelectedBooking(booking);
+    api.get(`/bookings/${booking.id}/logs`)
+      .then(res => setBookingLogs(res.data))
+      .catch(err => console.error("Error fetching logs", err));
+    setIsDetailsModalOpen(true);
   };
 
   const pageVariants = {
@@ -349,6 +360,11 @@ export const Bookings = () => {
                             <MessageCircle size={16} /> WhatsApp
                           </motion.button>
                         )}
+                        {user?.role === 'Super Admin' && (
+                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleViewDetails(booking)} className="p-2.5 rounded-xl bg-blue-500/10 hover:bg-blue-500 text-blue-400 hover:text-[var(--text-primary)] transition-colors border border-blue-500/20 shadow-[var(--badge-glow-blue)]">
+                             <Info size={16} />
+                          </motion.button>
+                        )}
                         {user?.role !== 'Viewer' && (
                           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleEditClick(booking)} className="p-2.5 rounded-xl bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] text-[var(--text-primary)] transition-colors border border-[var(--border-subtle)]">
                             <Edit2 size={16} />
@@ -457,6 +473,102 @@ export const Bookings = () => {
                   </motion.button>
                 </div>
               </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Detailed Record View Modal */}
+      <AnimatePresence>
+        {isDetailsModalOpen && selectedBooking && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-2xl shadow-[var(--modal-shadow)] p-8 relative overflow-hidden flex flex-col max-h-[90vh]"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-emerald-500"></div>
+              
+              <div className="flex justify-between items-center mb-6 shrink-0">
+                <div>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Booking <span className="font-extrabold text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">Timeline</span></h2>
+                  <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">ID: {selectedBooking.id}</p>
+                </div>
+                <button onClick={() => setIsDetailsModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
+                  <X size={18} className="text-[var(--text-secondary)]" />
+                </button>
+              </div>
+
+              <div className="bg-[var(--overlay-bg)] rounded-2xl p-6 border border-[var(--border-subtle)] mb-6 shrink-0">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] block mb-1">Customer</span>
+                    <span className="text-sm font-bold text-[var(--text-primary)]">{selectedBooking.customerName}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] block mb-1">Phone</span>
+                    <span className="text-sm font-bold text-[var(--text-primary)]">{selectedBooking.phone}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] block mb-1">Status</span>
+                    <span className={`text-sm font-extrabold px-2 py-0.5 rounded-md ${selectedBooking.status === 'Confirmed' ? 'text-emerald-400 bg-emerald-500/10' : 'text-rose-400 bg-rose-500/10'}`}>{selectedBooking.status}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] block mb-1">Total Paid</span>
+                    <span className="text-sm font-bold text-emerald-400">₹ {selectedBooking.amount}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col min-h-0 overflow-hidden flex-1">
+                <h3 className="text-xs font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 shrink-0">Lifecycle History</h3>
+                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar pb-2">
+                  {bookingLogs.length === 0 ? (
+                    <div className="text-center py-8">
+                      <p className="text-sm text-[var(--text-secondary)] italic">No timeline history available for this booking.</p>
+                      <p className="text-xs text-[var(--text-secondary)]/70 mt-1">Timeline tracking starts from the latest update.</p>
+                    </div>
+                  ) : (
+                    <div className="relative border-l-2 border-[var(--border-subtle)] ml-3 pl-6 space-y-6">
+                      {bookingLogs.map((log, index) => {
+                        let detailsObj = {};
+                        try { detailsObj = JSON.parse(log.details); } catch(e) {}
+                        
+                        return (
+                          <div key={log.id || index} className="relative">
+                            <div className={`absolute -left-[31px] w-4 h-4 rounded-full border-2 border-[var(--bg-base)] ${log.action === 'Created' ? 'bg-blue-400' : log.action === 'Cancelled' ? 'bg-rose-400' : 'bg-emerald-400'}`}></div>
+                            <div className="flex flex-col">
+                              <span className="text-xs text-[var(--text-secondary)] font-medium mb-1">
+                                {new Date(log.timestamp).toLocaleString()}
+                              </span>
+                              <span className={`text-sm font-bold ${log.action === 'Created' ? 'text-blue-400' : log.action === 'Cancelled' ? 'text-rose-400' : 'text-emerald-400'}`}>
+                                {log.action}
+                              </span>
+                              {Object.keys(detailsObj).length > 0 && (
+                                <div className="mt-2 bg-[var(--bg-base)]/50 rounded-lg p-3 border border-[var(--border-subtle)] grid grid-cols-2 gap-2">
+                                  {Object.entries(detailsObj).map(([key, value]) => (
+                                    <div key={key} className="flex flex-col text-xs">
+                                      <span className="text-[var(--text-secondary)] capitalize font-semibold tracking-wide text-[10px]">{key}</span>
+                                      <span className="text-[var(--text-primary)] font-medium">{value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
             </motion.div>
           </motion.div>
         )}

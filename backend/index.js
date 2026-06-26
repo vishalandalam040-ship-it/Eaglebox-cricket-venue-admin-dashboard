@@ -111,6 +111,14 @@ const crypto = require('crypto');
         timestamp TEXT
       );
 
+      CREATE TABLE IF NOT EXISTS booking_logs (
+        id TEXT PRIMARY KEY,
+        bookingId TEXT,
+        action TEXT,
+        details TEXT,
+        timestamp TEXT
+      );
+
       CREATE TABLE IF NOT EXISTS settings (
         key TEXT PRIMARY KEY,
         value TEXT
@@ -235,6 +243,12 @@ const crypto = require('crypto');
           'INSERT INTO bookings (id, customerName, phone, date, time, endTime, amount, status, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
           [id, customerName, phone, date, time, endTime, amount, status, req.user.id]
         );
+        
+        await db.run(
+          'INSERT INTO booking_logs (id, bookingId, action, details, timestamp) VALUES (?, ?, ?, ?, ?)',
+          ['log' + Date.now() + Math.floor(Math.random() * 1000), id, 'Created', JSON.stringify({ amount, date, time, endTime }), new Date().toISOString()]
+        );
+        
         res.status(201).json({ message: 'Booking created successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -265,6 +279,12 @@ const crypto = require('crypto');
           'UPDATE bookings SET customerName = ?, phone = ?, date = ?, time = ?, endTime = ?, amount = ?, status = ? WHERE id = ?',
           [customerName, phone, date, time, endTime, amount, status, req.params.id]
         );
+        
+        await db.run(
+          'INSERT INTO booking_logs (id, bookingId, action, details, timestamp) VALUES (?, ?, ?, ?, ?)',
+          ['log' + Date.now() + Math.floor(Math.random() * 1000), req.params.id, 'Updated', JSON.stringify({ amount, date, time, endTime, status }), new Date().toISOString()]
+        );
+        
         res.json({ message: 'Booking updated successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -274,7 +294,22 @@ const crypto = require('crypto');
     app.put('/api/bookings/:id/cancel', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
         await db.run("UPDATE bookings SET status = 'Cancelled' WHERE id = ?", [req.params.id]);
+        
+        await db.run(
+          'INSERT INTO booking_logs (id, bookingId, action, details, timestamp) VALUES (?, ?, ?, ?, ?)',
+          ['log' + Date.now() + Math.floor(Math.random() * 1000), req.params.id, 'Cancelled', '{}', new Date().toISOString()]
+        );
+        
         res.json({ message: 'Booking cancelled successfully' });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    app.get('/api/bookings/:id/logs', verifyToken, authorizeRole(['Super Admin']), async (req, res) => {
+      try {
+        const logs = await db.all('SELECT id, bookingid AS "bookingId", action, details, timestamp FROM booking_logs WHERE bookingid = ? ORDER BY timestamp ASC', [req.params.id]);
+        res.json(logs);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
