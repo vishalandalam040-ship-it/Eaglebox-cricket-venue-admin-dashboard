@@ -50,9 +50,10 @@ export const Bookings = () => {
     if (newBooking.time && newBooking.endTime) {
       const startParts = newBooking.time.split(':');
       const endParts = newBooking.endTime.split(':');
+      let startHour = parseInt(startParts[0]);
       let endHour = parseInt(endParts[0]);
-      if (endHour === 0 && parseInt(startParts[0]) > 0) endHour = 24;
-      const durationHours = (endHour + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
+      if (endHour < startHour || (endHour === startHour && parseInt(endParts[1]) < parseInt(startParts[1]))) endHour += 24;
+      const durationHours = (endHour + parseInt(endParts[1])/60) - (startHour + parseInt(startParts[1])/60);
       
       if (durationHours > 0) {
         let minimumAmount = durationHours * hourlyRate;
@@ -107,9 +108,10 @@ export const Bookings = () => {
     }
     const startParts = newBooking.time.split(':');
     const endParts = newBooking.endTime.split(':');
+    let startHour = parseInt(startParts[0]);
     let endHour = parseInt(endParts[0]);
-    if (endHour === 0 && parseInt(startParts[0]) > 0) endHour = 24;
-    const durationHours = (endHour + parseInt(endParts[1])/60) - (parseInt(startParts[0]) + parseInt(startParts[1])/60);
+    if (endHour < startHour || (endHour === startHour && parseInt(endParts[1]) < parseInt(startParts[1]))) endHour += 24;
+    const durationHours = (endHour + parseInt(endParts[1])/60) - (startHour + parseInt(startParts[1])/60);
     
     if (durationHours < 1) {
       alert("A minimum of one-hour slot should be booked.");
