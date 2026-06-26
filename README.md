@@ -1,33 +1,36 @@
 # VenueOS: Eaglebox Cricket Venue Admin Dashboard
 
-A comprehensive, full-stack venue management solution designed specifically for Box Cricket grounds. VenueOS streamlines daily operations, from managing bookings and customer relationships to organizing tournaments and analyzing revenue.
+A comprehensive, full-stack venue management solution designed specifically for Box Cricket grounds. VenueOS streamlines daily operations, from managing bookings and customer relationships to organizing tournaments, tracking memberships, and analyzing revenue.
 
 ![VenueOS Dashboard Overview](frontend/public/stadium.png)
 
 ## 🚀 Features
 
-* **Advanced Dashboard:** Real-time analytics with Recharts, displaying revenue, active bookings, and customer growth dynamically with timeframe filters (7 days / 30 days).
+* **Advanced Dashboard:** Real-time analytics with Recharts, displaying revenue, active bookings, and customer growth dynamically with timeframe filters.
 * **Booking Management:** Seamlessly create, edit, and cancel slot bookings with automatic conflict resolution (overlap checking).
-* **Customer CRM:** Automatically tracks unique customers, total bookings, and calculates Lifetime Value (LTV) across all transactions.
+* **Customer CRM & Memberships:** Automatically tracks unique customers and their total bookings. Manage recurring users with VIP/Pro subscription tiers, and automated email confirmations using EmailJS.
 * **Tournament System:** Host and manage cricket tournaments, register participating teams, and display dynamic live countdowns until the start date.
-* **Membership Plans:** Manage recurring users with VIP/Pro subscription tiers.
-* **Role-Based Access Control (RBAC):** Secure login system with distinct privileges for Super Admins, Staff, and Viewers.
-* **Venue AI Assistant:** Integrated Google Gemini AI assistant to help admins query venue rules, check statistics, and get instant management advice.
+* **Role-Based Access Control (RBAC):** Secure login system with distinct privileges and tailored UI views for Super Admins, Staff, and Viewers.
+* **Venue AI Assistant:** Integrated Google Gemini AI assistant with markdown support to help admins query venue rules, check statistics, and get instant management advice.
+* **Modern UI/UX:** Responsive design, beautiful animations with Framer Motion, and a built-in Dark/Light mode toggle.
 
 ## 🛠 Tech Stack
 
 **Frontend:**
 * React.js (Vite)
-* Tailwind CSS (Custom Dark Mode UI)
+* Tailwind CSS (Custom Dark/Light Mode UI)
+* Framer Motion (Animations)
 * Recharts (Data Visualization)
-* Lucide React (Icons)
+* EmailJS (Email Notifications)
 * React Router v6
+* React Markdown
 
 **Backend:**
 * Node.js & Express.js
-* SQLite3 (Local persistent database)
+* PostgreSQL (Persistent Relational Database)
 * JSON Web Tokens (JWT) for secure Auth
-* Google Generative AI (Gemini Flash 3.5 API)
+* Google Generative AI (Gemini API)
+* Firebase Admin & PDFKit
 
 ## ⚙️ Local Setup
 
@@ -37,41 +40,48 @@ A comprehensive, full-stack venue management solution designed specifically for 
    cd Eaglebox-cricket-venue-admin-dashboard
    ```
 
-2. **Install Backend Dependencies:**
+2. **Configure PostgreSQL Database:**
+   Ensure you have PostgreSQL installed and running. Create a database for the project.
+
+3. **Install Backend Dependencies:**
    ```bash
    cd backend
    npm install
    ```
 
-3. **Configure Backend Environment:**
+4. **Configure Backend Environment:**
    Create a `.env` file in the `backend` directory and add your credentials:
    ```env
    PORT=5000
+   DATABASE_URL=postgres://user:password@localhost:5432/your_database_name
    JWT_SECRET=your_super_secret_jwt_key
    GEMINI_API_KEY=your_google_gemini_api_key
    ```
 
-4. **Start the Backend Server:**
+5. **Start the Backend Server:**
    ```bash
    npm run start
-   # Server will run on http://localhost:5000 and initialize the SQLite database
+   # Server will run on http://localhost:5000 and initialize the database schema
    ```
 
-5. **Install Frontend Dependencies:**
+6. **Install Frontend Dependencies:**
    Open a new terminal and navigate to the frontend:
    ```bash
    cd frontend
    npm install
    ```
 
-6. **Start the Frontend Application:**
+7. **Start the Frontend Application:**
    ```bash
    npm run dev
    # Access the dashboard at http://localhost:5173
    ```
 
 ## 🔒 Security
-Sensitive files such as `.env`, `serviceAccountKey.json`, and local `database.sqlite` files are actively ignored via `.gitignore` to ensure credentials remain secure.
+Sensitive files such as `.env` and database credentials are actively ignored via `.gitignore` to ensure credentials remain secure. Role-based API endpoints ensure strict data isolation across admin tiers.
+
+## 🚀 Deployment
+The frontend is built for static deployment (like GitHub Pages), and the backend seamlessly connects to cloud PostgreSQL instances for production data persistence.
 
 ---
 *Built for the future of Box Cricket management.*
