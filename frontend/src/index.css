@@ -1,143 +1,140 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Outfit', sans-serif;
+  --font-sans: 'Public Sans', sans-serif;
+  --font-display: 'Oswald', sans-serif;
 }
 
 @layer base {
   :root {
-    --text-glow-emerald: 0 0 8px rgba(16,185,129,0.5);
-    --icon-glow-subtle: 0 0 15px rgba(0,242,254,0.1);
-    --icon-glow: 0 0 15px rgba(0,242,254,0.2);
-    --icon-glow-strong: 0 0 15px rgba(0,242,254,0.3);
-    --button-glow: 0 0 20px rgba(0,242,254,0.3);
-    --badge-glow-emerald: 0 0 10px rgba(16,185,129,0.2);
-    --badge-glow-rose: 0 0 10px rgba(244,63,94,0.2);
-    --badge-glow-amber: 0 0 10px rgba(245,158,11,0.2);
-    --bar-glow-amber: 0 0 10px rgba(192,132,252,0.8);
-    --button-glow-amber: 0 0 15px rgba(192,132,252,0.4);
-    --modal-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    --glass-shadow-hover: 0 8px 40px rgba(16, 185, 129, 0.1);
-    --skeleton-bg: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-    --scrollbar-track: transparent;
-    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
-    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
-
-    /* Box Cricket Stadium Theme */
-    --bg-base: #0F172A; /* Deep Night Sky */
-    --bg-surface: rgba(30, 41, 59, 0.65); /* Slate 800 */
-    --bg-surface-hover: rgba(51, 65, 85, 0.85); /* Slate 700 */
+    /* Night Match / Turf Theme (Dark Mode Default) */
+    --bg-base: #022c22; /* Emerald 950 */
+    --bg-surface: #064e3b; /* Emerald 900 */
+    --bg-surface-hover: #065f46; /* Emerald 800 */
     
     --text-primary: #ffffff;
-    --text-secondary: #94A3B8;
-    --text-accent: #10B981; /* Turf Green */
+    --text-secondary: #a7f3d0; /* Emerald 200 */
+    --text-accent: #bef264; /* Lime 300 */
     
-    --border-subtle: rgba(255, 255, 255, 0.05);
-    --border-glow: rgba(16, 185, 129, 0.25);
+    --border-subtle: #047857; /* Emerald 600 */
+    --border-glow: #34d399; /* Emerald 400 */
     
+    --accent-primary: #B91C1C; /* Leather Red */
     --accent-emerald: #10B981;
     --accent-amber: #F59E0B;
     --accent-rose: #F43F5E;
     
     --overlay-bg: rgba(255, 255, 255, 0.05);
     --overlay-hover: rgba(255, 255, 255, 0.1);
+
+    --modal-shadow: 0 0 0 1px #047857; /* Sharp border shadow instead of blur */
+    --glass-shadow: none;
+    --glass-shadow-hover: none;
+    --skeleton-bg: linear-gradient(90deg, #064e3b 25%, #065f46 50%, #064e3b 75%);
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: #047857;
+    --scrollbar-thumb-hover: #059669;
+
+    --badge-glow-emerald: none;
+    --badge-glow-rose: none;
+    --badge-glow-amber: none;
+    --bar-glow-amber: none;
+    --button-glow-amber: none;
+    --button-glow: none;
+    --text-glow-emerald: none;
+    --icon-glow-subtle: none;
+    --icon-glow: none;
+    --icon-glow-strong: none;
   }
 
   :root.light {
-    --text-glow-emerald: none;
-    --icon-glow-subtle: 0 4px 15px rgba(148, 163, 184, 0.2);
-    --icon-glow: 0 6px 20px rgba(148, 163, 184, 0.25);
-    --icon-glow-strong: 0 8px 25px rgba(148, 163, 184, 0.3);
-    --button-glow: 0 8px 25px rgba(16, 185, 129, 0.35);
-    --badge-glow-emerald: 0 2px 8px rgba(16, 185, 129, 0.15);
-    --badge-glow-rose: 0 2px 8px rgba(244, 63, 94, 0.15);
-    --badge-glow-amber: 0 2px 8px rgba(245, 158, 11, 0.15);
-    --bar-glow-amber: none;
-    --button-glow-amber: 0 8px 20px rgba(245, 158, 11, 0.3);
-    --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    --glass-shadow: 0 10px 40px rgba(148, 163, 184, 0.15);
-    --glass-shadow-hover: 0 15px 50px rgba(16, 185, 129, 0.15);
-    --skeleton-bg: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
-    --scrollbar-track: rgba(0,0,0,0.02);
-    --scrollbar-thumb: rgba(0, 0, 0, 0.15);
-    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
+    /* Cricket Whites / Match Roster Theme */
+    --bg-base: #FCFCFD;
+    --bg-surface: #F3F4F6;
+    --bg-surface-hover: #E5E7EB;
+    
+    --text-primary: #0F172A;
+    --text-secondary: #4B5563;
+    --text-accent: #B91C1C; /* Red Ball */
+    
+    --border-subtle: #E5E7EB;
+    --border-glow: #B91C1C;
+    
+    --accent-primary: #B91C1C;
+    --accent-emerald: #15803D; /* Turf Green */
+    
+    --overlay-bg: rgba(0, 0, 0, 0.03);
+    --overlay-hover: rgba(0, 0, 0, 0.06);
 
-    --bg-base: #F8FAFC; /* Slate 50 */
-    --bg-surface: rgba(255, 255, 255, 0.85); /* White glass */
-    --bg-surface-hover: rgba(241, 245, 249, 0.95); /* Slate 100 */
-    
-    --text-primary: #0F172A; /* Slate 900 */
-    --text-secondary: #64748B; /* Slate 500 */
-    --text-accent: #059669; /* Emerald 600 */
-    
-    --border-subtle: rgba(0, 0, 0, 0.08);
-    --border-glow: rgba(16, 185, 129, 0.4);
-    
-    --overlay-bg: rgba(0, 0, 0, 0.05);
-    --overlay-hover: rgba(0, 0, 0, 0.1);
+    --modal-shadow: 0 0 0 1px #E5E7EB;
+    --skeleton-bg: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: #D1D5DB;
+    --scrollbar-thumb-hover: #9CA3AF;
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Public Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
-    background-image: 
-      radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.05), transparent 25%),
-      radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.05), transparent 25%);
-    background-attachment: fixed;
     min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
   }
 }
 
 @layer utilities {
   .glass-panel {
     background: var(--bg-surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-subtle);
-    box-shadow: var(--glass-shadow);
+    border-radius: 2px;
   }
 
   .glass-panel-interactive {
     background: var(--bg-surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border-subtle);
-    box-shadow: var(--glass-shadow);
-    @apply transition-all duration-300 ease-out;
+    border-radius: 2px;
+    @apply transition-colors duration-150;
   }
   
   .glass-panel-interactive:hover {
     background: var(--bg-surface-hover);
     border-color: var(--border-glow);
-    transform: translateY(-2px);
-    box-shadow: var(--glass-shadow-hover);
   }
 
   .neon-text-emerald {
     color: var(--accent-emerald);
-    text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    font-weight: 800;
   }
 
   .neon-border-emerald {
     border-color: var(--accent-emerald);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2), inset 0 0 10px rgba(16, 185, 129, 0.1);
   }
   
   .btn-primary {
-    background: linear-gradient(to right, var(--button-gradient-from), var(--button-gradient-to));
-    color: var(--button-text);
-    box-shadow: var(--button-shadow);
+    background: var(--accent-primary);
+    color: #ffffff;
+    border-radius: 2px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: all 0.15s ease-out;
   }
   
   .btn-primary:hover {
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    background: var(--text-primary);
+    color: var(--bg-base);
   }
   
-  :root.light .btn-primary:hover {
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+  .stumps-accent {
+    border-left: 4px double var(--accent-primary);
+    padding-left: 0.5rem;
   }
 
   /* Skeleton Loader Animation */
@@ -153,17 +150,17 @@
   }
 }
 
-/* Custom Scrollbar for a premium feel */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
-  border-radius: 4px;
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);

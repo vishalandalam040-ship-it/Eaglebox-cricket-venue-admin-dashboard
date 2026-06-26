@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ children, allowedRoles }) => {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-[var(--bg-color)]">
-        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-sm animate-spin"></div>
       </div>
     );
   }

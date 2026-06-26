@@ -128,7 +128,7 @@ export const Tournaments = () => {
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       
       {/* Header & Hero Section */}
-      <motion.div variants={itemVariants} className="glass-panel rounded-[2rem] p-8 mb-8 relative overflow-hidden flex flex-col items-start justify-center min-h-[260px] border border-[var(--border-subtle)] shadow-2xl group">
+      <motion.div variants={itemVariants} className="glass-panel rounded-[2rem] p-8 mb-8 relative overflow-hidden flex flex-col items-start justify-center min-h-[260px] border border-[var(--border-subtle)]  group">
         <div className="absolute inset-0 z-0 overflow-hidden">
            <motion.img 
              initial={{ scale: 1.1 }}
@@ -137,20 +137,20 @@ export const Tournaments = () => {
              src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Stadium" 
              className="w-full h-full object-cover opacity-20" 
            />
-           <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-base)] via-[var(--bg-base)]/80 to-transparent"></div>
-           <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] to-transparent opacity-80"></div>
+           <div className="absolute inset-0  from-[var(--bg-base)] via-[var(--bg-base)]/80 "></div>
+           <div className="absolute inset-0  from-[var(--bg-base)]  opacity-80"></div>
         </div>
         
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--overlay-bg)] rounded-sm blur-[80px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
 
         <div className="relative z-10 max-w-2xl w-full">
           <div className="flex items-center gap-3 mb-4">
-             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/30 shadow-[var(--icon-glow)]">
+             <div className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)] border border-[var(--border-subtle)] ">
                 <Trophy size={20} />
              </div>
-             <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em]">Tournament Center</span>
+             <span className="text-[10px] font-bold text-[var(--accent-emerald)] uppercase tracking-[0.2em]">Tournament Center</span>
           </div>
-          <h2 className="text-4xl font-light text-[var(--text-primary)] mb-4 tracking-tight">Host Professional <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Esports & Events</span></h2>
+          <h2 className="text-4xl font-light text-[var(--text-primary)] mb-4 tracking-tight">Host Professional <span className="font-bold text-[var(--accent-emerald)] drop-">Esports & Events</span></h2>
           <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl">Elevate your venue with full-scale tournament management. From registration to live fixtures, handle everything in one intelligence-driven dashboard.</p>
           
           <div className="flex flex-wrap gap-4">
@@ -159,7 +159,7 @@ export const Tournaments = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-emerald-400 to-blue-500 hover:from-emerald-300 hover:to-blue-400 text-black px-6 py-3 rounded-xl font-extrabold transition-all shadow-[var(--button-glow)] flex items-center justify-center gap-2"
+                className="   hover: hover: text-black px-6 py-3 rounded-sm font-bold transition-all  flex items-center justify-center gap-2"
               >
                 <Plus size={18} /> Initialize Tournament
               </motion.button>
@@ -168,7 +168,7 @@ export const Tournaments = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href={`${import.meta.env.BASE_URL}tournament_rules.pdf`} download="Tournament_Rules.pdf" 
-              className="glass-panel px-6 py-3 rounded-xl font-extrabold transition-all border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] flex items-center justify-center gap-2"
+              className="glass-panel px-6 py-3 rounded-sm font-bold transition-all border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] flex items-center justify-center gap-2"
             >
               Download Policy
             </motion.a>
@@ -179,7 +179,7 @@ export const Tournaments = () => {
       {/* Active Tournaments Header */}
       <motion.div variants={itemVariants} className="mb-6 flex justify-between items-end">
          <div className="flex flex-col">
-            <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-1">Live Feed</h3>
+            <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-1">Live Feed</h3>
             <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">Active Tournaments</h2>
          </div>
       </motion.div>
@@ -187,12 +187,12 @@ export const Tournaments = () => {
       {/* Tournaments List */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6 mb-12">
         {loading ? (
-           <div className="glass-panel rounded-3xl p-6 h-64 flex flex-col justify-center items-center">
-             <div className="w-16 h-16 rounded-full border-4 border-white/10 border-t-emerald-400 animate-spin mb-4"></div>
-             <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Syncing Neural Data...</p>
+           <div className="glass-panel rounded-sm p-6 h-64 flex flex-col justify-center items-center">
+             <div className="w-16 h-16 rounded-sm border-4 border-white/10 border-t-emerald-400 animate-spin mb-4"></div>
+             <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Syncing Neural Data...</p>
            </div>
         ) : tournaments.length === 0 ? (
-           <div className="glass-panel rounded-3xl p-16 text-center text-[var(--text-secondary)] font-medium">No active tournaments found in the system.</div>
+           <div className="glass-panel rounded-sm p-16 text-center text-[var(--text-secondary)] font-medium">No active tournaments found in the system.</div>
         ) : (
           <AnimatePresence>
             {tournaments.map((tournament, index) => (
@@ -201,29 +201,29 @@ export const Tournaments = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 key={tournament.id} 
-                className="glass-panel-interactive rounded-3xl overflow-hidden p-6 lg:p-8 flex flex-col xl:flex-row gap-8"
+                className="glass-panel-interactive rounded-sm overflow-hidden p-6 lg:p-8 flex flex-col xl:flex-row gap-8"
               >
                  {/* Left Section - Info */}
                  <div className="flex-1 flex flex-col justify-between relative">
-                    <div className="absolute -left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-amber-500 rounded-r-full shadow-[0_0_15px_rgba(0,242,254,0.5)]"></div>
+                    <div className="absolute -left-8 top-0 bottom-0 w-1    rounded-r-full "></div>
                     
                     <div>
                        <div className="flex items-center gap-3 mb-4">
-                         <span className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-[var(--badge-glow-emerald)]">
-                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> LIVE
+                         <span className="flex items-center gap-1.5 bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] text-[9px] font-bold px-3 py-1 rounded-sm uppercase tracking-widest ">
+                           <span className="w-1.5 h-1.5 rounded-sm bg-[var(--accent-emerald)] animate-pulse"></span> LIVE
                          </span>
-                         <span className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">ID: {tournament.id}</span>
+                         <span className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">ID: {tournament.id}</span>
                        </div>
                        
-                       <h3 className="text-3xl font-extrabold text-[var(--text-primary)] mb-3 tracking-tight">{tournament.name}</h3>
+                       <h3 className="text-3xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">{tournament.name}</h3>
                        
                        <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-[var(--text-secondary)] mb-6">
-                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
-                             <Calendar size={14} className="text-emerald-400" /> 
+                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-sm border border-[var(--border-subtle)]">
+                             <Calendar size={14} className="text-[var(--accent-emerald)]" /> 
                              {new Date(tournament.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                           </div>
-                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-lg border border-[var(--border-subtle)]">
-                             <Users size={14} className="text-amber-400" /> 
+                          <div className="flex items-center gap-1.5 bg-[var(--overlay-bg)] px-3 py-1.5 rounded-sm border border-[var(--border-subtle)]">
+                             <Users size={14} className="text-[var(--accent-primary)]" /> 
                              Main Arena
                           </div>
                        </div>
@@ -234,7 +234,7 @@ export const Tournaments = () => {
                         <motion.button 
                           whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                           onClick={() => openManageModal(tournament.id)} 
-                          className="px-6 py-2.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] text-[var(--text-primary)] font-bold transition-colors text-xs uppercase tracking-wider"
+                          className="px-6 py-2.5 rounded-sm border border-[var(--border-subtle)] bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] text-[var(--text-primary)] font-bold transition-colors text-xs uppercase tracking-wider"
                         >
                           Manage Rosters
                         </motion.button>
@@ -242,7 +242,7 @@ export const Tournaments = () => {
                       <motion.button 
                         whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                         onClick={() => openJoinModal(tournament.id)} 
-                        className="px-6 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-400 hover:text-black font-extrabold transition-all shadow-[var(--icon-glow-subtle)] text-xs uppercase tracking-wider"
+                        className="px-6 py-2.5 rounded-sm bg-[var(--overlay-bg)] text-[var(--accent-emerald)] border border-[var(--border-subtle)] hover:bg-[var(--accent-emerald)] hover:text-black font-bold transition-all  text-xs uppercase tracking-wider"
                       >
                         Register Team
                       </motion.button>
@@ -252,47 +252,47 @@ export const Tournaments = () => {
                  {/* Right Section - Stats Cards */}
                  <div className="flex flex-col lg:flex-row gap-4 xl:w-2/3">
                     {/* Teams Card */}
-                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
-                       <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
+                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
+                       <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
                        <div>
-                          <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Users size={12} className="text-amber-400"/> REGISTERED TEAMS</h4>
+                          <h4 className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Users size={12} className="text-[var(--accent-primary)]"/> REGISTERED TEAMS</h4>
                           <div className="flex items-baseline gap-2 mb-6">
-                             <span className="text-5xl font-extrabold text-[var(--text-primary)] tracking-tighter">{tournament.teams}</span>
+                             <span className="text-5xl font-bold text-[var(--text-primary)] tracking-tighter">{tournament.teams}</span>
                              <span className="text-sm font-bold text-[var(--text-secondary)]">/ {tournament.maxTeams || 16}</span>
                           </div>
                        </div>
-                       <div className="w-full bg-[var(--overlay-bg)] h-1.5 rounded-full overflow-hidden">
+                       <div className="w-full bg-[var(--overlay-bg)] h-1.5 rounded-sm overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(tournament.teams / (tournament.maxTeams || 16)) * 100}%` }}
                             transition={{ duration: 1.5, ease: "easeOut" }}
-                            className="bg-amber-500 h-full rounded-full shadow-[var(--bar-glow-amber)]"
+                            className="bg-[var(--accent-primary)] h-full rounded-sm "
                           ></motion.div>
                        </div>
                     </div>
 
                     {/* Prize Pool Card */}
-                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
-                       <div className="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
+                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
+                       <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
                        <div>
-                          <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Trophy size={12} className="text-amber-400"/> PRIZE POOL</h4>
-                          <p className="text-3xl font-extrabold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
-                            <span className="text-sm text-amber-400">₹</span> {tournament.prizePool.toLocaleString()}
+                          <h4 className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Trophy size={12} className="text-[var(--accent-primary)]"/> PRIZE POOL</h4>
+                          <p className="text-3xl font-bold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
+                            <span className="text-sm text-[var(--accent-primary)]">₹</span> {tournament.prizePool.toLocaleString()}
                           </p>
                           <p className="text-[10px] font-bold text-[var(--text-secondary)]">Winner takes 60%</p>
                        </div>
-                       <div className="mt-4 flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 w-fit px-3 py-1.5 rounded-md">
-                          <span className="text-[9px] font-extrabold text-amber-400 uppercase tracking-widest">Sponsored Event</span>
+                       <div className="mt-4 flex items-center gap-1.5 bg-[var(--overlay-bg)] border border-[var(--border-subtle)] w-fit px-3 py-1.5 rounded-sm">
+                          <span className="text-[9px] font-bold text-[var(--accent-primary)] uppercase tracking-widest">Sponsored Event</span>
                        </div>
                     </div>
 
                     {/* Entry Fee Card */}
-                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
-                       <div className="absolute top-0 left-0 w-full h-1 bg-emerald-400"></div>
+                    <div className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm p-6 flex-1 flex flex-col justify-between relative overflow-hidden group">
+                       <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-emerald)]"></div>
                        <div>
-                          <h4 className="text-[9px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Plus size={12} className="text-emerald-400"/> REGISTRATION FEE</h4>
-                          <p className="text-3xl font-extrabold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
-                            <span className="text-sm text-emerald-400">₹</span> {(tournament.entryFee || 0).toLocaleString()}
+                          <h4 className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-4 flex items-center gap-2"><Plus size={12} className="text-[var(--accent-emerald)]"/> REGISTRATION FEE</h4>
+                          <p className="text-3xl font-bold text-[var(--text-primary)] flex items-baseline gap-1 mb-1 tracking-tight">
+                            <span className="text-sm text-[var(--accent-emerald)]">₹</span> {(tournament.entryFee || 0).toLocaleString()}
                           </p>
                           <p className="text-[10px] font-bold text-[var(--text-secondary)]">Per team base rate</p>
                        </div>
@@ -307,44 +307,44 @@ export const Tournaments = () => {
       {/* Modals */}
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[var(--modal-shadow)] p-8 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-blue-500"></div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 ">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1   "></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">New <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Tournament</span></h2>
-                  <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Configure Event Parameters</p>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">New <span className="font-bold text-[var(--accent-emerald)] drop-">Tournament</span></h2>
+                  <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Configure Event Parameters</p>
                 </div>
-                <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-sm flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
               <form onSubmit={handleCreateTournament} className="flex flex-col gap-5">
                 <div>
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Tournament Name</label>
-                  <input required type="text" value={newTournament.name} onChange={e => setNewTournament({...newTournament, name: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium transition-all" placeholder="e.g. Champions League 2024" />
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Tournament Name</label>
+                  <input required type="text" value={newTournament.name} onChange={e => setNewTournament({...newTournament, name: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium transition-all" placeholder="e.g. Champions League 2024" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start Date</label>
-                  <input required type="date" value={newTournament.startDate} onChange={e => setNewTournament({...newTournament, startDate: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium [color-scheme:dark]" />
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Start Date</label>
+                  <input required type="date" value={newTournament.startDate} onChange={e => setNewTournament({...newTournament, startDate: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium [color-scheme:dark]" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Prize Pool (₹)</label>
-                    <input required type="number" value={newTournament.prizePool} onChange={e => setNewTournament({...newTournament, prizePool: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="50000" />
+                    <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Prize Pool (₹)</label>
+                    <input required type="number" value={newTournament.prizePool} onChange={e => setNewTournament({...newTournament, prizePool: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="50000" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Entry Fee (₹)</label>
-                    <input required type="number" value={newTournament.entryFee} onChange={e => setNewTournament({...newTournament, entryFee: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="2500" />
+                    <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Entry Fee (₹)</label>
+                    <input required type="number" value={newTournament.entryFee} onChange={e => setNewTournament({...newTournament, entryFee: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="2500" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Max Teams</label>
-                  <input required type="number" min="2" value={newTournament.maxTeams} onChange={e => setNewTournament({...newTournament, maxTeams: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-medium" placeholder="16" />
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Max Teams</label>
+                  <input required type="number" min="2" value={newTournament.maxTeams} onChange={e => setNewTournament({...newTournament, maxTeams: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="16" />
                 </div>
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 text-black font-extrabold shadow-[var(--button-glow)] transition-all">
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-sm    text-black font-bold  transition-all">
                     Initialize
                   </motion.button>
                 </div>
@@ -356,25 +356,25 @@ export const Tournaments = () => {
 
       <AnimatePresence>
         {isJoinModalOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-md shadow-[var(--modal-shadow)] p-8 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 ">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
-                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Register <span className="font-extrabold text-amber-400">Team</span></h2>
-                  <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Secure your tournament slot</p>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Register <span className="font-bold text-[var(--accent-primary)]">Team</span></h2>
+                  <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Secure your tournament slot</p>
                 </div>
-                <button onClick={() => setIsJoinModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsJoinModalOpen(false)} className="w-10 h-10 rounded-sm flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
               <form onSubmit={handleJoinTeam} className="flex flex-col gap-5">
                 <div>
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Team Name</label>
-                  <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="Thunderbolts" />
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Team Name</label>
+                  <input required type="text" value={newTeam.teamName} onChange={e => setNewTeam({...newTeam, teamName: e.target.value})} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="Thunderbolts" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
                   <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => {
                     const count = parseInt(e.target.value) || 0;
                     setNewTeam({
@@ -382,12 +382,12 @@ export const Tournaments = () => {
                       playersCount: e.target.value,
                       playerNames: Array(count).fill('').map((_, i) => newTeam.playerNames[i] || '')
                     })
-                  }} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-amber-500/50 text-[var(--text-primary)] font-medium" placeholder="11" />
+                  }} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="11" />
                 </div>
                 
                 {Number(newTeam.playersCount) > 0 && (
-                  <div className="mt-4 max-h-48 overflow-y-auto custom-scrollbar pr-2 space-y-3 border border-[var(--border-subtle)] p-4 rounded-xl bg-[var(--bg-base)]/30">
-                    <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2 sticky top-0 bg-[var(--bg-base)] py-1 z-10">Player Roster</label>
+                  <div className="mt-4 max-h-48 overflow-y-auto custom-scrollbar pr-2 space-y-3 border border-[var(--border-subtle)] p-4 rounded-sm bg-[var(--bg-base)]/30">
+                    <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2 sticky top-0 bg-[var(--bg-base)] py-1 z-10">Player Roster</label>
                     {newTeam.playerNames.map((name, idx) => (
                       <input 
                         key={idx}
@@ -399,21 +399,21 @@ export const Tournaments = () => {
                           newNames[idx] = e.target.value;
                           setNewTeam({...newTeam, playerNames: newNames});
                         }} 
-                        className="w-full bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-lg px-3 py-2 outline-none focus:border-amber-500/50 text-[var(--text-primary)] text-sm" 
+                        className="w-full bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-sm px-3 py-2 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] text-sm" 
                         placeholder={`Player ${idx + 1} Name`} 
                       />
                     ))}
                   </div>
                 )}
-                <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 mt-2">
-                  <label className="block text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
+                <div className="p-4 rounded-sm border border-[var(--border-subtle)] bg-[var(--overlay-bg)] mt-2">
+                  <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
                     Payment Amount (Min: ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0})
                   </label>
-                  <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className="w-full bg-transparent border-none outline-none text-3xl font-extrabold text-amber-400 placeholder-amber-900" placeholder="0" />
+                  <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className="w-full bg-transparent border-none outline-none text-3xl font-bold text-[var(--accent-primary)] placeholder-amber-900" placeholder="0" />
                 </div>
                 <div className="mt-8 flex gap-4">
-                  <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-xl border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} type="submit" className="flex-1 px-4 py-3.5 rounded-xl bg-amber-500 text-[var(--text-primary)] font-extrabold shadow-[0_0_20px_rgba(192,132,252,0.4)] transition-all disabled:opacity-50 disabled:shadow-none">
+                  <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} type="submit" className="flex-1 px-4 py-3.5 rounded-sm bg-[var(--accent-primary)] text-[var(--text-primary)] font-bold  transition-all disabled:opacity-50 disabled:shadow-none">
                     Confirm Registration
                   </motion.button>
                 </div>
@@ -425,28 +425,28 @@ export const Tournaments = () => {
 
       <AnimatePresence>
         {isManageModalOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-3xl w-full max-w-2xl shadow-[var(--modal-shadow)] p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 ">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-2xl  p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
               <div className="flex justify-between items-center mb-6 shrink-0">
                 <div>
-                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Manage <span className="font-extrabold text-emerald-400">Rosters</span></h2>
-                  <p className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Tournament Administration</p>
+                  <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Manage <span className="font-bold text-[var(--accent-emerald)]">Rosters</span></h2>
+                  <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mt-1">Tournament Administration</p>
                 </div>
-                <button onClick={() => setIsManageModalOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
+                <button onClick={() => setIsManageModalOpen(false)} className="w-10 h-10 rounded-sm flex items-center justify-center bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] transition-colors border border-[var(--border-subtle)]">
                   <X size={18} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
               
               {user?.role !== 'Viewer' && (
-                <div className="mb-6 p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5 flex flex-col md:flex-row md:items-end gap-4 shrink-0">
+                <div className="mb-6 p-4 rounded-sm border border-[var(--border-subtle)] bg-[var(--overlay-bg)] flex flex-col md:flex-row md:items-end gap-4 shrink-0">
                   <div className="flex-1">
-                    <label className="block text-[10px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mb-2">Update Entry Fee (₹)</label>
-                    <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-xl px-4 py-3 outline-none focus:border-emerald-500/50 text-[var(--text-primary)] font-extrabold" />
+                    <label className="block text-[10px] font-bold text-[var(--accent-emerald)] uppercase tracking-[0.2em] mb-2">Update Entry Fee (₹)</label>
+                    <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-bold" />
                   </div>
                   <button 
                     onClick={handleUpdateFee}
                     disabled={isSavingManageFee}
-                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 text-black font-extrabold shadow-[var(--button-glow)] hover:from-emerald-300 hover:to-emerald-400 transition-colors disabled:opacity-50 whitespace-nowrap"
+                    className="px-6 py-3 rounded-sm    text-black font-bold  hover: hover: transition-colors disabled:opacity-50 whitespace-nowrap"
                   >
                     {isSavingManageFee ? 'Saving...' : 'Save Price'}
                   </button>
@@ -455,27 +455,27 @@ export const Tournaments = () => {
 
               <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 relative z-10">
                 {teams.length === 0 ? (
-                  <div className="py-12 text-center text-[var(--text-secondary)] font-medium bg-[var(--overlay-bg)] rounded-2xl border border-[var(--border-subtle)]">No squads registered yet.</div>
+                  <div className="py-12 text-center text-[var(--text-secondary)] font-medium bg-[var(--overlay-bg)] rounded-sm border border-[var(--border-subtle)]">No squads registered yet.</div>
                 ) : (
                   <div className="space-y-3">
                     {teams.map((team, idx) => (
-                      <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }} key={team.id} className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-2xl p-4 flex flex-col gap-4 hover:border-emerald-500/30 transition-colors">
+                      <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }} key={team.id} className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm p-4 flex flex-col gap-4 hover:border-[var(--border-subtle)] transition-colors">
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-4">
-                             <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
+                             <div className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)] border border-[var(--border-subtle)]">
                                <Users size={16} />
                              </div>
                              <div>
-                               <p className="font-extrabold text-[var(--text-primary)] text-base">{team.teamName}</p>
+                               <p className="font-bold text-[var(--text-primary)] text-base">{team.teamName}</p>
                                <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">ID: {team.id}</p>
                              </div>
                           </div>
                           <div className="flex items-center gap-4">
-                            <span className="bg-amber-500/10 text-amber-400 px-3 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest border border-amber-500/20">
+                            <span className="bg-[var(--overlay-bg)] text-[var(--accent-primary)] px-3 py-1.5 rounded-sm text-[10px] font-bold uppercase tracking-widest border border-[var(--border-subtle)]">
                               {team.playersCount} Players
                             </span>
                             {user?.role !== 'Viewer' && (
-                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="w-8 h-8 rounded-full flex items-center justify-center text-rose-500 hover:bg-rose-500/10 hover:text-rose-400 transition-colors border border-transparent hover:border-rose-500/20" title="Remove Team">
+                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="w-8 h-8 rounded-sm flex items-center justify-center text-[var(--accent-primary)] hover:bg-[var(--overlay-bg)] hover:text-[var(--accent-primary)] transition-colors border border-transparent hover:border-[var(--border-subtle)]" title="Remove Team">
                                  <X size={14} />
                               </button>
                             )}
@@ -484,7 +484,7 @@ export const Tournaments = () => {
                         {team.players && team.players.length > 0 && (
                           <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border-subtle)]">
                             {team.players.map(p => (
-                              <span key={p.id} className="text-xs bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--text-secondary)] px-2.5 py-1 rounded-md">{p.playerName}</span>
+                              <span key={p.id} className="text-xs bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--text-secondary)] px-2.5 py-1 rounded-sm">{p.playerName}</span>
                             ))}
                           </div>
                         )}

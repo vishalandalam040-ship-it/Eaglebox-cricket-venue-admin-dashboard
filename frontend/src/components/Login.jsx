@@ -86,7 +86,7 @@ export const Login = () => {
               y: mousePosition.y * -1,
             }}
             transition={{ type: 'spring', damping: 50, stiffness: 200 }}
-            className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-emerald-500/30 rounded-full blur-[120px]"
+            className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-[var(--overlay-bg)] rounded-sm blur-[120px]"
           />
           <motion.div 
             animate={{ 
@@ -94,10 +94,10 @@ export const Login = () => {
               y: mousePosition.y * 1.5,
             }}
             transition={{ type: 'spring', damping: 50, stiffness: 200 }}
-            className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/30 rounded-full blur-[120px]"
+            className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/30 rounded-sm blur-[120px]"
           />
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          <div className="absolute inset-0  from-black via-black/50 "></div>
         </div>
 
         {/* Top Logo */}
@@ -107,11 +107,11 @@ export const Login = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="relative z-10 flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.4)]">
+          <div className="w-12 h-12 rounded-sm    flex items-center justify-center ">
             <Trophy size={24} className="text-black" />
           </div>
-          <span className="text-2xl font-black tracking-tight text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
-            Venue<span className="text-emerald-400">OS</span>
+          <span className="text-2xl font-black tracking-tight text-white drop-">
+            Venue<span className="text-[var(--accent-emerald)]">OS</span>
           </span>
         </motion.div>
 
@@ -124,7 +124,7 @@ export const Login = () => {
         >
           <h1 className="text-5xl lg:text-6xl font-light tracking-tight leading-tight mb-6">
             Intelligent <br />
-            <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+            <span className="font-bold text-transparent bg-clip-text    drop-">
               Venue Control.
             </span>
           </h1>
@@ -133,11 +133,11 @@ export const Login = () => {
           </p>
 
           <div className="flex gap-6">
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-              <ShieldCheck size={16} className="text-emerald-400" />
+            <div className="flex items-center gap-3 bg-white/5  px-4 py-2 rounded-sm border border-white/10">
+              <ShieldCheck size={16} className="text-[var(--accent-emerald)]" />
               <span className="text-xs font-bold uppercase tracking-wider">Secure Access</span>
             </div>
-            <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+            <div className="flex items-center gap-3 bg-white/5  px-4 py-2 rounded-sm border border-white/10">
               <Activity size={16} className="text-blue-400" />
               <span className="text-xs font-bold uppercase tracking-wider">Live Telemetry</span>
             </div>
@@ -161,16 +161,16 @@ export const Login = () => {
         >
           {/* Mobile Logo (Visible only on small screens) */}
           <motion.div variants={itemVariants} className="flex lg:hidden items-center justify-center gap-3 mb-12">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center shadow-[var(--icon-glow)]">
+            <div className="w-12 h-12 rounded-sm    flex items-center justify-center ">
               <Trophy size={24} className="text-white" />
             </div>
             <span className="text-3xl font-black tracking-tight text-[var(--text-primary)]">
-              Venue<span className="text-emerald-500">OS</span>
+              Venue<span className="text-[var(--accent-emerald)]">OS</span>
             </span>
           </motion.div>
 
           <motion.div variants={itemVariants} className="mb-10 text-center lg:text-left">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--text-primary)] tracking-tight mb-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] tracking-tight mb-3">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h2>
             <p className="text-[var(--text-secondary)] font-medium text-lg">
@@ -179,13 +179,13 @@ export const Login = () => {
           </motion.div>
 
           {error && (
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-rose-500/10 border border-rose-500/20 text-rose-500 font-bold p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--accent-primary)] font-bold p-4 rounded-sm mb-6 text-sm flex items-center gap-3">
               <ShieldCheck size={18} /> {error}
             </motion.div>
           )}
 
           {successMsg && (
-            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 font-bold p-4 rounded-xl mb-6 text-sm flex items-center gap-3">
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] font-bold p-4 rounded-sm mb-6 text-sm flex items-center gap-3">
               <ShieldCheck size={18} /> {successMsg}
             </motion.div>
           )}
@@ -193,28 +193,28 @@ export const Login = () => {
           <motion.form variants={itemVariants} onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <Mail size={18} className="text-[var(--text-secondary)] group-focus-within:text-emerald-500 transition-colors" />
+                <Mail size={18} className="text-[var(--text-secondary)] group-focus-within:text-[var(--accent-emerald)] transition-colors" />
               </div>
               <input 
                 type="email" 
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-emerald-500/50 rounded-2xl pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:shadow-[var(--icon-glow-subtle)]"
+                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-[var(--border-subtle)] rounded-sm pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:"
                 placeholder="Email Address"
               />
             </div>
             
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <Lock size={18} className="text-[var(--text-secondary)] group-focus-within:text-emerald-500 transition-colors" />
+                <Lock size={18} className="text-[var(--text-secondary)] group-focus-within:text-[var(--accent-emerald)] transition-colors" />
               </div>
               <input 
                 type="password" 
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-emerald-500/50 rounded-2xl pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:shadow-[var(--icon-glow-subtle)]"
+                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-[var(--border-subtle)] rounded-sm pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:"
                 placeholder="Password"
               />
             </div>
@@ -224,10 +224,10 @@ export const Login = () => {
               whileTap={{ scale: 0.98 }}
               type="submit" 
               disabled={loading}
-              className="btn-primary w-full mt-6 font-extrabold py-4 px-6 rounded-2xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-lg uppercase tracking-wide"
+              className="btn-primary w-full mt-6 font-bold py-4 px-6 rounded-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-lg uppercase tracking-wide"
             >
               {loading ? (
-                <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-sm animate-spin"></div>
               ) : (
                 <>
                   {isLogin ? 'Authenticate' : 'Initialize Profile'} <ArrowRight size={20} />
@@ -248,7 +248,7 @@ export const Login = () => {
                 setError('');
                 setSuccessMsg('');
               }} 
-              className="px-6 py-3 rounded-xl bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] font-bold transition-all shadow-sm"
+              className="px-6 py-3 rounded-sm bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] font-bold transition-all "
             >
               {isLogin ? 'Sign up now' : 'Sign in'}
             </motion.button>

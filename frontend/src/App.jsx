@@ -48,10 +48,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           <motion.div 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,254,0.4)] cursor-pointer shrink-0" 
+            className="w-10 h-10 rounded-sm bg-[var(--accent-primary)] flex items-center justify-center cursor-pointer shrink-0" 
             onClick={() => setIsOpen(!isOpen)}
           >
-            <Trophy size={20} className="text-[var(--text-primary)]" />
+            <Trophy size={20} className="text-white" />
           </motion.div>
           
           <AnimatePresence>
@@ -62,8 +62,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex flex-col overflow-hidden whitespace-nowrap"
               >
-                 <h2 className="font-extrabold text-2xl tracking-tight text-[var(--text-primary)] m-0">VenueOS</h2>
-                 <span className="text-[9px] font-bold tracking-[0.2em] text-emerald-400 uppercase">Premium Edition</span>
+                 <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] m-0">VenueOS</h2>
+                 <span className="text-[9px] font-bold tracking-[0.2em] text-[var(--accent-primary)] uppercase">Premium Edition</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -77,10 +77,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <Link key={item.path} to={item.path}>
                 <motion.div 
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 relative overflow-hidden group ${isActive ? 'bg-emerald-500/10 border border-emerald-500/30 shadow-[inset_0_0_20px_rgba(0,242,254,0.05)]' : 'hover:bg-[var(--overlay-bg)] border border-transparent'}`}
+                  className={`flex items-center gap-4 px-4 py-3.5 rounded-sm transition-all duration-150 relative overflow-hidden group ${isActive ? 'bg-[var(--overlay-bg)] border border-[var(--border-subtle)]' : 'hover:bg-[var(--overlay-bg)] border border-transparent'}`}
                 >
-                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-400 rounded-r-full shadow-[0_0_10px_rgba(0,242,254,0.8)]" />}
-                  <Icon size={22} className={`shrink-0 transition-colors duration-300 ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`} />
+                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--accent-primary)]" />}
+                  <Icon size={22} className={`shrink-0 transition-colors duration-150 ${isActive ? 'text-[var(--accent-emerald)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`} />
                   
                   <AnimatePresence>
                     {isOpen && (
@@ -102,7 +102,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
         {user && (
           <div className="p-6 border-t border-[var(--border-subtle)]">
-            <button onClick={logout} className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-rose-400 transition-colors w-full group overflow-hidden whitespace-nowrap">
+            <button onClick={logout} className="flex items-center gap-4 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors w-full group overflow-hidden whitespace-nowrap">
               <LogOut size={22} className="shrink-0" />
               <AnimatePresence>
                 {isOpen && (
@@ -123,15 +123,15 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Mobile Bottom Navigation (Floating Dock) */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
-        <div className="glass-panel rounded-2xl flex items-center p-2 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[var(--border-subtle)]/50 bg-[var(--bg-surface)]/90 backdrop-blur-xl overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="glass-panel rounded-sm flex items-center p-2  border border-[var(--border-subtle)]/50 bg-[var(--bg-surface)]/90  overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className="flex flex-col items-center justify-center p-2 min-w-[72px] relative group shrink-0 rounded-xl hover:bg-[var(--overlay-bg)] transition-colors">
-                {isActive && <div className="absolute -top-2 w-8 h-1 bg-emerald-400 rounded-b-full shadow-[0_0_10px_rgba(16,185,129,0.8)]" />}
-                <Icon size={20} className={isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
-                <span className={`text-[8px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-emerald-400' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
+              <Link key={item.path} to={item.path} className="flex flex-col items-center justify-center p-2 min-w-[72px] relative group shrink-0 rounded-sm hover:bg-[var(--overlay-bg)] transition-colors">
+                {isActive && <div className="absolute -top-2 w-8 h-1 bg-[var(--accent-primary)]" />}
+                <Icon size={20} className={isActive ? 'text-[var(--accent-emerald)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
+                <span className={`text-[8px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
           })}
@@ -263,10 +263,10 @@ const Topbar = () => {
     >
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-[var(--text-primary)] mr-4" />
-        <h2 className="font-extrabold text-xl m-0 text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)]">VenueOS</h2>
+        <h2 className="font-bold text-xl m-0 text-[var(--text-primary)]">VenueOS</h2>
       </div>
       
-      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-full px-5 py-2.5 w-full max-w-md focus-within:border-[var(--accent-emerald)]/50 focus-within:shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all duration-300">
+      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-sm px-5 py-2 w-full max-w-md focus-within:border-[var(--accent-primary)] transition-colors">
          <Search size={18} className="text-[var(--text-secondary)]" />
          <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)] font-medium" />
       </div>
@@ -290,7 +290,7 @@ const Topbar = () => {
               className="relative p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             >
               <Bell size={20} />
-              {hasUnread && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full shadow-[var(--badge-glow-rose)]"></span>}
+              {hasUnread && <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[var(--accent-primary)] rounded-sm"></span>}
             </button>
 
             <AnimatePresence>
@@ -300,18 +300,18 @@ const Topbar = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    className="fixed inset-0 bg-black/50  z-40"
                     onClick={() => setShowNotifications(false)}
                   />
                   <motion.div 
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    className="fixed top-20 right-4 left-4 md:absolute md:top-full md:mt-4 md:right-0 md:left-auto md:w-80 glass-panel border border-[var(--border-subtle)] rounded-2xl shadow-2xl overflow-hidden z-50 bg-[var(--bg-surface)]"
+                    className="fixed top-20 right-4 left-4 md:absolute md:top-full md:mt-4 md:right-0 md:left-auto md:w-80 glass-panel border border-[var(--border-subtle)] rounded-sm  overflow-hidden z-50 bg-[var(--bg-surface)]"
                   >
                     <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-black/10">
                       <h3 className="font-bold text-[var(--text-primary)]">Notifications</h3>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-secondary)]">{hasUnread ? notifications.length : 0} New</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-secondary)]">{hasUnread ? notifications.length : 0} New</span>
                     </div>
                   <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
                     {notifications.length === 0 ? (
@@ -337,17 +337,17 @@ const Topbar = () => {
 
         <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
 
-        <button onClick={logout} className="md:hidden p-2 text-[var(--text-secondary)] hover:text-rose-400 transition-colors flex flex-col items-center gap-1">
+        <button onClick={logout} className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex flex-col items-center gap-1">
           <LogOut size={20} />
-          <span className="text-[8px] font-extrabold uppercase tracking-wider text-rose-400">Logout</span>
+          <span className="text-[8px] font-bold uppercase tracking-wider text-[var(--accent-primary)]">Logout</span>
         </button>
 
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
-             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-emerald)] drop-shadow-[var(--text-glow-emerald)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
-             <span className="text-[9px] font-extrabold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : user?.role?.toUpperCase()}</span>
+             <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
+             <span className="text-[9px] font-bold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : user?.role?.toUpperCase()}</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-blue-600 flex items-center justify-center text-[var(--text-primary)] font-bold text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-2 ring-white/10 group-hover:ring-[var(--accent-emerald)]/50 transition-all">
+          <div className="w-10 h-10 rounded-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-primary)] font-bold text-lg group-hover:border-[var(--accent-primary)] transition-colors">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
@@ -358,7 +358,7 @@ const Topbar = () => {
 
 // Skeleton Loader for Dashboard Cards
 const StatCardSkeleton = () => (
-  <div className="glass-panel rounded-2xl p-6 h-32 flex flex-col justify-between">
+  <div className="glass-panel rounded-sm p-6 h-32 flex flex-col justify-between">
     <div className="flex items-center gap-2 mb-2">
       <div className="w-4 h-4 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
       <div className="h-3 w-24 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
@@ -497,22 +497,22 @@ const Dashboard = () => {
       className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
     >
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-extrabold text-emerald-400 drop-shadow-[var(--text-glow-emerald)]">Overview</span></h1>
+        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-bold text-[var(--accent-emerald)] drop-">Overview</span></h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
       </motion.div>
 
       <div className="flex flex-col xl:flex-row gap-6 mb-8">
         <motion.div variants={itemVariants} className="xl:w-2/3 flex flex-col gap-6">
-          <div className="glass-panel rounded-3xl p-6 relative h-[380px] flex flex-col overflow-hidden group">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -z-10 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+          <div className="glass-panel rounded-sm p-6 relative h-[380px] flex flex-col overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--overlay-bg)] rounded-sm blur-[80px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
             
             <div className="flex justify-between items-start mb-6 z-10">
                <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-[11px] font-extrabold text-[var(--text-secondary)] uppercase tracking-[0.2em]">GROSS REVENUE</h3>
-                    <div className="flex bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-lg p-0.5">
-                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Today</button>
-                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-emerald-500 text-black shadow-md' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>All Time</button>
+                    <h3 className="text-[11px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">GROSS REVENUE</h3>
+                    <div className="flex bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-sm p-0.5">
+                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-[var(--accent-emerald)] text-black ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Today</button>
+                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-[var(--accent-emerald)] text-black ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>All Time</button>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -520,16 +520,16 @@ const Dashboard = () => {
                       <div className="h-10 w-40 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
                     ) : (
                       <>
-                        <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
-                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md tracking-wider flex items-center border ${revenueView === 'today' ? 'text-emerald-400 bg-emerald-400/10 border-emerald-500/30 shadow-[var(--badge-glow-emerald)]' : 'text-amber-400 bg-amber-400/10 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.2)]'}`}>
+                        <p className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
+                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-sm tracking-wider flex items-center border ${revenueView === 'today' ? 'text-[var(--accent-emerald)] bg-[var(--overlay-bg)] border-[var(--border-subtle)] ' : 'text-[var(--accent-primary)] bg-[var(--overlay-bg)] border-[var(--border-subtle)] '}`}>
                           {revenueView === 'today' ? 'TODAY LIVE' : 'ALL TIME'}
                         </span>
                       </>
                     )}
                   </div>
                </div>
-               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-xl px-3 py-2 cursor-pointer hover:bg-[var(--overlay-bg)] transition-all z-20">
-                 <Calendar size={16} className="text-emerald-400" />
+               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-sm px-3 py-2 cursor-pointer hover:bg-[var(--overlay-bg)] transition-all z-20">
+                 <Calendar size={16} className="text-[var(--accent-emerald)]" />
                  <select 
                    value={timeframe} 
                    onChange={(e) => setTimeframe(e.target.value)}
@@ -542,7 +542,7 @@ const Dashboard = () => {
             </div>
             
             <div className="flex-1 -mx-6 -mb-6 mt-4 relative z-0">
-               <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/5 to-transparent z-10 pointer-events-none"></div>
+               <div className="absolute inset-0    z-10 pointer-events-none"></div>
                {loading ? (
                  <div className="w-full h-full bg-[var(--overlay-bg)] skeleton-shimmer opacity-50"></div>
                ) : (
@@ -560,9 +560,9 @@ const Dashboard = () => {
                         content={({ active, payload, label }) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="glass-panel p-4 rounded-xl shadow-2xl border border-emerald-500/30">
+                              <div className="glass-panel p-4 rounded-sm  border border-[var(--border-subtle)]">
                                 <p className="text-[var(--text-secondary)] text-xs font-bold mb-1 uppercase tracking-wider">{label}</p>
-                                <p className="text-emerald-400 text-lg font-extrabold">₹{Number(payload[0].value).toLocaleString()}</p>
+                                <p className="text-[var(--accent-emerald)] text-lg font-bold">₹{Number(payload[0].value).toLocaleString()}</p>
                               </div>
                             );
                           }
@@ -585,36 +585,36 @@ const Dashboard = () => {
               </>
             ) : (
               <>
-                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-sm p-6 flex items-center justify-between">
                    <div>
                      <div className="flex items-center gap-2 mb-3">
-                        <Calendar size={16} className="text-emerald-400" />
-                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOTAL BOOKINGS</h3>
+                        <Calendar size={16} className="text-[var(--accent-emerald)]" />
+                        <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">TOTAL BOOKINGS</h3>
                      </div>
-                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.bookings}</p>
+                     <p className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">{stats.bookings}</p>
                    </div>
-                   <div className="w-12 h-12 rounded-full bg-emerald-400/10 flex items-center justify-center">
-                     <ChevronRight size={20} className="text-emerald-400 opacity-50" />
-                   </div>
-                </motion.div>
-
-                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
-                   <div>
-                     <div className="flex items-center gap-2 mb-3">
-                        <Users size={16} className="text-amber-400" />
-                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded ml-2 shadow-[0_0_8px_rgba(192,132,252,0.3)]">LIVE</span></h3>
-                     </div>
-                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.customers}</p>
+                   <div className="w-12 h-12 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center">
+                     <ChevronRight size={20} className="text-[var(--accent-emerald)] opacity-50" />
                    </div>
                 </motion.div>
 
-                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-2xl p-6 flex items-center justify-between">
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-sm p-6 flex items-center justify-between">
                    <div>
                      <div className="flex items-center gap-2 mb-3">
-                        <Trophy size={16} className="text-emerald-400" />
-                        <h3 className="text-[10px] font-extrabold text-[var(--text-secondary)] uppercase tracking-widest">TOURNAMENTS</h3>
+                        <Users size={16} className="text-[var(--accent-primary)]" />
+                        <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">CUSTOMERS <span className="bg-[var(--overlay-bg)] text-[var(--accent-primary)] px-2 py-0.5 rounded ml-2 ">LIVE</span></h3>
                      </div>
-                     <p className="text-4xl font-extrabold text-[var(--text-primary)] tracking-tight">{stats.tournaments}</p>
+                     <p className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">{stats.customers}</p>
+                   </div>
+                </motion.div>
+
+                <motion.div whileHover={{ y: -4 }} className="glass-panel-interactive rounded-sm p-6 flex items-center justify-between">
+                   <div>
+                     <div className="flex items-center gap-2 mb-3">
+                        <Trophy size={16} className="text-[var(--accent-emerald)]" />
+                        <h3 className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">TOURNAMENTS</h3>
+                     </div>
+                     <p className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">{stats.tournaments}</p>
                    </div>
                 </motion.div>
               </>
@@ -623,21 +623,21 @@ const Dashboard = () => {
         </motion.div>
 
         <motion.div variants={itemVariants} className="xl:w-1/3 flex flex-col h-full">
-          <div className="glass-panel rounded-3xl p-8 flex-1 relative overflow-hidden group border-t border-t-emerald-500/30">
-            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-emerald-500/5 via-amber-500/5 to-transparent z-0 opacity-50"></div>
+          <div className="glass-panel rounded-sm p-8 flex-1 relative overflow-hidden group border-t border-t-emerald-500/30">
+            <div className="absolute top-0 right-0 w-full h-full     z-0 opacity-50"></div>
             
             <div className="flex items-center gap-4 mb-8 relative z-10">
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="bg-[var(--bg-base)] p-3 rounded-2xl border border-emerald-500/30 shadow-[var(--button-glow)] flex items-center justify-center"
+                className="bg-[var(--bg-base)] p-3 rounded-sm border border-[var(--border-subtle)]  flex items-center justify-center"
               >
-                <BrainCircuit size={24} className="text-emerald-400" />
+                <BrainCircuit size={24} className="text-[var(--accent-emerald)]" />
               </motion.div>
               <div>
-                <h3 className="text-xl font-extrabold text-[var(--text-primary)] leading-tight">Neural Insights</h3>
-                <p className="text-[9px] font-extrabold text-emerald-400 uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_5px_#00F2FE]"></span>
+                <h3 className="text-xl font-bold text-[var(--text-primary)] leading-tight">Neural Insights</h3>
+                <p className="text-[9px] font-bold text-[var(--accent-emerald)] uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-sm bg-[var(--accent-emerald)] animate-pulse "></span>
                   SYSTEM THINKING
                 </p>
               </div>
@@ -646,28 +646,28 @@ const Dashboard = () => {
             <div className="space-y-4 relative z-10">
               {aiLoading ? (
                 <>
-                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-2xl"></div>
-                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-2xl"></div>
+                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-sm"></div>
+                  <div className="w-full h-24 bg-[var(--overlay-bg)] skeleton-shimmer rounded-sm"></div>
                 </>
               ) : (
                 aiInsights && aiInsights.map((insight, idx) => (
-                  <motion.div key={idx} whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-2xl p-5 relative overflow-hidden backdrop-blur-md">
-                     <div className={`absolute top-0 left-0 w-1 h-full ${insight.type === 'recommendation' ? 'bg-amber-500 shadow-[0_0_10px_#C084FC]' : 'bg-emerald-400 shadow-[0_0_10px_#00F2FE]'}`}></div>
+                  <motion.div key={idx} whileHover={{ scale: 1.02 }} className="bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-sm p-5 relative overflow-hidden ">
+                     <div className={`absolute top-0 left-0 w-1 h-full ${insight.type === 'recommendation' ? 'bg-[var(--accent-primary)] ' : 'bg-[var(--accent-emerald)] '}`}></div>
                      {insight.type === 'recommendation' ? (
-                       <p className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                       <p className="text-[10px] font-bold text-[var(--accent-primary)] uppercase tracking-widest mb-2 flex items-center gap-2">
                           {insight.title || "Actionable Recommendation"}
                        </p>
                      ) : null}
                      <p className={`text-sm ${insight.type === 'recommendation' ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)] mb-4'} leading-relaxed font-medium`}>
-                       {insight.desc} {insight.highlight && <span className={`font-bold text-[var(--text-primary)] ${insight.type === 'recommendation' ? 'bg-amber-500/20 px-1 rounded ml-1' : 'text-emerald-400 text-base ml-1'}`}>{insight.highlight}</span>}
+                       {insight.desc} {insight.highlight && <span className={`font-bold text-[var(--text-primary)] ${insight.type === 'recommendation' ? 'bg-[var(--overlay-bg)] px-1 rounded ml-1' : 'text-[var(--accent-emerald)] text-base ml-1'}`}>{insight.highlight}</span>}
                      </p>
                      {insight.type !== 'recommendation' && (
-                       <div className="w-full h-1.5 bg-[var(--overlay-hover)] rounded-full overflow-hidden">
+                       <div className="w-full h-1.5 bg-[var(--overlay-hover)] rounded-sm overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: "75%" }}
                             transition={{ duration: 1.5, ease: "easeOut" }}
-                            className="h-full bg-emerald-400 rounded-full shadow-[0_0_10px_#00F2FE]"
+                            className="h-full bg-[var(--accent-emerald)] rounded-sm "
                           ></motion.div>
                        </div>
                      )}
@@ -693,8 +693,8 @@ const AppContent = () => {
     return (
       <div className="h-screen flex items-center justify-center bg-[var(--bg-base)]">
         <div className="relative">
-          <div className="w-16 h-16 border-4 border-white/10 rounded-full"></div>
-          <div className="w-16 h-16 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin absolute top-0 left-0 shadow-[0_0_20px_rgba(0,242,254,0.5)]"></div>
+          <div className="w-16 h-16 border-4 border-white/10 rounded-sm"></div>
+          <div className="w-16 h-16 border-4 border-[var(--accent-emerald)] border-t-transparent rounded-sm animate-spin absolute top-0 left-0 "></div>
         </div>
       </div>
     );
@@ -714,7 +714,7 @@ const AppContent = () => {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] selection:bg-emerald-500/30 font-sans">
+    <div className="flex h-screen overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)] selection:bg-[var(--overlay-bg)] font-sans">
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <main className="flex-1 overflow-y-auto relative custom-scrollbar">
         <Topbar />
