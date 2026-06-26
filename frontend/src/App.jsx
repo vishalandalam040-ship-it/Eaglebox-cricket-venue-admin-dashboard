@@ -346,7 +346,11 @@ const Topbar = () => {
         <div className="flex items-center gap-3 cursor-pointer group">
           <div className="hidden md:flex flex-col items-end">
              <span className="text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
-             <span className="text-[9px] font-bold text-[var(--accent-emerald)] uppercase tracking-widest">{user?.role === 'Viewer' ? 'READ ONLY' : user?.role?.toUpperCase()}</span>
+             <span className={`text-[9px] font-bold uppercase tracking-widest ${user?.membership?.includes('Expired') ? 'text-[var(--accent-rose)]' : 'text-[var(--accent-emerald)]'}`}>
+               {user?.role === 'Viewer' 
+                 ? (user?.membership ? `${user.membership} | READ ONLY` : 'READ ONLY') 
+                 : user?.role?.toUpperCase()}
+             </span>
           </div>
           <div className="w-10 h-10 rounded-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-primary)] font-bold text-lg group-hover:border-[var(--accent-primary)] transition-colors">
             {user?.email?.[0]?.toUpperCase() || 'S'}

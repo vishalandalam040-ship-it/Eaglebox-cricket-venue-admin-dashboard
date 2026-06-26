@@ -26,20 +26,21 @@ module.exports = (db) => {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
 
-      // Fetch active membership for user
-      const membership = await db.get('SELECT plantype AS "planType" FROM memberships WHERE email = ? AND status = \'Active\'', [email]);
+      // Fetch active or expired membership for user
+      const membership = await db.get('SELECT plantype AS "planType", status FROM memberships WHERE email = ? ORDER BY startdate DESC LIMIT 1', [email]);
+      const membershipDisplay = membership ? (membership.status === 'Active' ? membership.planType : `${membership.planType} (Expired)`) : null;
 
       // Create JWT Payload
       const payload = {
         id: user.id,
         email: user.email,
         role: user.role,
-        membership: membership ? membership.planType : null
+        membership: membershipDisplay
       };
 
       const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
 
-      res.json({ token, user: { id: user.id, email: user.email, role: user.role, membership: membership ? membership.planType : null } });
+      res.json({ token, user: { id: user.id, email: user.email, role: user.role, membership: membershipDisplay } });
     } catch (err) {
       console.error('Login Error:', err);
       res.status(500).json({ error: 'Server error during login' });
