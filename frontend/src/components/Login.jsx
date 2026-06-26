@@ -76,8 +76,8 @@ export const Login = () => {
   return (
     <div className="min-h-screen w-full flex overflow-hidden bg-[var(--bg-base)]">
       
-      {/* Left Branding Panel (Hidden on Mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 overflow-hidden bg-black text-white">
+        {/* Left Branding Panel (Hidden on Mobile) */}
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between p-12 overflow-hidden bg-[var(--bg-surface)] border-r border-[var(--border-subtle)]">
         {/* Animated Background Mesh */}
         <div className="absolute inset-0 z-0">
           <motion.div 
@@ -86,7 +86,7 @@ export const Login = () => {
               y: mousePosition.y * -1,
             }}
             transition={{ type: 'spring', damping: 50, stiffness: 200 }}
-            className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-[var(--overlay-bg)] rounded-sm blur-[120px]"
+            className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-[var(--overlay-bg)] rounded-sm"
           />
           <motion.div 
             animate={{ 
@@ -94,10 +94,10 @@ export const Login = () => {
               y: mousePosition.y * 1.5,
             }}
             transition={{ type: 'spring', damping: 50, stiffness: 200 }}
-            className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/30 rounded-sm blur-[120px]"
+            className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[var(--accent-primary)] opacity-10 rounded-sm"
           />
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
-          <div className="absolute inset-0  from-black via-black/50 "></div>
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[var(--bg-surface)] opacity-80"></div>
         </div>
 
         {/* Top Logo */}
@@ -107,11 +107,11 @@ export const Login = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="relative z-10 flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-sm    flex items-center justify-center ">
-            <Trophy size={24} className="text-black" />
+          <div className="w-12 h-12 rounded-sm bg-[var(--accent-primary)] flex items-center justify-center">
+            <Trophy size={24} className="text-white" />
           </div>
-          <span className="text-2xl font-black tracking-tight text-white drop-">
-            Venue<span className="text-[var(--accent-emerald)]">OS</span>
+          <span className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
+            Venue<span className="text-[var(--accent-primary)]">OS</span>
           </span>
         </motion.div>
 
@@ -122,24 +122,24 @@ export const Login = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="relative z-10 max-w-lg"
         >
-          <h1 className="text-5xl lg:text-6xl font-light tracking-tight leading-tight mb-6">
+          <h1 className="text-5xl lg:text-6xl font-light tracking-tight leading-tight mb-6 text-[var(--text-primary)]">
             Intelligent <br />
-            <span className="font-bold text-transparent bg-clip-text    drop-">
+            <span className="font-bold text-[var(--accent-primary)]">
               Venue Control.
             </span>
           </h1>
-          <p className="text-lg text-slate-300 font-medium leading-relaxed mb-8">
+          <p className="text-lg text-[var(--text-secondary)] font-medium leading-relaxed mb-8">
             The next-generation operating system for premium sports venues and esports arenas. Manage bookings, tournaments, and real-time telemetry from a single command center.
           </p>
 
           <div className="flex gap-6">
-            <div className="flex items-center gap-3 bg-white/5  px-4 py-2 rounded-sm border border-white/10">
-              <ShieldCheck size={16} className="text-[var(--accent-emerald)]" />
-              <span className="text-xs font-bold uppercase tracking-wider">Secure Access</span>
+            <div className="flex items-center gap-3 bg-[var(--overlay-bg)] px-4 py-2 rounded-sm border border-[var(--border-subtle)]">
+              <ShieldCheck size={16} className="text-[var(--accent-primary)]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">Secure Access</span>
             </div>
-            <div className="flex items-center gap-3 bg-white/5  px-4 py-2 rounded-sm border border-white/10">
-              <Activity size={16} className="text-blue-400" />
-              <span className="text-xs font-bold uppercase tracking-wider">Live Telemetry</span>
+            <div className="flex items-center gap-3 bg-[var(--overlay-bg)] px-4 py-2 rounded-sm border border-[var(--border-subtle)]">
+              <Activity size={16} className="text-[var(--text-primary)]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">Live Telemetry</span>
             </div>
           </div>
         </motion.div>
@@ -161,11 +161,11 @@ export const Login = () => {
         >
           {/* Mobile Logo (Visible only on small screens) */}
           <motion.div variants={itemVariants} className="flex lg:hidden items-center justify-center gap-3 mb-12">
-            <div className="w-12 h-12 rounded-sm    flex items-center justify-center ">
+            <div className="w-12 h-12 rounded-sm bg-[var(--accent-primary)] flex items-center justify-center">
               <Trophy size={24} className="text-white" />
             </div>
             <span className="text-3xl font-black tracking-tight text-[var(--text-primary)]">
-              Venue<span className="text-[var(--accent-emerald)]">OS</span>
+              Venue<span className="text-[var(--accent-primary)]">OS</span>
             </span>
           </motion.div>
 
@@ -200,21 +200,21 @@ export const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-[var(--border-subtle)] rounded-sm pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:"
+                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-sm pl-12 pr-4 py-4 outline-none transition-colors text-[var(--text-primary)] font-medium text-lg"
                 placeholder="Email Address"
               />
             </div>
             
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <Lock size={18} className="text-[var(--text-secondary)] group-focus-within:text-[var(--accent-emerald)] transition-colors" />
+                <Lock size={18} className="text-[var(--text-secondary)] group-focus-within:text-[var(--accent-primary)] transition-colors" />
               </div>
               <input 
                 type="password" 
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] focus:bg-[var(--overlay-bg)] border border-[var(--border-subtle)] focus:border-[var(--border-subtle)] rounded-sm pl-12 pr-4 py-4 outline-none transition-all text-[var(--text-primary)] font-medium text-lg focus:"
+                className="w-full bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-sm pl-12 pr-4 py-4 outline-none transition-colors text-[var(--text-primary)] font-medium text-lg"
                 placeholder="Password"
               />
             </div>
@@ -248,7 +248,7 @@ export const Login = () => {
                 setError('');
                 setSuccessMsg('');
               }} 
-              className="px-6 py-3 rounded-sm bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] text-[var(--accent-emerald)] font-bold transition-all "
+              className="px-6 py-3 rounded-sm bg-[var(--overlay-bg)] hover:bg-[var(--overlay-hover)] border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold transition-all "
             >
               {isLogin ? 'Sign up now' : 'Sign in'}
             </motion.button>
