@@ -84,8 +84,7 @@ export const Customers = () => {
         )}
       </motion.div>
 
-      <motion.div variants={itemVariants} className="glass-panel rounded-sm overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-full h-full    z-0 opacity-50 pointer-events-none"></div>
+      <motion.div variants={itemVariants} className="glass-panel overflow-hidden relative">
         
         <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] ">
           <h2 className="text-xs font-bold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DATABASE</h2>
@@ -119,20 +118,19 @@ export const Customers = () => {
               <AnimatePresence>
                 {customers.map((customer, index) => (
                   <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    key={customer.id} 
-                    className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[var(--overlay-bg)] transition-colors group cursor-pointer"
+                    layout
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    whileHover={{ scale: 1.01 }}
+                    key={customer.phone} 
+                    className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-[var(--bg-surface-hover)] transition-colors group cursor-pointer"
                     onClick={() => user?.role !== 'Viewer' && setSelectedCustomer(customer)}
                   >
                     <div className="flex items-center gap-5">
-                       <div className="relative shrink-0">
-                          <img src={`https://ui-avatars.com/api/?name=${customer.name}&background=0B1120&color=C084FC&rounded=true&bold=true`} alt={customer.name} className="w-14 h-14 rounded-sm border-2 border-[var(--border-subtle)] group-hover:border-amber-400 transition-colors " />
-                          <div className="absolute bottom-0 right-0 w-4 h-4 bg-[var(--accent-emerald)] border-2 border-[var(--bg-base)] rounded-sm "></div>
-                       </div>
+                       <img src={`https://ui-avatars.com/api/?name=${customer.customerName}&background=0A0A0A&color=EDEDED&rounded=true&bold=true`} alt={customer.customerName} className="w-14 h-14 rounded-full border border-[var(--border-subtle)] group-hover:border-[var(--accent-primary)] transition-colors" />
                        <div>
-                          <p className="font-bold text-[var(--text-primary)] text-lg tracking-tight group-hover:text-[var(--accent-primary)] transition-colors">{customer.name}</p>
+                          <p className="font-semibold text-[var(--text-primary)] text-lg tracking-tight mb-1">{customer.customerName}</p>
                           <p className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5 mt-0.5"><User size={12}/> ID: {customer.id}</p>
                        </div>
                     </div>
@@ -148,15 +146,14 @@ export const Customers = () => {
                       {user?.role !== 'Viewer' && (
                         <div className="flex items-center gap-6">
                           <div className="flex flex-col text-right">
-                             <span className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Lifetime Value</span>
-                             <p className="font-bold text-[var(--accent-emerald)] text-lg tracking-tight">₹ {customer.lifetimeRevenue.toLocaleString()}</p>
+                             <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">Lifetime Value</span>
+                             <p className="text-xl font-semibold data-number text-[var(--accent-primary)] whitespace-nowrap">₹ {customer.totalSpent.toLocaleString()}</p>
                           </div>
-                          <motion.div 
-                            whileHover={{ x: 4 }}
-                            className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-primary)] border border-[var(--border-subtle)] group-hover:bg-[var(--accent-primary)] group-hover:text-[var(--text-primary)] transition-all  hidden md:flex"
+                          <button 
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[var(--overlay-bg)] text-[var(--text-primary)] hover:bg-[var(--accent-primary)] hover:text-white border border-[var(--border-subtle)] transition-all font-medium text-xs hidden md:flex"
                           >
-                            <ChevronRight size={18} />
-                          </motion.div>
+                            <Mail size={16} /> Contact
+                          </button>
                         </div>
                       )}
                     </div>

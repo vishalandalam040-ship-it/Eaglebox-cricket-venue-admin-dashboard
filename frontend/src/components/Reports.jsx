@@ -42,7 +42,7 @@ export const Reports = () => {
         <div className="flex items-center gap-2 mb-2 text-[var(--accent-emerald)] font-bold text-[10px] uppercase tracking-[0.2em] bg-[var(--overlay-bg)] w-fit px-3 py-1.5 rounded-sm border border-[var(--border-subtle)] ">
            <BrainCircuit size={14} className="animate-pulse" /> INTELLIGENCE-DRIVEN INSIGHTS
         </div>
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-bold text-[var(--accent-emerald)]">Reports</span></h1>
+        <h1 className="text-3xl font-semibold text-[var(--text-primary)] mb-2 tracking-tight">Executive Reports</h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Automated analytics and generative business intelligence.</p>
       </motion.div>
 
@@ -93,7 +93,7 @@ export const Reports = () => {
                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                  onClick={() => handleDownload('/reports/business-summary/pdf', 'ai_business_summary.pdf')}
                  disabled={!['Super Admin'].includes(user?.role)}
-                 className="flex items-center justify-center gap-3    text-black px-8 py-3.5 rounded-sm font-bold  hover: transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                 className="btn-primary flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                >
                  <Download size={18} />
                  {['Super Admin'].includes(user?.role) ? 'Generate Report' : 'Access Denied'}

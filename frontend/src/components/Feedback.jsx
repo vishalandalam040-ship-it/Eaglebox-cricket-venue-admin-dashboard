@@ -57,7 +57,7 @@ export const Feedback = () => {
   return (
     <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} className="pb-24 md:pb-0 pt-6">
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Customer <span className="font-bold text-[var(--accent-emerald)] drop-">Feedback</span></h1>
+        <h1 className="text-3xl font-semibold text-[var(--text-primary)] mb-2 tracking-tight">Customer Feedback</h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">{user?.role === 'Viewer' ? 'Share your experience with us.' : 'Monitor customer satisfaction and reviews.'}</p>
       </motion.div>
 
@@ -128,7 +128,7 @@ export const Feedback = () => {
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
                     type="submit" 
-                    className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-4 rounded-sm    text-black font-bold  transition-all disabled:opacity-50"
+                    className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-4 btn-primary disabled:opacity-50"
                   >
                     {isSubmitting ? 'Submitting...' : <><Send size={18} /> Submit Feedback</>}
                   </motion.button>

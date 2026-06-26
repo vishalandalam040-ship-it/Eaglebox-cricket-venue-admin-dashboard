@@ -1,140 +1,126 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Public Sans', sans-serif;
-  --font-display: 'Oswald', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @layer base {
   :root {
-    /* Night Match / Turf Theme (Dark Mode Default) */
-    --bg-base: #022c22; /* Emerald 950 */
-    --bg-surface: #064e3b; /* Emerald 900 */
-    --bg-surface-hover: #065f46; /* Emerald 800 */
+    /* Vercel/Linear Dark Mode */
+    --bg-base: #000000;
+    --bg-surface: #0A0A0A;
+    --bg-surface-hover: #141414;
     
-    --text-primary: #ffffff;
-    --text-secondary: #a7f3d0; /* Emerald 200 */
-    --text-accent: #bef264; /* Lime 300 */
+    --text-primary: #EDEDED;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
     
-    --border-subtle: #047857; /* Emerald 600 */
-    --border-glow: #34d399; /* Emerald 400 */
+    --border-subtle: #27272A;
+    --border-glow: #52525B;
     
-    --accent-primary: #B91C1C; /* Leather Red */
+    /* Cosmic/Aurora Accent */
+    --accent-primary: #818CF8; /* Indigo 400 */
     --accent-emerald: #10B981;
     --accent-amber: #F59E0B;
     --accent-rose: #F43F5E;
     
     --overlay-bg: rgba(255, 255, 255, 0.05);
-    --overlay-hover: rgba(255, 255, 255, 0.1);
+    --overlay-hover: rgba(255, 255, 255, 0.08);
 
-    --modal-shadow: 0 0 0 1px #047857; /* Sharp border shadow instead of blur */
-    --glass-shadow: none;
-    --glass-shadow-hover: none;
-    --skeleton-bg: linear-gradient(90deg, #064e3b 25%, #065f46 50%, #064e3b 75%);
+    /* Subtle depth shadows */
+    --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    --glass-shadow-hover: inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    --modal-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.1), 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+    
+    --skeleton-bg: linear-gradient(90deg, #141414 25%, #27272A 50%, #141414 75%);
     --scrollbar-track: transparent;
-    --scrollbar-thumb: #047857;
-    --scrollbar-thumb-hover: #059669;
-
-    --badge-glow-emerald: none;
-    --badge-glow-rose: none;
-    --badge-glow-amber: none;
-    --bar-glow-amber: none;
-    --button-glow-amber: none;
-    --button-glow: none;
-    --text-glow-emerald: none;
-    --icon-glow-subtle: none;
-    --icon-glow: none;
-    --icon-glow-strong: none;
+    --scrollbar-thumb: #27272A;
+    --scrollbar-thumb-hover: #3F3F46;
   }
 
   :root.light {
-    /* Cricket Whites / Match Roster Theme */
-    --bg-base: #FCFCFD;
-    --bg-surface: #F3F4F6;
-    --bg-surface-hover: #E5E7EB;
+    /* Vercel/Linear Light Mode */
+    --bg-base: #FAFAFA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-hover: #F4F4F5;
     
-    --text-primary: #0F172A;
-    --text-secondary: #4B5563;
-    --text-accent: #B91C1C; /* Red Ball */
+    --text-primary: #09090B;
+    --text-secondary: #71717A;
+    --text-muted: #A1A1AA;
     
-    --border-subtle: #E5E7EB;
-    --border-glow: #B91C1C;
+    --border-subtle: #E4E4E7;
+    --border-glow: #D4D4D8;
     
-    --accent-primary: #B91C1C;
-    --accent-emerald: #15803D; /* Turf Green */
+    --accent-primary: #4F46E5; /* Indigo 600 */
+    --accent-emerald: #059669;
     
     --overlay-bg: rgba(0, 0, 0, 0.03);
     --overlay-hover: rgba(0, 0, 0, 0.06);
 
-    --modal-shadow: 0 0 0 1px #E5E7EB;
-    --skeleton-bg: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+    --glass-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    --glass-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    --modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    
+    --skeleton-bg: linear-gradient(90deg, #F4F4F5 25%, #E4E4E7 50%, #F4F4F5 75%);
     --scrollbar-track: transparent;
-    --scrollbar-thumb: #D1D5DB;
-    --scrollbar-thumb-hover: #9CA3AF;
+    --scrollbar-thumb: #D4D4D8;
+    --scrollbar-thumb-hover: #A1A1AA;
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--text-primary);
-    font-family: 'Public Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
   }
 }
 
 @layer utilities {
   .glass-panel {
     background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 2px;
+    box-shadow: var(--glass-shadow);
+    border-radius: 0.75rem; /* rounded-xl */
   }
 
   .glass-panel-interactive {
     background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: 2px;
-    @apply transition-colors duration-150;
+    box-shadow: var(--glass-shadow);
+    border-radius: 0.75rem;
+    @apply transition-all duration-300 ease-out;
   }
   
   .glass-panel-interactive:hover {
     background: var(--bg-surface-hover);
-    border-color: var(--border-glow);
+    box-shadow: var(--glass-shadow-hover);
+    transform: translateY(-2px);
   }
 
-  .neon-text-emerald {
-    color: var(--accent-emerald);
-    font-weight: 800;
-  }
-
-  .neon-border-emerald {
-    border-color: var(--accent-emerald);
+  .btn-primary {
+    background: var(--text-primary);
+    color: var(--bg-base);
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: -0.01em;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2);
   }
   
-  .btn-primary {
-    background: var(--accent-primary);
-    color: #ffffff;
-    border-radius: 2px;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    border: 1px solid transparent;
-    transition: all 0.15s ease-out;
+  :root.light .btn-primary {
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4), 0 1px 2px 0 rgba(0,0,0,0.1);
   }
   
   .btn-primary:hover {
-    background: var(--text-primary);
-    color: var(--bg-base);
+    opacity: 0.9;
+    transform: scale(0.98);
   }
   
-  .stumps-accent {
-    border-left: 4px double var(--accent-primary);
-    padding-left: 0.5rem;
+  .data-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "tnum";
   }
 
   /* Skeleton Loader Animation */
@@ -160,7 +146,7 @@
 }
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
-  border-radius: 0;
+  border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);

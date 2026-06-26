@@ -259,18 +259,17 @@ export const Bookings = () => {
           )}
           
           <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={openCreateModal}
-            className="flex items-center justify-center gap-2    hover: hover: text-black px-6 py-2.5 rounded-sm font-bold transition-all "
+            className="btn-primary flex items-center justify-center gap-2"
           >
             <Plus size={18} /> New Booking
           </motion.button>
         </div>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="glass-panel rounded-sm overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-full h-full    z-0 opacity-50 pointer-events-none"></div>
+      <motion.div variants={itemVariants} className="glass-panel overflow-hidden relative">
         
         <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] ">
           <h2 className="text-xs font-bold text-[var(--text-secondary)] tracking-[0.2em] uppercase">UPCOMING SCHEDULE</h2>
@@ -305,21 +304,23 @@ export const Bookings = () => {
               <AnimatePresence>
                 {bookings.map(booking => (
                   <motion.div 
+                    layout
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
+                    whileHover={{ scale: 1.01 }}
                     key={booking.id} 
-                    className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-6 hover:bg-[var(--overlay-bg)] transition-colors group"
+                    className="p-6 flex flex-col xl:flex-row xl:items-center justify-between gap-6 hover:bg-[var(--bg-surface-hover)] transition-colors group cursor-pointer"
                   >
                     <div className="flex items-center gap-5">
                        <div className="relative shrink-0">
-                          <img src={`https://ui-avatars.com/api/?name=${booking.customerName}&background=0B1120&color=00F2FE&rounded=true&bold=true`} alt={booking.customerName} className="w-14 h-14 rounded-sm border-2 border-[var(--border-subtle)] group-hover:border-[var(--accent-emerald)] transition-colors " />
-                          {booking.status === 'Confirmed' && <div className="absolute bottom-0 right-0 w-4 h-4 bg-[var(--accent-emerald)] border-2 border-[#0B1120] rounded-sm "></div>}
+                          <img src={`https://ui-avatars.com/api/?name=${booking.customerName}&background=0A0A0A&color=EDEDED&rounded=true&bold=true`} alt={booking.customerName} className="w-14 h-14 rounded-full border border-[var(--border-subtle)] group-hover:border-[var(--accent-primary)] transition-colors" />
+                          {booking.status === 'Confirmed' && <div className="absolute bottom-0 right-0 w-4 h-4 bg-[var(--accent-emerald)] border-2 border-[var(--bg-surface)] rounded-full"></div>}
                        </div>
                        <div>
                           <div className="flex items-center gap-3 mb-1">
-                             <p className="font-bold text-[var(--text-primary)] text-lg tracking-tight">{booking.customerName}</p>
-                             <span className={`px-2.5 py-1 rounded-sm text-[9px] font-bold uppercase tracking-widest ${booking.status === 'Confirmed' ? 'bg-[var(--overlay-bg)] text-[var(--accent-emerald)] border border-[var(--border-subtle)] ' : 'bg-[var(--overlay-bg)] text-[var(--accent-primary)] border border-[var(--border-subtle)] '}`}>
+                             <p className="font-semibold text-[var(--text-primary)] text-lg tracking-tight">{booking.customerName}</p>
+                             <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium uppercase tracking-widest ${booking.status === 'Confirmed' ? 'bg-[var(--accent-emerald)]/10 text-[var(--accent-emerald)] border border-[var(--accent-emerald)]/20' : 'bg-[var(--accent-rose)]/10 text-[var(--accent-rose)] border border-[var(--accent-rose)]/20'}`}>
                                {booking.status}
                              </span>
                           </div>
@@ -336,8 +337,8 @@ export const Bookings = () => {
                     </div>
 
                     <div className="flex flex-wrap xl:flex-nowrap items-center gap-4 xl:gap-8 justify-end">
-                      <div className="flex flex-wrap xl:flex-nowrap items-center gap-6 bg-[var(--overlay-bg)] xl:bg-transparent p-4 xl:p-0 rounded-sm border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
-                         <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
+                      <div className="flex flex-col sm:flex-row flex-wrap xl:flex-nowrap items-center gap-4 sm:gap-6 bg-[var(--overlay-bg)] xl:bg-transparent p-4 xl:p-0 rounded-md border border-[var(--border-subtle)] xl:border-none w-full xl:w-auto">
+                         <div className="flex items-center gap-4 pr-0 sm:pr-6 border-b sm:border-b-0 sm:border-r border-[var(--border-subtle)] w-full sm:w-auto pb-4 sm:pb-0">
                             <div className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)]">
                               <CalendarIcon size={18} />
                             </div>
@@ -347,7 +348,7 @@ export const Bookings = () => {
                             </div>
                          </div>
                          
-                         <div className="flex items-center gap-4 pr-6 border-r border-[var(--border-subtle)]">
+                         <div className="flex items-center gap-4 pr-0 sm:pr-6 border-b sm:border-b-0 sm:border-r border-[var(--border-subtle)] w-full sm:w-auto pb-4 sm:pb-0">
                             <div className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-primary)]">
                               <Clock size={18} />
                             </div>
@@ -359,8 +360,8 @@ export const Bookings = () => {
 
                          {user?.role !== 'Viewer' && (
                            <div className="flex flex-col text-right ml-auto xl:ml-0">
-                              <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Revenue</span>
-                              <p className="text-xl font-bold text-[var(--accent-emerald)] drop- whitespace-nowrap">₹ {booking.amount}</p>
+                               <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-0.5">Revenue</span>
+                               <p className="text-xl font-bold data-number text-[var(--text-primary)] whitespace-nowrap">₹ {booking.amount}</p>
                            </div>
                          )}
                       </div>
@@ -371,7 +372,7 @@ export const Bookings = () => {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => sendWhatsApp(booking)}
-                            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-[var(--overlay-bg)] text-[var(--accent-emerald)] hover:bg-[var(--accent-emerald)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)] transition-all font-bold text-xs "
+                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[var(--overlay-bg)] text-[var(--accent-emerald)] hover:bg-[var(--accent-emerald)] hover:text-[var(--bg-base)] border border-[var(--border-subtle)] transition-all font-medium text-xs"
                           >
                             <MessageCircle size={16} /> WhatsApp
                           </motion.button>
@@ -414,7 +415,7 @@ export const Bookings = () => {
               initial={{ scale: 0.9, y: 20, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden"
+              className="glass-panel border border-[var(--border-subtle)] rounded-md w-[95%] sm:w-full max-w-md p-6 md:p-8 relative overflow-hidden max-h-[90vh] overflow-y-auto custom-scrollbar"
             >
               <div className="absolute top-0 left-0 w-full h-1   "></div>
               

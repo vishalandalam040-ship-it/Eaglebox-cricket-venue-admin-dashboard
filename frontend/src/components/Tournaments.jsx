@@ -156,10 +156,10 @@ export const Tournaments = () => {
           <div className="flex flex-wrap gap-4">
             {user?.role !== 'Viewer' && (
               <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setIsModalOpen(true)}
-                className="   hover: hover: text-black px-6 py-3 rounded-sm font-bold transition-all  flex items-center justify-center gap-2"
+                className="btn-primary flex items-center justify-center gap-2"
               >
                 <Plus size={18} /> Initialize Tournament
               </motion.button>
@@ -168,7 +168,7 @@ export const Tournaments = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href={`${import.meta.env.BASE_URL}tournament_rules.pdf`} download="Tournament_Rules.pdf" 
-              className="glass-panel px-6 py-3 rounded-sm font-bold transition-all border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] flex items-center justify-center gap-2"
+              className="px-6 py-2 rounded-md transition-all border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] flex items-center justify-center gap-2 text-sm font-medium"
             >
               Download Policy
             </motion.a>
@@ -197,15 +197,16 @@ export const Tournaments = () => {
           <AnimatePresence>
             {tournaments.map((tournament, index) => (
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                layout
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ delay: index * 0.05 }}
                 key={tournament.id} 
-                className="glass-panel-interactive rounded-sm overflow-hidden p-6 lg:p-8 flex flex-col xl:flex-row gap-8"
+                className="glass-panel-interactive overflow-hidden p-6 lg:p-8 flex flex-col xl:flex-row gap-8 cursor-default"
               >
                  {/* Left Section - Info */}
                  <div className="flex-1 flex flex-col justify-between relative">
-                    <div className="absolute -left-8 top-0 bottom-0 w-1    rounded-r-full "></div>
                     
                     <div>
                        <div className="flex items-center gap-3 mb-4">
@@ -242,7 +243,7 @@ export const Tournaments = () => {
                       <motion.button 
                         whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                         onClick={() => openJoinModal(tournament.id)} 
-                        className="px-6 py-2.5 rounded-sm bg-[var(--overlay-bg)] text-[var(--accent-emerald)] border border-[var(--border-subtle)] hover:bg-[var(--accent-emerald)] hover:text-black font-bold transition-all  text-xs uppercase tracking-wider"
+                        className="px-4 py-2 rounded-md bg-[var(--overlay-bg)] text-[var(--accent-emerald)] border border-[var(--border-subtle)] hover:bg-[var(--accent-emerald)] hover:text-[var(--bg-base)] font-medium transition-colors text-xs uppercase tracking-wider"
                       >
                         Register Team
                       </motion.button>
@@ -308,7 +309,7 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 ">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-md w-[95%] sm:w-full max-w-md p-6 md:p-8 relative overflow-hidden max-h-[90vh] overflow-y-auto custom-scrollbar">
               <div className="absolute top-0 left-0 w-full h-1   "></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
@@ -344,7 +345,7 @@ export const Tournaments = () => {
                 </div>
                 <div className="mt-8 flex gap-4">
                   <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-sm    text-black font-bold  transition-all">
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 btn-primary">
                     Initialize
                   </motion.button>
                 </div>
@@ -357,7 +358,7 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isJoinModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 ">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-md w-[95%] sm:w-full max-w-md p-6 md:p-8 relative overflow-hidden max-h-[90vh] overflow-y-auto custom-scrollbar">
               <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
               <div className="flex justify-between items-center mb-8">
                 <div>
@@ -426,7 +427,7 @@ export const Tournaments = () => {
       <AnimatePresence>
         {isManageModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 ">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-2xl  p-8 relative overflow-hidden flex flex-col max-h-[85vh]">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-md w-[95%] sm:w-full max-w-2xl p-6 md:p-8 relative overflow-hidden flex flex-col max-h-[90vh] custom-scrollbar">
               <div className="flex justify-between items-center mb-6 shrink-0">
                 <div>
                   <h2 className="text-2xl font-light text-[var(--text-primary)] tracking-tight">Manage <span className="font-bold text-[var(--accent-emerald)]">Rosters</span></h2>
@@ -446,7 +447,7 @@ export const Tournaments = () => {
                   <button 
                     onClick={handleUpdateFee}
                     disabled={isSavingManageFee}
-                    className="px-6 py-3 rounded-sm    text-black font-bold  hover: hover: transition-colors disabled:opacity-50 whitespace-nowrap"
+                    className="btn-primary whitespace-nowrap"
                   >
                     {isSavingManageFee ? 'Saving...' : 'Save Price'}
                   </button>

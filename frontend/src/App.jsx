@@ -62,8 +62,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 exit={{ opacity: 0, x: -10 }}
                 className="flex flex-col overflow-hidden whitespace-nowrap"
               >
-                 <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] m-0">VenueOS</h2>
-                 <span className="text-[9px] font-bold tracking-[0.2em] text-[var(--accent-primary)] uppercase">Premium Edition</span>
+                 <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] m-0">VenueOS</h2>
+                 <span className="text-[10px] font-medium tracking-wide text-[var(--text-secondary)]">Premium Edition</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -77,10 +77,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <Link key={item.path} to={item.path}>
                 <motion.div 
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-sm transition-all duration-150 relative overflow-hidden group ${isActive ? 'bg-[var(--overlay-bg)] border border-[var(--border-subtle)]' : 'hover:bg-[var(--overlay-bg)] border border-transparent'}`}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-4 px-4 py-2.5 rounded-lg transition-all duration-200 relative group ${isActive ? 'bg-[var(--overlay-bg)] text-[var(--text-primary)]' : 'hover:bg-[var(--overlay-hover)] text-[var(--text-secondary)]'}`}
                 >
-                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--accent-primary)]" />}
-                  <Icon size={22} className={`shrink-0 transition-colors duration-150 ${isActive ? 'text-[var(--accent-emerald)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`} />
+                  {isActive && <motion.div layoutId="sidebar-active" className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[var(--text-primary)] rounded-r-full" />}
+                  <Icon size={18} className={`shrink-0 transition-colors duration-200 ${isActive ? 'text-[var(--text-primary)]' : 'group-hover:text-[var(--text-primary)]'}`} />
                   
                   <AnimatePresence>
                     {isOpen && (
@@ -128,10 +129,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
             return (
-              <Link key={item.path} to={item.path} className="flex flex-col items-center justify-center p-2 min-w-[72px] relative group shrink-0 rounded-sm hover:bg-[var(--overlay-bg)] transition-colors">
-                {isActive && <div className="absolute -top-2 w-8 h-1 bg-[var(--accent-primary)]" />}
-                <Icon size={20} className={isActive ? 'text-[var(--accent-emerald)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
-                <span className={`text-[8px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
+              <Link key={item.path} to={item.path} className="flex flex-col items-center justify-center p-2 min-w-[72px] relative group shrink-0 rounded-lg hover:bg-[var(--overlay-hover)] transition-colors">
+                {isActive && <motion.div layoutId="mobile-active" className="absolute top-0 w-8 h-1 bg-[var(--text-primary)] rounded-b-full" />}
+                <Icon size={20} className={isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors'} />
+                <span className={`text-[10px] mt-1 font-medium tracking-wide ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>{item.name}</span>
               </Link>
             );
           })}
@@ -259,16 +260,16 @@ const Topbar = () => {
     <motion.div 
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex items-center justify-between p-6 sticky top-0 z-40 glass-panel border-b border-[var(--border-subtle)]"
+      className="flex items-center justify-between p-4 md:p-6 sticky top-0 z-40 glass-panel border-b border-[var(--border-subtle)]"
     >
       <div className="flex items-center md:hidden">
         <Menu size={24} className="text-[var(--text-primary)] mr-4" />
-        <h2 className="font-bold text-xl m-0 text-[var(--text-primary)]">VenueOS</h2>
+        <h2 className="font-semibold text-xl m-0 text-[var(--text-primary)] tracking-tight">VenueOS</h2>
       </div>
       
-      <div className="hidden md:flex items-center gap-3 bg-[var(--bg-base)] border border-[var(--border-subtle)] rounded-sm px-5 py-2 w-full max-w-md focus-within:border-[var(--accent-primary)] transition-colors">
-         <Search size={18} className="text-[var(--text-secondary)]" />
-         <input type="text" placeholder="Search operations, bookings, users..." className="bg-transparent outline-none flex-1 text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)] font-medium" />
+      <div className="hidden md:flex items-center gap-3 bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 w-full max-w-md focus-within:border-[var(--text-primary)] transition-colors">
+         <Search size={16} className="text-[var(--text-secondary)]" />
+         <input type="text" placeholder="Search..." className="bg-transparent outline-none flex-1 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] font-medium" />
       </div>
 
       <div className="flex items-center gap-5 ml-auto relative">
@@ -497,7 +498,7 @@ const Dashboard = () => {
       className="pb-24 md:pb-0 px-2 md:px-0 pt-6"
     >
       <motion.div variants={itemVariants} className="mb-8">
-        <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Executive <span className="font-bold text-[var(--accent-emerald)] drop-">Overview</span></h1>
+        <h1 className="text-3xl font-semibold text-[var(--text-primary)] mb-1 tracking-tight">Overview</h1>
         <p className="text-sm font-medium text-[var(--text-secondary)]">Real-time telemetry and operational intelligence.</p>
       </motion.div>
 
@@ -506,34 +507,34 @@ const Dashboard = () => {
           <div className="glass-panel rounded-sm p-6 relative h-[380px] flex flex-col overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--overlay-bg)] rounded-sm blur-[80px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
             
-            <div className="flex justify-between items-start mb-6 z-10">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 z-10">
                <div>
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="text-[11px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">GROSS REVENUE</h3>
                     <div className="flex bg-[var(--overlay-bg)] border border-[var(--border-subtle)] rounded-sm p-0.5">
-                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-[var(--accent-emerald)] text-black ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Today</button>
-                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-[var(--accent-emerald)] text-black ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>All Time</button>
+                      <button onClick={() => setRevenueView('today')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'today' ? 'bg-[var(--accent-emerald)] text-[var(--bg-base)] ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>Today</button>
+                      <button onClick={() => setRevenueView('all')} className={`px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest transition-all ${revenueView === 'all' ? 'bg-[var(--accent-emerald)] text-[var(--bg-base)] ' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}>All Time</button>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     {loading ? (
                       <div className="h-10 w-40 rounded bg-[var(--overlay-hover)] skeleton-shimmer"></div>
                     ) : (
-                      <>
-                        <p className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">₹ {revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
-                        <span className={`text-[10px] font-bold px-2.5 py-1 rounded-sm tracking-wider flex items-center border ${revenueView === 'today' ? 'text-[var(--accent-emerald)] bg-[var(--overlay-bg)] border-[var(--border-subtle)] ' : 'text-[var(--accent-primary)] bg-[var(--overlay-bg)] border-[var(--border-subtle)] '}`}>
-                          {revenueView === 'today' ? 'TODAY LIVE' : 'ALL TIME'}
+                      <motion.div layout className="flex items-center gap-3">
+                        <p className="text-3xl font-semibold data-number text-[var(--text-primary)] tracking-tight">₹{revenueView === 'today' ? stats.revenue.toLocaleString() : stats.totalRevenue.toLocaleString()}</p>
+                        <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border border-[var(--border-subtle)] text-[var(--text-secondary)] bg-[var(--bg-base)]">
+                          {revenueView === 'today' ? 'Today' : 'All Time'}
                         </span>
-                      </>
+                      </motion.div>
                     )}
                   </div>
                </div>
-               <div className="flex items-center gap-2 glass-panel border-[var(--border-subtle)] rounded-sm px-3 py-2 cursor-pointer hover:bg-[var(--overlay-bg)] transition-all z-20">
-                 <Calendar size={16} className="text-[var(--accent-emerald)]" />
+               <div className="flex items-center justify-between sm:justify-start gap-2 glass-panel border-[var(--border-subtle)] rounded-sm px-3 py-2 cursor-pointer hover:bg-[var(--overlay-bg)] transition-all z-20 w-full sm:w-auto">
+                 <Calendar size={16} className="text-[var(--accent-emerald)] shrink-0" />
                  <select 
                    value={timeframe} 
                    onChange={(e) => setTimeframe(e.target.value)}
-                   className="bg-transparent text-xs font-bold text-[var(--text-primary)] outline-none cursor-pointer appearance-none pr-4"
+                   className="bg-transparent text-xs font-bold text-[var(--text-primary)] outline-none cursor-pointer appearance-none pr-4 w-full"
                  >
                    <option value="7" className="bg-[var(--bg-base)] text-[var(--text-primary)]">Last 7 Days</option>
                    <option value="30" className="bg-[var(--bg-base)] text-[var(--text-primary)]">Last 30 Days</option>

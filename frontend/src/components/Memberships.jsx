@@ -124,15 +124,15 @@ export const Memberships = () => {
       
       <motion.div variants={itemVariants} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Access & <span className="font-bold text-[var(--accent-emerald)] drop-">Tiers</span></h1>
+          <h1 className="text-3xl font-semibold text-[var(--text-primary)] mb-2 tracking-tight">Access & Tiers</h1>
           <p className="text-sm font-medium text-[var(--text-secondary)]">Manage and monitor venue access and subscriber lifecycle.</p>
         </div>
         {user?.role !== 'Viewer' && (
           <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setShowModal(true)}
-            className="flex items-center justify-center gap-2    hover: hover: text-black px-6 py-2.5 rounded-sm font-bold transition-all "
+            className="btn-primary flex items-center justify-center gap-2"
           >
             <Crown size={18} /> Grant Membership
           </motion.button>
@@ -142,11 +142,10 @@ export const Memberships = () => {
       {user?.role !== 'Viewer' && (
       <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
         {/* TOTAL MEMBERS */}
-        <div className="glass-panel rounded-sm p-6 relative overflow-hidden group">
+        <div className="glass-panel-interactive p-6 relative overflow-hidden group">
           <div className="absolute right-[-20px] top-4 opacity-5">
             <Crown size={120} />
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--overlay-bg)] rounded-sm blur-[40px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
           
           <div className="relative z-10 flex flex-col h-full justify-between gap-4">
             <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">TOTAL NETWORK</p>
@@ -167,11 +166,10 @@ export const Memberships = () => {
         </div>
 
         {/* ACTIVE SUBSCRIPTIONS */}
-        <div className="glass-panel rounded-sm p-6 relative overflow-hidden group">
+        <div className="glass-panel-interactive p-6 relative overflow-hidden group">
           <div className="absolute right-[-10px] top-4 opacity-5">
             <ShieldCheck size={100} />
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--overlay-bg)] rounded-sm blur-[40px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between gap-4">
             <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">ACTIVE SUBSCRIPTIONS</p>
@@ -192,11 +190,10 @@ export const Memberships = () => {
         </div>
 
         {/* EXPIRING SOON */}
-        <div className="glass-panel rounded-sm p-6 relative overflow-hidden group">
+        <div className="glass-panel-interactive p-6 relative overflow-hidden group">
           <div className="absolute right-4 top-4 opacity-5">
             <Activity size={80} />
           </div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--overlay-bg)] rounded-sm blur-[40px] -z-10 group-hover:bg-[var(--overlay-bg)] transition-all duration-700"></div>
 
           <div className="relative z-10 flex flex-col h-full justify-between gap-4">
             <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">EXPIRING SOON</p>
@@ -228,7 +225,7 @@ export const Memberships = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full    z-0 blur-[100px]"></div>
           
           <div className="relative z-10 text-center mb-12">
-            <h2 className="text-3xl font-light text-[var(--text-primary)] mb-2 tracking-tight">Tier <span className="font-bold text-[var(--accent-emerald)]">Pricing</span></h2>
+            <h2 className="text-3xl font-semibold text-[var(--text-primary)] mb-2 tracking-tight">Tier Pricing</h2>
             <p className="text-[var(--text-secondary)] font-medium text-sm">Choose a plan that fits your needs to unlock exclusive discounts.</p>
           </div>
           
@@ -260,8 +257,7 @@ export const Memberships = () => {
           </div>
         </motion.div>
       ) : (
-      <motion.div variants={itemVariants} className="glass-panel rounded-sm overflow-hidden  relative">
-        <div className="absolute top-0 right-0 w-full h-full    z-0 opacity-50 pointer-events-none"></div>
+      <motion.div variants={itemVariants} className="glass-panel overflow-hidden relative">
 
         <div className="p-5 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] ">
            <h2 className="text-xs font-bold text-[var(--text-secondary)] tracking-[0.2em] uppercase">MEMBER DIRECTORY</h2>
@@ -313,11 +309,13 @@ export const Memberships = () => {
 
                      return (
                        <motion.tr 
+                         layout
                          initial={{ opacity: 0, x: -10 }}
                          animate={{ opacity: 1, x: 0 }}
+                         exit={{ opacity: 0, scale: 0.95 }}
                          transition={{ delay: index * 0.05 }}
                          key={member.id} 
-                         className="hover:bg-[var(--overlay-bg)] transition-colors group"
+                         className="hover:bg-[var(--bg-surface-hover)] transition-colors group cursor-default"
                        >
                           <td className="px-8 py-5">
                              <div className="flex items-center gap-4">
@@ -383,7 +381,7 @@ export const Memberships = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 ">
-            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-sm w-full max-w-md  p-8 relative overflow-hidden">
+            <motion.div initial={{ scale: 0.9, y: 20, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }} exit={{ scale: 0.9, y: 20, opacity: 0 }} className="glass-panel border border-[var(--border-subtle)] rounded-md w-[95%] sm:w-full max-w-md p-6 md:p-8 relative overflow-hidden max-h-[90vh] overflow-y-auto custom-scrollbar">
               <div className="absolute top-0 left-0 w-full h-1   "></div>
               
               <div className="flex justify-between items-center mb-8">
@@ -401,7 +399,7 @@ export const Memberships = () => {
                   <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Customer Name</label>
                   <input required type="text" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium transition-colors" value={formData.customerName} onChange={e => setFormData({...formData, customerName: e.target.value})} placeholder="Enter full name" />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Email</label>
                     <input required type="email" className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="abc@xyz.com" />
@@ -427,7 +425,7 @@ export const Memberships = () => {
                 
                 <div className="mt-8 flex gap-4">
                   <button type="button" onClick={() => setShowModal(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 px-4 py-3.5 rounded-sm    text-black font-bold  transition-all flex items-center justify-center gap-2">
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" className="flex-1 btn-primary flex items-center justify-center gap-2">
                     <ShieldCheck size={18} /> Confirm & Pay
                   </motion.button>
                 </div>
