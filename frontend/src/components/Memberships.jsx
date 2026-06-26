@@ -245,8 +245,6 @@ export const Memberships = () => {
                  <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-slate-400 mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">10% Off all bookings</span></div>
                  <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-slate-400 mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">Standard tournament entry</span></div>
                </div>
-               
-               <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] transition-colors">Select Plan</button>
             </motion.div>
             
             {/* Gold (Glowing) */}
@@ -267,8 +265,6 @@ export const Memberships = () => {
                    <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-primary)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-primary)] font-medium">Priority tournament entry</span></div>
                    <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-primary)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-primary)] font-medium">Free equipment rental</span></div>
                  </div>
-                 
-                 <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider bg-[var(--accent-primary)] text-black transition-all hover:scale-[1.02]">Go Pro</button>
                </div>
             </motion.div>
             
@@ -289,8 +285,6 @@ export const Memberships = () => {
                  <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-emerald)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">VIP tournament seeding</span></div>
                  <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-emerald)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">Free guest passes (2/mo)</span></div>
                </div>
-               
-               <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] transition-colors">Select Plan</button>
             </motion.div>
           </div>
         </motion.div>
