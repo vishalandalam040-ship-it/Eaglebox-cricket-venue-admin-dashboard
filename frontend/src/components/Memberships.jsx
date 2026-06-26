@@ -221,38 +221,76 @@ export const Memberships = () => {
       )}
 
       {user?.role === 'Viewer' ? (
-        <motion.div variants={itemVariants} className="glass-panel rounded-sm overflow-hidden p-8 lg:p-12 mb-8 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full    z-0 blur-[100px]"></div>
-          
-          <div className="relative z-10 text-center mb-12">
-            <h2 className="text-3xl font-semibold text-[var(--text-primary)] mb-2 tracking-tight">Tier Pricing</h2>
-            <p className="text-[var(--text-secondary)] font-medium text-sm">Choose a plan that fits your needs to unlock exclusive discounts.</p>
+        <motion.div variants={itemVariants} className="mb-8 mt-12">
+          <div className="text-center mb-16 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[var(--accent-primary)] blur-[120px] opacity-20 pointer-events-none"></div>
+            <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-4 tracking-tight">Level Up Your Game.</h2>
+            <p className="text-[var(--text-secondary)] font-medium text-lg max-w-xl mx-auto">Join the elite. Unlock priority bookings, exclusive tournament access, and premium venue discounts.</p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 max-w-6xl mx-auto px-4 md:px-0">
             {/* Silver */}
-            <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-sm p-8 text-center  relative overflow-hidden group">
-               <div className="absolute top-0 left-0 w-full h-1 bg-slate-300"></div>
-               <h3 className="text-xl font-bold text-slate-300 mb-2 uppercase tracking-[0.2em]">Silver</h3>
-               <p className="text-[var(--text-primary)] font-bold text-4xl mb-6 tracking-tight">₹1,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Month</span></p>
-               <div className="bg-slate-300/10 py-3 rounded-sm border border-slate-300/20 text-slate-300 font-bold text-xs uppercase tracking-wider">10% Off Bookings</div>
+            <motion.div whileHover={{ y: -8, scale: 1.02 }} className="glass-panel border border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col relative overflow-hidden group">
+               <div className="absolute top-0 left-0 w-full h-1 bg-slate-400"></div>
+               <div className="absolute top-0 right-0 w-32 h-32 bg-slate-400/10 blur-[50px] -z-10 group-hover:bg-slate-400/20 transition-all duration-500"></div>
+               
+               <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2 tracking-tight">Silver Core</h3>
+               <p className="text-sm text-[var(--text-secondary)] font-medium h-10 mb-6">Perfect for casual players looking for occasional access.</p>
+               
+               <div className="mb-8">
+                 <p className="text-[var(--text-primary)] font-black text-5xl tracking-tighter">₹1k <span className="text-sm text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ month</span></p>
+               </div>
+               
+               <div className="flex-1 flex flex-col gap-4 mb-8">
+                 <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-slate-400 mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">10% Off all bookings</span></div>
+                 <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-slate-400 mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">Standard tournament entry</span></div>
+               </div>
+               
+               <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] transition-colors">Select Plan</button>
             </motion.div>
             
-            {/* Gold */}
-            <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)] border-2 border-[var(--border-subtle)] rounded-sm p-8 text-center  relative transform md:-translate-y-4">
-               <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
-               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--accent-primary)] text-black text-[9px] font-bold px-4 py-1 rounded-sm uppercase tracking-widest ">Most Popular</div>
-               <h3 className="text-xl font-bold text-[var(--accent-primary)] mb-2 uppercase tracking-[0.2em] mt-2">Gold</h3>
-               <p className="text-[var(--text-primary)] font-bold text-4xl mb-6 tracking-tight">₹2,500 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 3 Months</span></p>
-               <div className="bg-[var(--overlay-bg)] py-3 rounded-sm border border-[var(--border-subtle)] text-[var(--accent-primary)] font-bold text-xs uppercase tracking-wider">15% Off Bookings</div>
+            {/* Gold (Glowing) */}
+            <motion.div whileHover={{ y: -8, scale: 1.02 }} className="bg-[var(--bg-base)] border border-[var(--accent-primary)] shadow-[0_0_30px_rgba(0,0,0,0.2)] md:shadow-[0_0_40px_rgba(0,0,0,0.3)] rounded-2xl p-8 flex flex-col relative overflow-hidden group transform md:-translate-y-4">
+               <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-primary)]/10 to-transparent opacity-50"></div>
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[var(--accent-primary)] text-black text-[10px] font-black px-6 py-1.5 rounded-b-lg uppercase tracking-widest z-20">Most Popular</div>
+               
+               <div className="relative z-10">
+                 <h3 className="text-2xl font-bold text-[var(--accent-primary)] mb-2 tracking-tight mt-4">Gold Pro</h3>
+                 <p className="text-sm text-[var(--text-secondary)] font-medium h-10 mb-6">For dedicated athletes demanding regular premium access.</p>
+                 
+                 <div className="mb-8">
+                   <p className="text-[var(--text-primary)] font-black text-5xl tracking-tighter">₹2.5k <span className="text-sm text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 3 months</span></p>
+                 </div>
+                 
+                 <div className="flex-1 flex flex-col gap-4 mb-8">
+                   <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-primary)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-primary)] font-medium">15% Off all bookings</span></div>
+                   <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-primary)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-primary)] font-medium">Priority tournament entry</span></div>
+                   <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-primary)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-primary)] font-medium">Free equipment rental</span></div>
+                 </div>
+                 
+                 <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider bg-[var(--accent-primary)] text-black transition-all hover:scale-[1.02]">Go Pro</button>
+               </div>
             </motion.div>
             
             {/* Platinum */}
-            <motion.div whileHover={{ y: -8 }} className="bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-sm p-8 text-center  relative overflow-hidden group">
-               <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-primary)]"></div>
-               <h3 className="text-xl font-bold text-[var(--accent-primary)] mb-2 uppercase tracking-[0.2em]">Platinum</h3>
-               <p className="text-[var(--text-primary)] font-bold text-4xl mb-6 tracking-tight">₹8,000 <span className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ 1 Year</span></p>
-               <div className="bg-[var(--overlay-bg)] py-3 rounded-sm border border-[var(--border-subtle)] text-[var(--accent-primary)] font-bold text-xs uppercase tracking-wider">20% Off Bookings</div>
+            <motion.div whileHover={{ y: -8, scale: 1.02 }} className="glass-panel border border-[var(--border-subtle)] rounded-2xl p-8 flex flex-col relative overflow-hidden group">
+               <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent-emerald)]"></div>
+               <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent-emerald)]/10 blur-[50px] -z-10 group-hover:bg-[var(--accent-emerald)]/20 transition-all duration-500"></div>
+               
+               <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2 tracking-tight">Platinum Elite</h3>
+               <p className="text-sm text-[var(--text-secondary)] font-medium h-10 mb-6">Ultimate flexibility and savings for teams and pros.</p>
+               
+               <div className="mb-8">
+                 <p className="text-[var(--text-primary)] font-black text-5xl tracking-tighter">₹8k <span className="text-sm text-[var(--text-secondary)] font-bold uppercase tracking-widest block mt-2">/ year</span></p>
+               </div>
+               
+               <div className="flex-1 flex flex-col gap-4 mb-8">
+                 <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-emerald)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">20% Off all bookings</span></div>
+                 <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-emerald)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">VIP tournament seeding</span></div>
+                 <div className="flex items-start gap-3"><ShieldCheck size={18} className="text-[var(--accent-emerald)] mt-0.5 shrink-0"/><span className="text-sm text-[var(--text-secondary)] font-medium">Free guest passes (2/mo)</span></div>
+               </div>
+               
+               <button className="w-full py-4 rounded-xl font-bold text-sm uppercase tracking-wider border border-[var(--border-subtle)] text-[var(--text-primary)] hover:bg-[var(--overlay-bg)] transition-colors">Select Plan</button>
             </motion.div>
           </div>
         </motion.div>

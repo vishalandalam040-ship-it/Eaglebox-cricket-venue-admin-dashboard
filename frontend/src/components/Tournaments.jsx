@@ -204,6 +204,69 @@ export const Tournaments = () => {
       </motion.div>
 
       {/* Tournaments List */}
+      {user?.role === 'Viewer' ? (
+        <motion.div variants={itemVariants} className="mb-12 relative w-full overflow-hidden">
+          <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory custom-scrollbar pr-8">
+            {loading ? (
+               <div className="w-80 h-[500px] shrink-0 rounded-3xl glass-panel flex flex-col justify-center items-center border border-[var(--border-subtle)]">
+                 <div className="w-16 h-16 rounded-full border-4 border-white/10 border-t-[var(--accent-emerald)] animate-spin mb-4"></div>
+                 <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em]">Syncing Neural Data...</p>
+               </div>
+            ) : tournaments.length === 0 ? (
+               <div className="w-full glass-panel border border-[var(--border-subtle)] rounded-3xl p-16 text-center text-[var(--text-secondary)] font-medium h-[500px] flex items-center justify-center">No active tournaments found.</div>
+            ) : (
+              <AnimatePresence>
+                {tournaments.map((tournament, index) => (
+                  <motion.div 
+                    layout
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    key={tournament.id} 
+                    className="w-[85vw] sm:w-[400px] shrink-0 snap-center relative overflow-hidden rounded-3xl group cursor-pointer border border-[var(--border-subtle)] hover:border-[var(--accent-emerald)] transition-all duration-500 h-[500px]"
+                    onClick={() => openJoinModal(tournament.id)}
+                  >
+                    <div className="absolute inset-0 bg-[var(--bg-base)]/60 z-10 transition-all duration-500 group-hover:bg-[var(--bg-base)]/40"></div>
+                    <img src={`https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&sig=${index}`} alt="Tournament" className="absolute inset-0 w-full h-full object-cover z-0 filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-base)] via-[var(--bg-base)]/90 to-transparent z-10"></div>
+                    
+                    <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
+                      <div className="mb-auto self-start">
+                        <span className="flex items-center gap-1.5 bg-[var(--bg-base)]/80 backdrop-blur-md border border-[var(--border-subtle)] text-[var(--accent-emerald)] text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest ">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-emerald)] animate-pulse shadow-[0_0_10px_var(--accent-emerald)]"></span> LIVE EVENT
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-3xl font-black text-[var(--text-primary)] mb-2 tracking-tight group-hover:-translate-y-2 transition-transform duration-500">{tournament.name}</h3>
+                      
+                      <div className="flex items-center gap-4 text-xs font-bold text-[var(--text-secondary)] mb-6 group-hover:-translate-y-2 transition-transform duration-500 delay-75">
+                         <div className="flex items-center gap-1.5">
+                            <Calendar size={14} className="text-[var(--accent-emerald)]" /> 
+                            {new Date(tournament.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                         </div>
+                         <div className="w-1 h-1 rounded-full bg-[var(--border-subtle)]"></div>
+                         <div className="flex items-center gap-1.5 text-[var(--accent-primary)]">
+                            ₹{tournament.prizePool.toLocaleString()} PRIZE
+                         </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] text-[var(--text-secondary)] uppercase tracking-widest font-bold mb-1">Entry Fee</span>
+                          <span className="text-xl font-black text-[var(--text-primary)]">₹{tournament.entryFee}</span>
+                        </div>
+                        <button className="bg-[var(--accent-emerald)] text-black px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]">
+                          Join Squad
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            )}
+          </div>
+        </motion.div>
+      ) : (
       <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6 mb-12">
         {loading ? (
            <div className="glass-panel rounded-sm p-6 h-64 flex flex-col justify-center items-center">
@@ -323,6 +386,7 @@ export const Tournaments = () => {
           </AnimatePresence>
         )}
       </motion.div>
+      )}
 
       {/* Modals */}
       <AnimatePresence>

@@ -269,6 +269,69 @@ export const Bookings = () => {
         </div>
       </motion.div>
 
+      {user?.role === 'Viewer' ? (
+        <motion.div variants={itemVariants} className="mt-8 mb-12">
+           <div className="flex justify-between items-center mb-8">
+             <h2 className="text-2xl font-bold text-[var(--text-primary)]">My Sessions</h2>
+             <span className="text-[10px] font-bold text-[var(--accent-emerald)] uppercase tracking-widest bg-[var(--overlay-bg)] px-3 py-1 rounded-sm border border-[var(--border-subtle)]">
+                {bookings.length} UPCOMING
+             </span>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+             <AnimatePresence>
+                {bookings.map((booking, index) => (
+                   <motion.div 
+                     layout
+                     initial={{ opacity: 0, scale: 0.9 }}
+                     animate={{ opacity: 1, scale: 1 }}
+                     exit={{ opacity: 0, scale: 0.9 }}
+                     transition={{ delay: index * 0.05 }}
+                     key={booking.id}
+                     className="glass-panel border border-[var(--border-subtle)] rounded-2xl overflow-hidden group hover:border-[var(--accent-emerald)] transition-colors cursor-pointer"
+                     onClick={() => handleViewDetails(booking)}
+                   >
+                     <div className="h-32 bg-[var(--overlay-bg)] relative p-6 flex flex-col justify-between overflow-hidden">
+                       <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent-emerald)]/10 blur-[40px] group-hover:bg-[var(--accent-emerald)]/20 transition-all"></div>
+                       <div className="flex justify-between items-start relative z-10">
+                         <span className={`px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest ${booking.status === 'Confirmed' ? 'bg-[var(--accent-emerald)]/20 text-[var(--accent-emerald)] border border-[var(--accent-emerald)]/30' : 'bg-[var(--accent-rose)]/20 text-[var(--accent-rose)] border border-[var(--accent-rose)]/30'}`}>
+                           {booking.status}
+                         </span>
+                         <span className="text-xs font-bold text-[var(--text-secondary)]">ID: {booking.id}</span>
+                       </div>
+                       <h3 className="text-xl font-bold text-[var(--text-primary)] relative z-10">{new Date(booking.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</h3>
+                     </div>
+                     <div className="p-6 bg-[var(--bg-base)]">
+                       <div className="flex items-center gap-4 mb-6">
+                         <div className="w-12 h-12 rounded-xl bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-primary)]">
+                           <Clock size={20} />
+                         </div>
+                         <div>
+                           <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">Time Slot</p>
+                           <p className="text-[var(--text-primary)] font-bold">{booking.time} - {booking.endTime}</p>
+                         </div>
+                       </div>
+                       
+                       <div className="flex items-center gap-4">
+                         <div className="w-12 h-12 rounded-xl bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)]">
+                           <CreditCard size={20} />
+                         </div>
+                         <div>
+                           <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-widest mb-1">Amount Paid</p>
+                           <p className="text-[var(--text-primary)] font-bold text-lg">₹{booking.amount}</p>
+                         </div>
+                       </div>
+                     </div>
+                   </motion.div>
+                ))}
+             </AnimatePresence>
+           </div>
+           
+           {bookings.length === 0 && !loading && (
+              <div className="w-full glass-panel border border-[var(--border-subtle)] rounded-3xl p-16 text-center text-[var(--text-secondary)] font-medium">No upcoming sessions. Book a slot to get started!</div>
+           )}
+        </motion.div>
+      ) : (
       <motion.div variants={itemVariants} className="glass-panel overflow-hidden relative">
         
         <div className="p-6 border-b border-[var(--border-subtle)] flex justify-between items-center relative z-10 bg-[var(--overlay-bg)] ">
@@ -401,7 +464,7 @@ export const Bookings = () => {
           )}
         </div>
       </motion.div>
-
+      )}
       {/* Premium Create Booking Modal */}
       <AnimatePresence>
         {isModalOpen && (
