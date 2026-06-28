@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import api from '../api';
-import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2, Mail, Info } from 'lucide-react';
+import { MessageCircle, Plus, X, Calendar as CalendarIcon, Clock, CreditCard, User, Edit2, Mail, Info, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -193,6 +193,16 @@ export const Bookings = () => {
           setBookings(bookings.map(b => b.id === id ? { ...b, status: 'Cancelled' } : b));
         })
         .catch(err => alert("Failed to cancel booking."));
+    }
+  };
+
+  const handleDeleteBooking = (id) => {
+    if(window.confirm('Are you absolutely sure you want to completely DELETE this booking? This action will permanently remove it from the database and deduct the revenue.')) {
+      api.delete(`/bookings/${id}`)
+        .then(res => {
+          setBookings(bookings.filter(b => b.id !== id));
+        })
+        .catch(err => alert("Failed to delete booking."));
     }
   };
 
@@ -451,8 +461,13 @@ export const Bookings = () => {
                           </motion.button>
                         )}
                         {user?.role !== 'Viewer' && booking.status !== 'Cancelled' && (
-                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleCancelBooking(booking.id)} className="p-2.5 rounded-sm bg-[var(--overlay-bg)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-[var(--text-primary)] transition-colors border border-[var(--border-subtle)]">
+                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleCancelBooking(booking.id)} className="p-2.5 rounded-sm bg-[var(--overlay-bg)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-[var(--text-primary)] transition-colors border border-[var(--border-subtle)]" title="Cancel Booking">
                              <X size={16} />
+                          </motion.button>
+                        )}
+                        {user?.role === 'Super Admin' && (
+                          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleDeleteBooking(booking.id)} className="p-2.5 rounded-sm bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-[var(--text-primary)] transition-colors border border-red-500/20" title="Delete Booking Permanently">
+                             <Trash2 size={16} />
                           </motion.button>
                         )}
                       </div>

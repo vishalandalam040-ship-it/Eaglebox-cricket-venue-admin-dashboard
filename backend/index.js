@@ -282,7 +282,7 @@ const crypto = require('crypto');
         let newEnd = normalizeTime(endTime);
         if (newEnd <= newStart) newEnd += 24 * 60;
 
-        const dayBookings = await db.all(`SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled' AND id != ?`, [date, req.params.id]);
+        const dayBookings = await db.all(`SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE date = ? AND status != 'Cancelled' AND id != ?`, [date, req.params.id]);
         const overlapping = dayBookings.find(b => {
           const bStart = normalizeTime(b.time);
           let bEnd = normalizeTime(b.endTime);
@@ -320,6 +320,16 @@ const crypto = require('crypto');
         );
         
         res.json({ message: 'Booking cancelled successfully' });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+
+    app.delete('/api/bookings/:id', verifyToken, authorizeRole(['Super Admin']), async (req, res) => {
+      try {
+        await db.run('DELETE FROM booking_logs WHERE bookingid = ?', [req.params.id]);
+        await db.run('DELETE FROM bookings WHERE id = ?', [req.params.id]);
+        res.json({ message: 'Booking permanently deleted' });
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
