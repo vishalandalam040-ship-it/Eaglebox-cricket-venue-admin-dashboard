@@ -218,10 +218,7 @@ const crypto = require('crypto');
       try {
         let bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings ORDER BY date DESC, time DESC');
         if (req.user.role === 'Viewer') {
-          bookings = bookings.map(b => {
-            if (b.userId === req.user.id) return b;
-            return { ...b, customerName: 'Booked', phone: '***', amount: 0 };
-          });
+          bookings = bookings.filter(b => b.userId === req.user.id);
         }
         res.json(bookings);
       } catch (err) {
