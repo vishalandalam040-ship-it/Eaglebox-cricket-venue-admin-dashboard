@@ -567,23 +567,23 @@ export const Tournaments = () => {
                   <div className="space-y-3">
                     {teams.map((team, idx) => (
                       <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 }} key={team.id} className="bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm p-4 flex flex-col gap-4 hover:border-[var(--border-subtle)] transition-colors">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-4">
-                             <div className="w-10 h-10 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)] border border-[var(--border-subtle)]">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                          <div className="flex items-center gap-3 min-w-0">
+                             <div className="w-10 h-10 shrink-0 rounded-sm bg-[var(--overlay-bg)] flex items-center justify-center text-[var(--accent-emerald)] border border-[var(--border-subtle)]">
                                <Users size={16} />
                              </div>
-                             <div>
-                               <p className="font-bold text-[var(--text-primary)] text-base">{team.teamName}</p>
-                               <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">ID: {team.id}</p>
+                             <div className="min-w-0 overflow-hidden flex-1">
+                               <p className="font-bold text-[var(--text-primary)] text-sm sm:text-base truncate">{team.teamName}</p>
+                               <p className="text-[8px] sm:text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider truncate">ID: {team.id}</p>
                              </div>
                           </div>
-                          <div className="flex items-center gap-4">
-                            <span className="bg-[var(--overlay-bg)] text-[var(--accent-primary)] px-3 py-1.5 rounded-sm text-[10px] font-bold uppercase tracking-widest border border-[var(--border-subtle)]">
+                          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
+                            <span className="flex-1 sm:flex-none text-center bg-[var(--overlay-bg)] text-[var(--accent-primary)] px-3 py-1.5 rounded-sm text-[9px] sm:text-[10px] font-bold uppercase tracking-widest border border-[var(--border-subtle)]">
                               {team.playersCount} Players
                             </span>
                             {user?.role !== 'Viewer' && (
-                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="w-8 h-8 rounded-sm flex items-center justify-center text-[var(--accent-primary)] hover:bg-[var(--overlay-bg)] hover:text-[var(--accent-primary)] transition-colors border border-transparent hover:border-[var(--border-subtle)]" title="Remove Team">
-                                 <X size={14} />
+                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-sm flex items-center justify-center text-[var(--accent-primary)] bg-[var(--bg-base)] sm:bg-transparent hover:bg-[var(--overlay-bg)] transition-colors border border-[var(--border-subtle)] sm:border-transparent sm:hover:border-[var(--border-subtle)]" title="Remove Team">
+                                 <X size={16} className="sm:w-3.5 sm:h-3.5" />
                               </button>
                             )}
                           </div>
