@@ -624,6 +624,11 @@ const crypto = require('crypto');
         const prompt = `You are a Venue Admin AI Assistant for a Box Cricket venue. 
 Answer concisely and professionally. Help the user manage their ground.${roleInstructions}
 
+CRITICAL: When computing or discussing "Total Revenue", "All-time Revenue", or "Overall Revenue", you MUST sum up ALL three of these streams:
+1. Confirmed Bookings amount
+2. Tournament Teams entryFee (from the tournament they belong to)
+3. Memberships amountPaid
+
 Here is the current system database information you MUST use to answer the user's request. NEVER invent fake data:
 ${JSON.stringify(systemData)}
 

@@ -458,19 +458,36 @@ const Dashboard = () => {
         setChartData(data);
 
         // Fetch other stats concurrently
-        const [resCustomers, resTournaments] = await Promise.all([
+        const [resCustomers, resTournaments, resTeams, resMemberships] = await Promise.all([
           api.get('/customers'),
-          api.get('/tournaments')
+          api.get('/tournaments'),
+          api.get('/tournaments').then(res => Promise.all(res.data.map(t => api.get(`/tournaments/${t.id}/teams`)))).then(allRes => allRes.flatMap(r => r.data)),
+          api.get('/memberships').catch(() => ({ data: [] }))
         ]);
         
         const todayStr = new Date().toISOString().split('T')[0];
         let todayRev = 0;
         let totalRev = 0;
+        
+        // Add Bookings Revenue
         bookings.forEach(b => {
            if (b.status !== 'Cancelled') {
              totalRev += Number(b.amount || 0);
              if (b.date === todayStr) todayRev += Number(b.amount || 0);
            }
+        });
+        
+        // Add Tournaments Revenue
+        resTeams.forEach(t => {
+           const tournament = resTournaments.data.find(tour => tour.id === t.tournamentId);
+           if (tournament) {
+              totalRev += Number(tournament.entryFee || 0);
+           }
+        });
+        
+        // Add Memberships Revenue
+        resMemberships.data.forEach(m => {
+           totalRev += Number(m.amountPaid || 0);
         });
 
         setStats({
