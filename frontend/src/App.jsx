@@ -272,7 +272,7 @@ const Topbar = () => {
          <input type="text" placeholder="Search..." className="bg-transparent outline-none flex-1 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] font-medium" />
       </div>
 
-      <div className="flex items-center gap-5 ml-auto relative">
+      <div className="flex items-center gap-2 md:gap-5 ml-auto relative">
         <button onClick={toggleTheme} className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
           {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
@@ -338,13 +338,12 @@ const Topbar = () => {
 
         <div className="w-px h-8 bg-[var(--border-subtle)] hidden md:block"></div>
 
-        <button onClick={logout} className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex flex-col items-center gap-1">
+        <button onClick={logout} className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center justify-center">
           <LogOut size={20} />
-          <span className="text-[8px] font-bold uppercase tracking-wider text-[var(--accent-primary)]">Logout</span>
         </button>
 
         <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="flex flex-col items-end mr-2 md:mr-0">
+          <div className="hidden md:flex flex-col items-end mr-2 md:mr-0">
              <span className="text-xs md:text-sm font-bold leading-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{user?.role === 'Super Admin' ? 'System Architect' : user?.role + ' Account'}</span>
              <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest ${user?.membership?.includes('Expired') ? 'text-[var(--accent-rose)]' : 'text-[var(--accent-emerald)]'}`}>
                {user?.role === 'Viewer' 
@@ -352,7 +351,7 @@ const Topbar = () => {
                  : user?.role?.toUpperCase()}
              </span>
           </div>
-          <div className="w-10 h-10 rounded-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-primary)] font-bold text-lg group-hover:border-[var(--accent-primary)] transition-colors">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-sm bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-primary)] font-bold text-sm md:text-lg group-hover:border-[var(--accent-primary)] transition-colors">
             {user?.email?.[0]?.toUpperCase() || 'S'}
           </div>
         </div>
