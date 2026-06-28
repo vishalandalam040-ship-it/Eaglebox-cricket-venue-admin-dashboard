@@ -184,18 +184,18 @@ const Topbar = () => {
         
         let notifs = [];
         
-        // Latest Booking
-        if (bookingsRes.data.length > 0) {
-          const latestBooking = bookingsRes.data[bookingsRes.data.length - 1];
+        // Latest Bookings
+        const sortedBookings = [...bookingsRes.data].sort((a, b) => b.id.localeCompare(a.id));
+        sortedBookings.slice(0, 3).forEach(booking => {
           notifs.push({
-            id: `booking-${latestBooking.id}`,
+            id: `booking-${booking.id}`,
             type: 'booking',
             title: user?.role === 'Viewer' ? 'Booking Confirmed' : 'New Booking',
-            desc: user?.role === 'Viewer' ? `Your booking is confirmed on ${latestBooking.date}` : `${latestBooking.customerName} booked for ${latestBooking.date}`,
-            time: new Date().getTime(), // In a real app we'd use creation timestamp
+            desc: user?.role === 'Viewer' ? `Your booking is confirmed on ${booking.date}` : `${booking.customerName} booked for ${booking.date}`,
+            time: parseInt(booking.id.replace('b', '')) || new Date().getTime(),
             path: '/bookings'
           });
-        }
+        });
 
         // Latest Tournament Teams
         const teamPromises = tournamentsRes.data.map(t => api.get(`/tournaments/${t.id}/teams`));
@@ -203,18 +203,21 @@ const Topbar = () => {
         
         allTeamsRes.forEach((res, index) => {
           const t = tournamentsRes.data[index];
-          if (res.data.length > 0) {
-            const latestTeam = res.data[res.data.length - 1];
+          const sortedTeams = [...res.data].sort((a, b) => b.id.localeCompare(a.id));
+          sortedTeams.slice(0, 2).forEach(team => {
             notifs.push({
-              id: `team-${latestTeam.id}`,
+              id: `team-${team.id}`,
               type: 'team',
               title: user?.role === 'Viewer' ? 'Tournament Registration' : 'New Team Registration',
-              desc: user?.role === 'Viewer' ? `You registered to ${t.name}` : `${latestTeam.teamName} joined ${t.name}`,
-              time: new Date().getTime() - 1000,
+              desc: user?.role === 'Viewer' ? `You registered to ${t.name}` : `${team.teamName} joined ${t.name}`,
+              time: parseInt(team.id.replace('t', '')) || new Date().getTime(),
               path: '/tournaments'
             });
-          }
+          });
         });
+
+        // Sort all notifications by time descending
+        notifs.sort((a, b) => b.time - a.time);
 
         setNotifications(notifs);
         
