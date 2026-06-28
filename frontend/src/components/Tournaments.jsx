@@ -224,7 +224,13 @@ export const Tournaments = () => {
                     transition={{ delay: index * 0.1 }}
                     key={tournament.id} 
                     className="w-[85vw] sm:w-[400px] shrink-0 snap-center relative overflow-hidden rounded-3xl group cursor-pointer border border-[var(--border-subtle)] hover:border-[var(--accent-emerald)] transition-all duration-500 h-[500px]"
-                    onClick={() => openJoinModal(tournament.id)}
+                    onClick={() => {
+                      if (tournament.teams >= (tournament.maxTeams || 16)) {
+                        alert("Tournament is already full!");
+                      } else {
+                        openJoinModal(tournament.id);
+                      }
+                    }}
                   >
                     <div className="absolute inset-0 bg-black/50 z-10 transition-all duration-500 group-hover:bg-black/30"></div>
                     <img src={`https://images.unsplash.com/photo-1542652694-40abf526446e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&sig=${index}`} alt="Tournament" className="absolute inset-0 w-full h-full object-cover z-0 filter grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
@@ -248,6 +254,10 @@ export const Tournaments = () => {
                          <div className="flex items-center gap-1.5 text-emerald-400">
                             ₹{tournament.prizePool?.toLocaleString() || 0} PRIZE
                          </div>
+                         <div className="w-1 h-1 rounded-full bg-gray-500"></div>
+                         <div className="flex items-center gap-1.5 text-blue-400">
+                            <Users size={14} /> {tournament.teams} / {tournament.maxTeams || 16} TEAMS
+                         </div>
                       </div>
                       
                       <div className="flex items-center justify-between mt-4">
@@ -255,8 +265,8 @@ export const Tournaments = () => {
                           <span className="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Entry Fee</span>
                           <span className="text-xl font-black text-white">₹{tournament.entryFee || 0}</span>
                         </div>
-                        <button className="bg-[var(--accent-emerald)] text-black px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]">
-                          Join Squad
+                        <button className={`${tournament.teams >= (tournament.maxTeams || 16) ? 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)]' : 'bg-[var(--accent-emerald)] shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]'} text-black px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform`}>
+                          {tournament.teams >= (tournament.maxTeams || 16) ? 'Tournament Full' : 'Join Squad'}
                         </button>
                       </div>
                     </div>
@@ -324,10 +334,16 @@ export const Tournaments = () => {
                       )}
                       <motion.button 
                         whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                        onClick={() => openJoinModal(tournament.id)} 
-                        className="px-4 py-2 rounded-md bg-[var(--overlay-bg)] text-[var(--accent-emerald)] border border-[var(--border-subtle)] hover:bg-[var(--accent-emerald)] hover:text-[var(--bg-base)] font-medium transition-colors text-xs uppercase tracking-wider"
+                        onClick={() => {
+                          if (tournament.teams >= (tournament.maxTeams || 16)) {
+                            alert("Tournament is already full!");
+                          } else {
+                            openJoinModal(tournament.id);
+                          }
+                        }}
+                        className={`px-4 py-2 rounded-md bg-[var(--overlay-bg)] border border-[var(--border-subtle)] font-medium transition-colors text-xs uppercase tracking-wider ${tournament.teams >= (tournament.maxTeams || 16) ? 'text-red-500 hover:bg-red-500 hover:text-white' : 'text-[var(--accent-emerald)] hover:bg-[var(--accent-emerald)] hover:text-[var(--bg-base)]'}`}
                       >
-                        Register Team
+                        {tournament.teams >= (tournament.maxTeams || 16) ? 'Tournament Full' : 'Register Team'}
                       </motion.button>
                     </div>
                  </div>

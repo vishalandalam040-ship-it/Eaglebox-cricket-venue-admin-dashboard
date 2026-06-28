@@ -481,6 +481,12 @@ const crypto = require('crypto');
           }
         }
 
+        // Check if tournament is full
+        const tournament = await db.get('SELECT teams, maxTeams FROM tournaments WHERE id = ?', [tournamentId]);
+        if (tournament && tournament.teams >= (tournament.maxTeams || 16)) {
+          return res.status(400).json({ error: 'This tournament is already full.' });
+        }
+
         await db.run(
           'INSERT INTO tournament_teams (id, tournamentId, userId, teamName, playersCount) VALUES (?, ?, ?, ?, ?)',
           [id, tournamentId, userId, teamName, playersCount]
