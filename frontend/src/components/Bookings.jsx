@@ -57,12 +57,12 @@ export const Bookings = () => {
       
       if (durationHours > 0) {
         let minimumAmount = durationHours * hourlyRate;
-        if (isDiscountApplied && user?.membership) {
+        if (isDiscountApplied && user?.membership && !user.membership.includes('Expired')) {
           let discount = 0;
           if (user.membership.includes('Silver')) discount = 0.10;
           else if (user.membership.includes('Gold')) discount = 0.15;
           else if (user.membership.includes('Platinum')) discount = 0.20;
-          minimumAmount = minimumAmount * (1 - discount);
+          minimumAmount = Math.round(minimumAmount * (1 - discount));
         }
         setNewBooking(prev => ({ ...prev, amount: minimumAmount }));
       } else {
@@ -528,7 +528,7 @@ export const Bookings = () => {
                     <div className="flex-1">
                       <input required readOnly type="number" value={newBooking.amount} className="w-full bg-transparent border-none outline-none text-3xl font-bold text-[var(--accent-emerald)] drop- placeholder-emerald-900" placeholder="0" />
                     </div>
-                    {user?.membership && !isDiscountApplied && (
+                    {user?.membership && !user.membership.includes('Expired') && !isDiscountApplied && (
                       <button type="button" onClick={() => setIsDiscountApplied(true)} className="px-4 py-2 rounded-sm bg-[var(--accent-primary)] hover:bg-amber-600 text-[var(--text-primary)] font-bold text-xs uppercase tracking-wider transition-colors ">
                         Apply Discount
                       </button>
