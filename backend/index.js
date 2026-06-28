@@ -238,7 +238,7 @@ const crypto = require('crypto');
         let newEnd = normalizeTime(endTime);
         if (newEnd <= newStart) newEnd += 24 * 60;
 
-        const dayBookings = await db.all(`SELECT * FROM bookings WHERE date = ? AND status != 'Cancelled'`, [date]);
+        const dayBookings = await db.all(`SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE date = ? AND status != 'Cancelled'`, [date]);
         const overlapping = dayBookings.find(b => {
           const bStart = normalizeTime(b.time);
           let bEnd = normalizeTime(b.endTime);
