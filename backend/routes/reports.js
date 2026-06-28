@@ -28,8 +28,8 @@ module.exports = (db) => {
     try {
       const bookings = await db.all('SELECT id, customername AS "customerName", phone, date, time, endtime AS "endTime", amount, status, userid AS "userId" FROM bookings WHERE status = \'Confirmed\'');
       
-      const tournaments = await db.all('SELECT * FROM tournaments');
-      const teams = await db.all('SELECT * FROM tournament_teams');
+      const tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
+      const teams = await db.all('SELECT id, tournamentid AS "tournamentId", userid AS "userId", teamname AS "teamName", playerscount AS "playersCount" FROM tournament_teams');
       
       let tournamentRevenue = 0;
       const teamDetails = [];

@@ -84,10 +84,13 @@ const crypto = require('crypto');
         name TEXT,
         teams INTEGER,
         maxTeams INTEGER,
+        minPlayers INTEGER DEFAULT 11,
         prizePool INTEGER,
         entryFee INTEGER,
         status TEXT
       );
+      
+      ALTER TABLE tournaments ADD COLUMN IF NOT EXISTS minPlayers INTEGER DEFAULT 11;
 
       CREATE TABLE IF NOT EXISTS tournament_teams (
         id TEXT PRIMARY KEY,
@@ -403,7 +406,7 @@ const crypto = require('crypto');
     // --- API for Tournaments ---
     app.get('/api/tournaments', verifyToken, async (req, res) => {
       try {
-        const tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
+        const tournaments = await db.all('SELECT id, name, teams, maxteams AS "maxTeams", minplayers AS "minPlayers", prizepool AS "prizePool", entryfee AS "entryFee", status FROM tournaments');
         res.json(tournaments);
       } catch (err) {
         res.status(500).json({ error: err.message });
@@ -424,11 +427,11 @@ const crypto = require('crypto');
       }
     });
 
-    app.put('/api/tournaments/:id/fee', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+    app.put('/api/tournaments/:id/settings', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
       try {
-        const { entryFee } = req.body;
-        await db.run('UPDATE tournaments SET entryFee = ? WHERE id = ?', [entryFee, req.params.id]);
-        res.json({ message: 'Tournament fee updated successfully' });
+        const { entryFee, minPlayers } = req.body;
+        await db.run('UPDATE tournaments SET entryFee = ?, minPlayers = ? WHERE id = ?', [entryFee, minPlayers, req.params.id]);
+        res.json({ message: 'Tournament settings updated successfully' });
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
@@ -491,10 +494,13 @@ const crypto = require('crypto');
           }
         }
 
-        // Check if tournament is full
-        const tournament = await db.get('SELECT teams, maxTeams FROM tournaments WHERE id = ?', [tournamentId]);
+        // Check if tournament is full and players count meets minimum
+        const tournament = await db.get('SELECT teams, maxTeams, minPlayers FROM tournaments WHERE id = ?', [tournamentId]);
         if (tournament && tournament.teams >= (tournament.maxTeams || 16)) {
           return res.status(400).json({ error: 'This tournament is already full.' });
+        }
+        if (tournament && playersCount < (tournament.minPlayers || 11)) {
+          return res.status(400).json({ error: `You must register at least ${tournament.minPlayers || 11} players.` });
         }
 
         await db.run(

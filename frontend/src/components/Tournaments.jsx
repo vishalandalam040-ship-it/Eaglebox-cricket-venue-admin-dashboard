@@ -18,6 +18,7 @@ export const Tournaments = () => {
   const [isManageModalOpen, setIsManageModalOpen] = useState(false);
   const [teams, setTeams] = useState([]);
   const [activeTournamentFee, setActiveTournamentFee] = useState('');
+  const [activeTournamentMinPlayers, setActiveTournamentMinPlayers] = useState(11);
   const [isSavingManageFee, setIsSavingManageFee] = useState(false);
 
   useEffect(() => {
@@ -106,9 +107,10 @@ export const Tournaments = () => {
 
   const openManageModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
-    const tournament = tournaments.find(t => t.id === tournamentId);
-    if (tournament) {
-      setActiveTournamentFee(tournament.entryFee || 0);
+    const t = tournaments.find(tour => tour.id === tournamentId);
+    if (t) {
+      setActiveTournamentFee(t.entryFee || 0);
+      setActiveTournamentMinPlayers(t.minPlayers || 11);
     }
     api.get(`/tournaments/${tournamentId}/teams`)
       .then(res => {
@@ -118,17 +120,16 @@ export const Tournaments = () => {
       .catch(err => alert("Failed to fetch teams"));
   };
 
-  const handleUpdateFee = () => {
-    if (user?.role === 'Viewer') return;
+  const handleUpdateSettings = () => {
     setIsSavingManageFee(true);
-    api.put(`/tournaments/${activeTournamentId}/fee`, { entryFee: activeTournamentFee })
-      .then(res => {
-        setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, entryFee: activeTournamentFee } : t));
-        alert("Tournament entry fee permanently updated!");
+    api.put(`/tournaments/${activeTournamentId}/settings`, { entryFee: activeTournamentFee, minPlayers: activeTournamentMinPlayers })
+      .then(() => {
+        setTournaments(tournaments.map(t => t.id === activeTournamentId ? { ...t, entryFee: activeTournamentFee, minPlayers: activeTournamentMinPlayers } : t));
         setIsSavingManageFee(false);
+        alert("Tournament settings updated!");
       })
-      .catch(err => {
-        alert("Failed to update tournament fee.");
+      .catch(() => {
+        alert("Failed to update tournament settings.");
         setIsSavingManageFee(false);
       });
   };
@@ -483,13 +484,18 @@ export const Tournaments = () => {
                 <div>
                   <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">Squad Size</label>
                   <input required type="number" min="5" max="25" value={newTeam.playersCount} onChange={e => {
-                    const count = parseInt(e.target.value) || 0;
+                    const count = parseInt(e.target.value) || '';
+                    const tournament = tournaments.find(t => t.id === activeTournamentId);
                     setNewTeam({
                       ...newTeam, 
-                      playersCount: e.target.value,
+                      playersCount: count,
+                      amountPaid: tournament?.entryFee || 0,
                       playerNames: Array(count).fill('').map((_, i) => newTeam.playerNames[i] || '')
                     })
-                  }} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-medium" placeholder="11" />
+                  }} className="w-full bg-[var(--bg-base)]/80 border border-[var(--border-subtle)] rounded-sm px-3 py-2 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] text-sm" placeholder="11" />
+                  {newTeam.playersCount && parseInt(newTeam.playersCount) < (tournaments.find(t => t.id === activeTournamentId)?.minPlayers || 11) && (
+                    <p className="text-[10px] text-red-500 mt-1">Minimum {tournaments.find(t => t.id === activeTournamentId)?.minPlayers || 11} players required.</p>
+                  )}
                 </div>
                 
                 {Number(newTeam.playersCount) > 0 && (
@@ -520,7 +526,7 @@ export const Tournaments = () => {
                 </div>
                 <div className="mt-8 flex gap-4">
                   <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
-                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0)} type="submit" className="flex-1 px-4 py-3.5 rounded-sm bg-[var(--accent-primary)] text-[var(--text-primary)] font-bold  transition-all disabled:opacity-50 disabled:shadow-none">
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={!newTeam.amountPaid || Number(newTeam.amountPaid) < (tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0) || Number(newTeam.playersCount) < (tournaments.find(t => t.id === activeTournamentId)?.minPlayers || 11)} type="submit" className="flex-1 px-4 py-3.5 rounded-sm bg-[var(--accent-primary)] text-[var(--text-primary)] font-bold  transition-all disabled:opacity-50 disabled:shadow-none">
                     Confirm Registration
                   </motion.button>
                 </div>
@@ -550,12 +556,16 @@ export const Tournaments = () => {
                     <label className="block text-[10px] font-bold text-[var(--accent-emerald)] uppercase tracking-[0.2em] mb-2">Update Entry Fee (₹)</label>
                     <input type="number" value={activeTournamentFee} onChange={e => setActiveTournamentFee(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-bold" />
                   </div>
+                  <div className="flex-1">
+                    <label className="block text-[10px] font-bold text-[var(--accent-emerald)] uppercase tracking-[0.2em] mb-2">Min Players / Team</label>
+                    <input type="number" value={activeTournamentMinPlayers} onChange={e => setActiveTournamentMinPlayers(e.target.value)} className="w-full bg-[var(--bg-base)]/50 border border-[var(--border-subtle)] rounded-sm px-4 py-3 outline-none focus:border-[var(--border-subtle)] text-[var(--text-primary)] font-bold" />
+                  </div>
                   <button 
-                    onClick={handleUpdateFee}
+                    onClick={handleUpdateSettings}
                     disabled={isSavingManageFee}
-                    className="btn-primary whitespace-nowrap"
+                    className="btn-primary whitespace-nowrap h-[46px]"
                   >
-                    {isSavingManageFee ? 'Saving...' : 'Save Price'}
+                    {isSavingManageFee ? 'Saving...' : 'Save Settings'}
                   </button>
                 </div>
               )}
