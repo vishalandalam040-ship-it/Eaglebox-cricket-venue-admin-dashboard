@@ -582,7 +582,7 @@ export const Tournaments = () => {
                               {team.playersCount} Players
                             </span>
                             {user?.role !== 'Viewer' && (
-                              <button onClick={() => handleDeleteTeam(team.id, activeTournamentId)} className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-sm flex items-center justify-center text-[var(--accent-primary)] bg-[var(--bg-base)] sm:bg-transparent hover:bg-[var(--overlay-bg)] transition-colors border border-[var(--border-subtle)] sm:border-transparent sm:hover:border-[var(--border-subtle)]" title="Remove Team">
+                              <button onClick={() => { if(window.confirm('Are you sure you want to remove this team?')) handleDeleteTeam(team.id, activeTournamentId) }} className="shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-sm flex items-center justify-center text-[var(--accent-primary)] bg-[var(--bg-base)] sm:bg-transparent hover:bg-[var(--overlay-bg)] transition-colors border border-[var(--border-subtle)] sm:border-transparent sm:hover:border-[var(--border-subtle)]" title="Remove Team">
                                  <X size={16} className="sm:w-3.5 sm:h-3.5" />
                               </button>
                             )}
