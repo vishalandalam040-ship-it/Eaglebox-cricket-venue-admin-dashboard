@@ -396,7 +396,7 @@ const Dashboard = () => {
       try {
         setAiLoading(true);
         const res = await api.post('/ai/chat', {
-          message: `Analyze the provided venue data and provide exactly two short, actionable insights for the dashboard. Output strictly valid JSON in this exact array format: [{"title": "Observation", "desc": "Peak utilization detected between", "highlight": "18:00 - 21:00", "type": "observation"}, {"title": "Actionable Recommendation", "desc": "Implement early bird pricing to increase conversion by", "highlight": "~14%", "type": "recommendation"}]`
+          message: `Analyze the provided venue data and provide exactly two short, actionable insights for the dashboard. CRITICAL: DO NOT attempt to calculate or mention "Total Revenue", "All-Time Revenue", or any overall financial totals, as your math may conflict with the frontend calculations. Focus on trends, popular slots, or tournament growth. Output strictly valid JSON in this exact array format: [{"title": "Observation", "desc": "Peak utilization detected between", "highlight": "18:00 - 21:00", "type": "observation"}, {"title": "Actionable Recommendation", "desc": "Implement early bird pricing to increase conversion by", "highlight": "~14%", "type": "recommendation"}]`
         });
         
         let jsonStr = res.data.response;
