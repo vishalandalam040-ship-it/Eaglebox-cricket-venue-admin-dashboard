@@ -62,9 +62,9 @@ export const Bookings = () => {
           if (user.membership.includes('Silver')) discount = 0.10;
           else if (user.membership.includes('Gold')) discount = 0.15;
           else if (user.membership.includes('Platinum')) discount = 0.20;
-          minimumAmount = Math.round(minimumAmount * (1 - discount));
+          minimumAmount = minimumAmount * (1 - discount);
         }
-        setNewBooking(prev => ({ ...prev, amount: minimumAmount }));
+        setNewBooking(prev => ({ ...prev, amount: Math.round(minimumAmount) }));
       } else {
         setNewBooking(prev => ({ ...prev, amount: '' }));
       }
