@@ -437,7 +437,7 @@ const crypto = require('crypto');
       }
     });
 
-    app.delete('/api/tournaments/:id', verifyToken, authorizeRole(['Super Admin', 'Staff']), async (req, res) => {
+    app.delete('/api/tournaments/:id', verifyToken, authorizeRole(['Super Admin']), async (req, res) => {
       try {
         await db.run('DELETE FROM tournament_players WHERE teamId IN (SELECT id FROM tournament_teams WHERE tournamentId = ?)', [req.params.id]);
         await db.run('DELETE FROM tournaments WHERE id = ?', [req.params.id]);

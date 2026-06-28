@@ -334,6 +334,15 @@ export const Tournaments = () => {
                           Manage Rosters
                         </motion.button>
                       )}
+                      {user?.role === 'Super Admin' && (
+                        <motion.button 
+                          whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                          onClick={() => { if(window.confirm('Are you sure you want to completely delete this tournament and all its registered teams?')) handleDeleteTournament(tournament.id) }} 
+                          className="px-6 py-2.5 rounded-sm border border-red-900/50 bg-red-950/20 hover:bg-red-900/40 text-red-500 font-bold transition-colors text-xs uppercase tracking-wider"
+                        >
+                          Delete
+                        </motion.button>
+                      )}
                       <motion.button 
                         whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                         onClick={() => {
