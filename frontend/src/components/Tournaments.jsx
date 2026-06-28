@@ -68,7 +68,8 @@ export const Tournaments = () => {
 
   const openJoinModal = (tournamentId) => {
     setActiveTournamentId(tournamentId);
-    setNewTeam({ teamName: '', email: '', playersCount: '', amountPaid: '', playerNames: [] });
+    const tournament = tournaments.find(t => t.id === tournamentId);
+    setNewTeam({ teamName: '', email: '', playersCount: '', amountPaid: tournament?.entryFee || 0, playerNames: [] });
     setIsJoinModalOpen(true);
   };
 
@@ -513,9 +514,9 @@ export const Tournaments = () => {
                 )}
                 <div className="p-4 rounded-sm border border-[var(--border-subtle)] bg-[var(--overlay-bg)] mt-2">
                   <label className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-[0.2em] mb-2">
-                    Payment Amount (Min: ₹{tournaments.find(t => t.id === activeTournamentId)?.entryFee || 0})
+                    Entry Fee
                   </label>
-                  <input required type="number" value={newTeam.amountPaid} onChange={e => setNewTeam({...newTeam, amountPaid: e.target.value})} className="w-full bg-transparent border-none outline-none text-3xl font-bold text-[var(--accent-primary)] placeholder-amber-900" placeholder="0" />
+                  <input readOnly required type="number" value={newTeam.amountPaid} className="w-full bg-transparent border-none outline-none text-3xl font-bold text-[var(--accent-primary)] cursor-not-allowed" />
                 </div>
                 <div className="mt-8 flex gap-4">
                   <button type="button" onClick={() => setIsJoinModalOpen(false)} className="flex-1 px-4 py-3.5 rounded-sm border border-[var(--border-subtle)] text-[var(--text-primary)] font-bold hover:bg-[var(--overlay-bg)] transition-colors">Cancel</button>
