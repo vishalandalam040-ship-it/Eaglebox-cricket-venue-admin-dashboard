@@ -124,7 +124,7 @@ module.exports = (db) => {
       
       Provide a brief 3-paragraph executive summary with insights and 2 actionable growth recommendations. Do not use markdown formatting.`;
 
-      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent(prompt);
       const text = await result.response.text();
 
