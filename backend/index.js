@@ -184,6 +184,37 @@ const crypto = require('crypto');
       res.json({ status: 'OK', message: 'Venue Admin Dashboard Backend is running with PostgreSQL' });
     });
 
+    // Secret route to view database tables easily
+    app.get('/api/view-tables-secret', async (req, res) => {
+      try {
+        const tablesResult = await db.all("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+        let html = "<html><head><style>body{font-family:sans-serif;padding:20px;} table{border-collapse:collapse;width:100%;margin-bottom:30px;} th,td{border:1px solid #ddd;padding:8px;text-align:left;} th{background-color:#f2f2f2;}</style></head><body><h1>Database Tables Viewer</h1>";
+        
+        for (let row of tablesResult) {
+          const tableName = row.table_name;
+          html += `<h2>Table: ${tableName}</h2>`;
+          const data = await db.all(`SELECT * FROM ${tableName} LIMIT 100`);
+          if (data.length === 0) {
+            html += "<p>Empty table</p>";
+          } else {
+            html += "<table><tr>";
+            Object.keys(data[0]).forEach(key => { html += `<th>${key}</th>`; });
+            html += "</tr>";
+            data.forEach(item => {
+              html += "<tr>";
+              Object.values(item).forEach(val => { html += `<td>${val}</td>`; });
+              html += "</tr>";
+            });
+            html += "</table>";
+          }
+        }
+        html += "</body></html>";
+        res.send(html);
+      } catch (err) {
+        res.status(500).send("Error: " + err.message);
+      }
+    });
+
     // --- API for Settings ---
     app.get('/api/settings', async (req, res) => {
       try {
