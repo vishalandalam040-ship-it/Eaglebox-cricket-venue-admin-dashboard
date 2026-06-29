@@ -604,7 +604,7 @@ const crypto = require('crypto');
 
         let roleInstructions = "";
         if (req.user && req.user.role === 'Viewer') {
-          roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding overall revenue, financial reports, total bookings, membership counts/details, business summaries, or Average LTV (Lifetime Value). If the user asks about any of these topics, politely refuse. HOWEVER, the user CAN ask about their own bookings, their own tournament registrations, and the current slot hour pricing. You must answer using ONLY the provided system data for them. ALL monetary values MUST be formatted in INR (e.g. ₹5,000).`;
+          roleInstructions = `\nCRITICAL SECURITY INSTRUCTION: The user you are speaking to is a "Viewer". Viewers do NOT have permission to see sensitive business data. You MUST NOT answer any questions regarding overall revenue, financial reports, total bookings, membership counts/details, business summaries, Average LTV (Lifetime Value), feedback information, or any booking information other than the user's own bookings. If the user asks about any of these topics, politely refuse. HOWEVER, the user CAN ask about their own bookings, their own tournament registrations, and the current slot hour pricing. You must answer using ONLY the provided system data for them. ALL monetary values MUST be formatted in INR (e.g. ₹5,000).`;
           bookings = bookings.filter(b => b.userId === req.user.id);
           teams = teams.filter(t => t.userId === req.user.id);
         } else {
